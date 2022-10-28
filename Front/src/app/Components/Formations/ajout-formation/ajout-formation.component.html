@@ -1,0 +1,24 @@
+<mat-card style="background-color:#f5f4f4;width: 480px">
+
+    <form class="example-form" #addForm="ngForm" (ngSubmit)="addFormations(addForm)">
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Titre</mat-label>
+            <input matInput name="titre" ngModel required>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Centre de Formation</mat-label>
+            <input matInput name="centre_formation" ngModel required>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Date</mat-label>
+            <input matInput name="date" ngModel required>
+        </mat-form-field>
+
+        <mat-card-actions>
+            <button mat-flat-button color="primary" [disabled]="addForm.invalid" type="submit">Confirmer</button>
+        </mat-card-actions>
+
+    </form>
+</mat-card>
