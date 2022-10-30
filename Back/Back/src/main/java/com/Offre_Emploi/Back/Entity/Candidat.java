@@ -12,15 +12,24 @@ public class Candidat extends User{
 
     private String adresse;
     @Column(length = 50000000)
-    private byte[] image;
-    private String mail;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_images",
+            joinColumns =  @JoinColumn(name = "user_id"),
+            inverseJoinColumns =  @JoinColumn(name = "image_id"))
+    private Set<Image> images = new HashSet<>();
+    private String fonction;
     private String date_naissance;
     @Column(length = 50000000)
     private byte[] cv;
     @Column(length = 50000000)
     private byte[] lettre_motivation;
-    @ElementCollection
-    private Set<String> competances = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "condidat_Competance",
+            joinColumns =  @JoinColumn(name = "user_id"),
+            inverseJoinColumns =  @JoinColumn(name = "competance_id"))
+    private Set<Competance> competances = new HashSet<>();
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "condidat_formation",

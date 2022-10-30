@@ -11,12 +11,27 @@ import {MatButtonModule} from "@angular/material/button";
 import {FormsModule} from "@angular/forms";
 import {FormationService} from "./Services/formation.service";
 import { HttpClientModule } from '@angular/common/http';
+import { NavBarComponent } from './Components/nav-bar/nav-bar.component';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatIconModule} from "@angular/material/icon";
+import { ProfileComponent } from './Components/Candidat/profile/profile.component';
+import {MatMenuModule} from "@angular/material/menu";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import { InsccriptionComponent } from './insccription/insccription.component';
+import { LoginComponent } from './login/login.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatRippleModule} from "@angular/material/core";
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    AjoutFormationComponent
+    AjoutFormationComponent,
+    NavBarComponent,
+    ProfileComponent,
+    InsccriptionComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -28,6 +43,13 @@ import { HttpClientModule } from '@angular/common/http';
     MatButtonModule,
     FormsModule,
     HttpClientModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatMenuModule,
+    MatTooltipModule,
+    MatProgressBarModule,
+    MatDialogModule,
+    MatRippleModule,
   ],
   providers: [
       FormationService

@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 @Data
 public class Recruteur extends User{
 
-    private String mail;
     private int num_tel;
     private String adresse;
     private String date_naissance;

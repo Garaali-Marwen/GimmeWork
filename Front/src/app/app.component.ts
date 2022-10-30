@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {UserAuthentificationService} from "./Services/user-authentification.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Front';
+
+  constructor(private userAuthentificationService: UserAuthentificationService, public router: Router){}
+
+  public isLogedIn(){
+    return this.userAuthentificationService.isLoggedIn();
+  }
 }

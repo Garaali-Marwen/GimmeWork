@@ -27,6 +27,10 @@ public class CandidatService {
         candidatRepository.deleteById(id);
     }
 
+    public Candidat findCandidatById(Long id){
+        return candidatRepository.findById(id).orElse(null);
+    }
+
     @Transactional
     public Candidat updateCandidat(Candidat candidat) {
         Candidat candidatUpdate = candidatRepository.findById(candidat.getId()).orElse(null);
@@ -38,8 +42,8 @@ public class CandidatService {
         candidatUpdate.setFormations(candidat.getFormations());
         candidatUpdate.setMail(candidat.getMail());
         candidatUpdate.setCv(candidat.getCv());
-        candidatUpdate.setImage(candidat.getImage());
         candidatUpdate.setLettre_motivation(candidat.getLettre_motivation());
+        candidatUpdate.setFonction(candidat.getFonction());
         return candidatUpdate;
     }
 
