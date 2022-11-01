@@ -21,4 +21,7 @@ export class FormationService {
     return this.http.post<Formation>(`${this.apiServerUrl}/formation/add`, formation);
   }
 
+  public addFormationToCandidat(candidatId: number, formationId: number): Observable<void>{
+    return this.http.get<void>(`${this.apiServerUrl}/candidat/formation/${candidatId}/${formationId}`);
+  }
 }

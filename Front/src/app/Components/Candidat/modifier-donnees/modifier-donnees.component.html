@@ -1,18 +1,5 @@
 <div style="width: 500px; text-align: center">
-
-    <h1 style="font-weight: bold; color: #3f45b5">Inscription</h1>
-
-    <div style="display: flex; justify-content: space-between">
-        <mat-card (click)="incritCandidat()" *ngIf="inscrit==''" style="width: 200px;height: 200px; cursor: pointer">
-            <mat-card-title>Candidat</mat-card-title>
-        </mat-card>
-
-        <mat-card (click)="inscritRecruteur()" *ngIf="inscrit==''" style="width: 200px;height: 200px; cursor: pointer">
-            <mat-card-title>Recruteur</mat-card-title>
-        </mat-card>
-    </div>
-
-    <form class="example-form" #addForm="ngForm" (ngSubmit)="addCondidat(addForm)" *ngIf="inscrit=='Candidat'">
+    <form class="example-form" #editForm="ngForm">
 
         <table>
             <tr>
@@ -48,8 +35,8 @@
             <tr>
                 <td style="text-align: left">
                     <mat-form-field class="example-full-width" appearance="fill">
-                        <mat-label>Mot de passe</mat-label>
-                        <input matInput [(ngModel)]="candidat.mdp" type="password" name="mdp" ngModel required>
+                        <mat-label>Fonction</mat-label>
+                        <input matInput [(ngModel)]="candidat.fonction" name="fonction" ngModel required>
                     </mat-form-field>
                 </td>
 
@@ -63,20 +50,13 @@
 
             <tr>
                 <td style="text-align: left">
-                    <mat-form-field class="example-full-width" appearance="fill">
-                        <mat-label>Fonction</mat-label>
-                        <input matInput [(ngModel)]="candidat.fonction" name="fonction" ngModel required>
+                    <mat-form-field class="example-full-width" appearance="fill" style="display: none">
+                        <mat-label>Mot de passe</mat-label>
+                        <input matInput [(ngModel)]="candidat.mdp" type="password" name="mdp" ngModel required>
                     </mat-form-field>
                 </td>
 
-                <td style="text-align: center; width: 200px;">
-                    <label id="lab" for="inputTag">
-                        <span class="material-symbols-outlined">add_photo_alternate</span><br>
-                        Choisir un Image de profile
-                        <input id="inputTag" type="file" required name="image" value="Ajout" accept="image/*" (change)="onFileSelected($event)">
-                    </label>
-
-                </td>
+                <input type="number" style="display: none" name="id" matInput ngModel="{{candidat.id}}">
 
             </tr>
 
@@ -84,7 +64,7 @@
 
                 <td colspan="2" style="text-align: center; width: 500px; padding-top: 10px">
                     <mat-card-actions>
-                        <button mat-flat-button color="primary" [disabled]="addForm.invalid" type="submit">Confirmer</button>
+                        <button mat-flat-button color="primary" [disabled]="editForm.invalid" (click)="updateCandidat(editForm.value)">Confirmer</button>
                         <button mat-flat-button mat-dialog-close color="primary" style="margin-left: 30px">Annuler</button>
                     </mat-card-actions>
                 </td>

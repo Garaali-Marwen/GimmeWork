@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NgForm} from "@angular/forms";
-import {UserAuthentificationService} from "../Services/user-authentification.service";
+import {UserAuthentificationService} from "../../Services/user-authentification.service";
 import {Router} from "@angular/router";
 
 
@@ -22,7 +22,8 @@ export class LoginComponent implements OnInit {
     mdp: ""
   }
 
-  constructor(private userAuthentificationService:UserAuthentificationService, private router: Router) { }
+  constructor(private userAuthentificationService:UserAuthentificationService,
+              private router: Router) { }
 
   ngOnInit(): void {
   }

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AjoutFormationComponent } from './Components/Formations/ajout-formation/ajout-formation.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from '@angular/material/input';
@@ -18,39 +17,48 @@ import { ProfileComponent } from './Components/Candidat/profile/profile.componen
 import {MatMenuModule} from "@angular/material/menu";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
-import { InsccriptionComponent } from './insccription/insccription.component';
-import { LoginComponent } from './login/login.component';
+import { InsccriptionComponent } from './Components/Inscription/insccription/insccription.component';
+import { LoginComponent } from './Components/login/login.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatRippleModule} from "@angular/material/core";
+import {MatSliderModule} from "@angular/material/slider";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModifierDonneesComponent } from './Components/Candidat/modifier-donnees/modifier-donnees.component';
+import { InscriptionRecruteurComponent } from './Components/Inscription/inscription-recruteur/inscription-recruteur.component';
+import { InscriptionCandidatComponent } from './Components/Inscription/inscription-candidat/inscription-candidat.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    AjoutFormationComponent,
     NavBarComponent,
     ProfileComponent,
     InsccriptionComponent,
-    LoginComponent
+    LoginComponent,
+    ModifierDonneesComponent,
+    InscriptionRecruteurComponent,
+    InscriptionCandidatComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCardModule,
-    MatButtonModule,
-    FormsModule,
-    HttpClientModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatMenuModule,
-    MatTooltipModule,
-    MatProgressBarModule,
-    MatDialogModule,
-    MatRippleModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatCardModule,
+        MatButtonModule,
+        FormsModule,
+        HttpClientModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatMenuModule,
+        MatTooltipModule,
+        MatProgressBarModule,
+        MatDialogModule,
+        MatRippleModule,
+        MatSliderModule,
+        NgbModule,
+    ],
   providers: [
       FormationService
   ],

@@ -11,23 +11,18 @@ export class ImageService {
   constructor(private sanitizer: DomSanitizer) { }
 
   public createImage(candidat: Candidat){
-    const candidatImage: any[] = candidat.images;
-    const candidatImageToImage: Image[] = [];
+    const candidatImage: any = candidat.image;
 
-    for (let i=0; i<candidatImage.length; i++){
-      const imageFileData = candidatImage[i];
+      const imageFileData = candidatImage;
       const imageBlob = this.dataURItoBlob(imageFileData.imageBytes, imageFileData.type);
 
       const imageFile = new File([imageBlob], imageFileData.nom, {type: imageFileData.type});
       const imageFinal: Image = {
         file: imageFile,
         url: this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(imageFile))
-      };
+      }
 
-      candidatImageToImage.push(imageFinal);
-    }
-
-    candidat.images = candidatImageToImage;
+    candidat.image = imageFinal;
     return candidat;
 
   }

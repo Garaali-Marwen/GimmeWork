@@ -11,13 +11,9 @@ import java.util.Set;
 public class Candidat extends User{
 
     private String adresse;
-    @Column(length = 50000000)
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_images",
-            joinColumns =  @JoinColumn(name = "user_id"),
-            inverseJoinColumns =  @JoinColumn(name = "image_id"))
-    private Set<Image> images = new HashSet<>();
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "image_id", referencedColumnName = "id")
+    private Image image ;
     private String fonction;
     private String date_naissance;
     @Column(length = 50000000)

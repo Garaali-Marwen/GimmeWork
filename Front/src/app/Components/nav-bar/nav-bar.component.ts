@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {UserAuthentificationService} from "../../Services/user-authentification.service";
 import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
-import {LoginComponent} from "../../login/login.component";
-import {InsccriptionComponent} from "../../insccription/insccription.component";
+import {LoginComponent} from "../login/login.component";
+import {InsccriptionComponent} from "../Inscription/insccription/insccription.component";
 
 @Component({
   selector: 'app-nav-bar',

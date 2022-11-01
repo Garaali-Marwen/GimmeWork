@@ -21,5 +21,9 @@ export class CandidatService {
     return this.http.get<Candidat>(`${this.apiServerUrl}/candidat/${id}`);
   }
 
+  public updateCandidat(candidat: Candidat): Observable<Candidat>{
+    return this.http.put<Candidat>(`${this.apiServerUrl}/candidat/update`, candidat);
+  }
+
 
 }

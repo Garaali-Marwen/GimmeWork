@@ -1,4 +1,6 @@
 import {Image} from "./Image";
+import {Formation} from "./Formation";
+import {Competance} from "./Competance";
 
 export interface Candidat {
     nom: string;
@@ -8,10 +10,11 @@ export interface Candidat {
     adresse: string,
     date_naissance: string;
     fonction: string;
-    images: Image[];
+    image: Image;
     cv: [];
     lettre_motivation: [];
     competances: [];
+    formations: []
 
 
 }

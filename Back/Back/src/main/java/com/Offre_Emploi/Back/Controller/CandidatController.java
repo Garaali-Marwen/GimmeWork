@@ -5,6 +5,7 @@ import com.Offre_Emploi.Back.Entity.Image;
 import com.Offre_Emploi.Back.Service.CandidatService;
 import com.Offre_Emploi.Back.Service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -53,11 +54,11 @@ public class CandidatController {
 
 
     @PostMapping(value = "/add", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public Candidat addLivre(@RequestPart("candidat") Candidat candidat,
-                             @RequestPart("imageFile") MultipartFile[] file) {
+    public Candidat addCandidat(@RequestPart("candidat") Candidat candidat,
+                             @RequestPart("imageFile") MultipartFile file) {
         try {
-            Set<Image> images = uploadImage(file);
-            candidat.setImages(images);
+            Image images = uploadImage(file);
+            candidat.setImage(images);
             Candidat newCandidat = candidatService.addCondidat(candidat);
             return newCandidat;
         }catch (Exception e){
@@ -68,18 +69,27 @@ public class CandidatController {
 
 
 
-    public Set<Image> uploadImage(MultipartFile[] multipartFiles) throws IOException {
-        Set<Image> images = new HashSet<>();
-
-        for (MultipartFile file: multipartFiles){
+    public Image uploadImage(MultipartFile multipartFiles) throws IOException {
             Image image = new Image(
-                    file.getOriginalFilename(),
-                    file.getContentType(),
-                    file.getBytes()
+                    multipartFiles.getOriginalFilename(),
+                    multipartFiles.getContentType(),
+                    multipartFiles.getBytes()
             );
-            images.add(image);
             imageService.addImage(image);
-        }
-        return images;
+        return image;
     }
+
+
+    @GetMapping("/competance/{candidatId}/{competanceId}")
+    public ResponseEntity<Candidat> addCompetanceToCandidat(@PathVariable("candidatId") long candidatId, @PathVariable("competanceId") long competanceId) {
+        candidatService.addCompetanceToCandidat(candidatId, competanceId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/formation/{candidatId}/{formationId}")
+    public ResponseEntity<Candidat> addFormationToCandidat(@PathVariable("candidatId") long candidatId, @PathVariable("formationId") long formationId) {
+        candidatService.addFormationToCandidat(candidatId, formationId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

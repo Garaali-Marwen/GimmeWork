@@ -1,5 +1,6 @@
 package com.Offre_Emploi.Back.Service;
 
+import com.Offre_Emploi.Back.Entity.Admin;
 import com.Offre_Emploi.Back.Entity.User;
 import com.Offre_Emploi.Back.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,10 @@ public class UserService {
         }
         System.out.println("invalide login ou mdp");
         return null;
+    }
+
+    public void addAdmin(Admin admin){
+        userRepository.save(admin);
     }
 
 }
