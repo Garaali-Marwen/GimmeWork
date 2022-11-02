@@ -44,4 +44,11 @@ export class NavBarComponent implements OnInit {
     else return false;
   }
 
+  public isCandidat(){
+    const role = this.userAuthentificationService.getRole();
+    if (role == 'Candidat')
+      return true;
+    else return false;
+  }
+
 }

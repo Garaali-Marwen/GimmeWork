@@ -26,6 +26,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModifierDonneesComponent } from './Components/Candidat/modifier-donnees/modifier-donnees.component';
 import { InscriptionRecruteurComponent } from './Components/Inscription/inscription-recruteur/inscription-recruteur.component';
 import { InscriptionCandidatComponent } from './Components/Inscription/inscription-candidat/inscription-candidat.component';
+import { OffresComponent } from './Components/offres/offres.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { InscriptionCandidatComponent } from './Components/Inscription/inscripti
     LoginComponent,
     ModifierDonneesComponent,
     InscriptionRecruteurComponent,
-    InscriptionCandidatComponent
+    InscriptionCandidatComponent,
+    OffresComponent
   ],
     imports: [
         BrowserModule,
