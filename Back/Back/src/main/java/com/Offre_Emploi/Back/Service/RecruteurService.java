@@ -35,9 +35,12 @@ public class RecruteurService {
         recruteurUpdate.setMdp(recruteur.getMdp());
         recruteurUpdate.setDate_naissance(recruteur.getDate_naissance());
         recruteurUpdate.setMail(recruteur.getMail());
-        recruteurUpdate.setImage(recruteur.getImage());
         recruteurUpdate.setNum_tel(recruteur.getNum_tel());
         recruteurUpdate.setAdresse(recruteur.getAdresse());
         return recruteurUpdate;
+    }
+
+    public Recruteur findRecruteurById(Long id){
+        return recruteurRepository.findById(id).orElse(null);
     }
 }

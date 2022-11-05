@@ -1,6 +1,5 @@
 package com.Offre_Emploi.Back.Controller;
 
-import com.Offre_Emploi.Back.Entity.Candidat;
 import com.Offre_Emploi.Back.Entity.Image;
 import com.Offre_Emploi.Back.Entity.Recruteur;
 import com.Offre_Emploi.Back.Service.ImageService;
@@ -62,4 +61,8 @@ public class RecruteurController {
         recruteurService.deleteRecruteur(id);
     }
 
+    @GetMapping("/{id}")
+    public Recruteur findById(@PathVariable("id") Long id){
+        return recruteurService.findRecruteurById(id);
+    }
 }

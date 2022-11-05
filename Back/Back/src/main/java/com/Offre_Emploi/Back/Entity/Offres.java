@@ -1,9 +1,7 @@
 package com.Offre_Emploi.Back.Entity;
-
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Data
@@ -12,11 +10,17 @@ public class Offres {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String titre;
-    private LocalDate date_ajout;
-    private LocalDate date_expiration;
+    private String date_ajout;
+    private String date_expiration;
+
+    @Column(length = 5000)
     private String description;
     private String domaine;
-    @ManyToOne
-    private Recruteur recruteur;
+    private String type_poste;
+    private String lieu;
+    private String experience;
+    private String etude;
+    private Double salaire;
+    private String disponibilite;
 
 }

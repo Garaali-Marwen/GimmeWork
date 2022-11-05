@@ -1,0 +1,67 @@
+<div style="display: flex;flex-wrap: wrap; padding: 20px; width: 820px;">
+    <mat-card style="width: 750px;height: 40px;display: flex; justify-content: space-between;align-items: center;padding-right: 20px;margin: 10px;">
+        <mat-card-title>Profile</mat-card-title>
+        <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Parametres du compte" *ngIf="isLogedIn() && proprietaireCompte()">
+            <span class="material-symbols-outlined">manage_accounts</span>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item style="display: flex;align-items: center;" (click)="openDialog()">
+                <span class="material-symbols-outlined">edit</span>
+                <span>Modifier</span>
+            </button>
+            <button mat-menu-item style="display: flex;align-items: center;">
+                <span class="material-symbols-outlined">notifications</span>
+                <span>Notifications</span>
+            </button>
+            <button mat-menu-item style="display: flex;align-items: center;" (click)="validerSuppressionProfil()">
+                <span class="material-symbols-outlined">delete</span>
+                <span>Supprimer le compte</span>
+            </button>
+        </mat-menu>
+    </mat-card>
+
+    <mat-card class="example-card" style="text-align: center; margin: 10px; width: 220px">
+        <img [src]=user.image.url style="width: 180px; height: 180px;border-radius: 50%;">
+        <button mat-icon-button style="position: absolute; top: 160px; right: 10px" matTooltip="Changer la photo du profil" *ngIf="isLogedIn() && proprietaireCompte()">
+           <span class="material-symbols-outlined">edit_square</span>
+        </button>
+        <mat-card-content>
+            <br>
+            <mat-card-title>{{user.nom}} {{user.prenom}}</mat-card-title>
+            <mat-card-subtitle *ngIf="role == 'Condidat'">{{user.fonction}}</mat-card-subtitle>
+            <mat-card-subtitle *ngIf="role == 'Recruteur'" style="align-items: center; display: flex;margin-left: 50px">
+                <span class="material-symbols-outlined">call</span>
+                {{user.num_tel}}
+            </mat-card-subtitle>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card style="width: 510px; margin: 10px">
+        <mat-card style="margin: 5px"><table style="width: 400px"><tr><td>Nom</td><td>{{user.nom}}</td></tr></table></mat-card>
+        <mat-card style="margin: 5px"><table style="width: 400px"><tr><td>Prénom</td><td>{{user.prenom}}</td></tr></table></mat-card>
+        <mat-card style="margin: 5px"><table style="width: 400px"><tr><td>Date de naissance</td><td>{{user.date_naissance}}</td></tr></table></mat-card>
+        <mat-card style="margin: 5px"><table style="width: 400px"><tr><td>Mail</td><td>{{user.mail}}</td></tr></table></mat-card>
+        <mat-card style="margin: 5px"><table style="width: 400px"><tr><td>Adresse</td><td>{{user.adresse}}</td></tr></table></mat-card>
+    </mat-card>
+
+    <app-competances *ngIf="role == 'Condidat'"></app-competances>
+
+    <app-formations *ngIf="role == 'Condidat'"></app-formations>
+
+    <mat-card style="width: 750px;height: 40px;display: flex; justify-content: space-between;align-items: center;margin: 10px;" *ngIf="role == 'Condidat'">
+        <mat-card-title>Documents</mat-card-title>
+        <div style="display: flex; align-items: center;justify-content: space-between;width: 100px">
+            <button mat-icon-button style="display: flex;align-items: center;" matTooltip="Afficher CV">
+                <span>CV</span>
+                <span class="material-symbols-outlined">file_open</span>
+            </button>
+            <div style="border-left: 2px solid black;  height: 20px;"></div>
+            <button mat-icon-button style="display: flex;align-items: center;" matTooltip="Afficher lettre de motivation">
+                <span>LM</span>
+                <span class="material-symbols-outlined">file_open</span>
+            </button>
+        </div>
+    </mat-card>
+
+    <app-offres *ngIf="role == 'Recruteur'"></app-offres>
+</div>

@@ -20,13 +20,14 @@ export class InscriptionRecruteurComponent implements OnInit {
     mail: "",
     adresse: "",
     date_naissance: "",
-    num_tel: 0,
     image: {
       file : new File([],""),
       url : ""
     },
     role: "",
     id: 0,
+    offres: [],
+    num_tel: 0,
   }
   constructor(private  recruteurService: RecruteurService) { }
 

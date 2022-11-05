@@ -25,5 +25,8 @@ export class CandidatService {
     return this.http.put<Candidat>(`${this.apiServerUrl}/candidat/update`, candidat);
   }
 
+  public deleteCandidat(candidatId: number): Observable<void>{
+    return this.http.delete<void>(`${this.apiServerUrl}/candidat/delete/${candidatId}`);
+  }
 
 }

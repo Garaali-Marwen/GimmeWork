@@ -13,7 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NavBarComponent } from './Components/nav-bar/nav-bar.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
-import { ProfileComponent } from './Components/Candidat/profile/profile.component';
+import { ProfileComponent } from './Components/Profiles/profile/profile.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
@@ -23,10 +23,22 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatRippleModule} from "@angular/material/core";
 import {MatSliderModule} from "@angular/material/slider";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ModifierDonneesComponent } from './Components/Candidat/modifier-donnees/modifier-donnees.component';
+import { ModifierDonneesComponent } from './Components/Profiles/modifier-donnees/modifier-donnees.component';
 import { InscriptionRecruteurComponent } from './Components/Inscription/inscription-recruteur/inscription-recruteur.component';
 import { InscriptionCandidatComponent } from './Components/Inscription/inscription-candidat/inscription-candidat.component';
-import { OffresComponent } from './Components/offres/offres.component';
+import { OffresComponent } from './Components/Offre/offres/offres.component';
+import { CompetancesComponent } from './Components/Profiles/competances/competances.component';
+import { FormationsComponent } from './Components/Profiles/formations/formations.component';
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatDividerModule} from "@angular/material/divider";
+import {MatRadioModule} from "@angular/material/radio";
+import {MatSelectModule} from "@angular/material/select";
+import { AfficherOffresComponent } from './Components/Offre/afficher-offres/afficher-offres.component';
+import { DetailOffreComponent } from './Components/Offre/detail-offre/detail-offre.component';
+import {MatTableModule} from "@angular/material/table";
+import { ValiderSuppressionComponent } from './Components/Offre/valider-suppression/valider-suppression.component';
+import { ValiderSuppressionProfilComponent } from './Components/Profiles/valider-suppression-profil/valider-suppression-profil.component';
+import { ModifierOffreComponent } from './Components/Offre/modifier-offre/modifier-offre.component';
 
 
 @NgModule({
@@ -39,7 +51,14 @@ import { OffresComponent } from './Components/offres/offres.component';
     ModifierDonneesComponent,
     InscriptionRecruteurComponent,
     InscriptionCandidatComponent,
-    OffresComponent
+    OffresComponent,
+    CompetancesComponent,
+    FormationsComponent,
+    AfficherOffresComponent,
+    DetailOffreComponent,
+    ValiderSuppressionComponent,
+    ValiderSuppressionProfilComponent,
+    ModifierOffreComponent
   ],
     imports: [
         BrowserModule,
@@ -60,6 +79,11 @@ import { OffresComponent } from './Components/offres/offres.component';
         MatRippleModule,
         MatSliderModule,
         NgbModule,
+        MatDatepickerModule,
+        MatDividerModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatTableModule,
     ],
   providers: [
       FormationService

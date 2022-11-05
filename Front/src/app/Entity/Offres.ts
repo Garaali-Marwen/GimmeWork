@@ -5,5 +5,10 @@ export interface Offres{
     description: string,
     domaine: string,
     titre: string,
-    recruteur_id: number,
+    type_poste: string,
+    lieu: string,
+    experience: string,
+    etude: string,
+    salaire: number,
+    disponibilite: string,
 }

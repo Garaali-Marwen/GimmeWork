@@ -17,6 +17,7 @@ export class NavBarComponent implements OnInit {
               public dialog: MatDialog) { }
 
 
+  private idUser: number = 0;
   ngOnInit(): void {
   }
 
@@ -46,9 +47,17 @@ export class NavBarComponent implements OnInit {
 
   public isCandidat(){
     const role = this.userAuthentificationService.getRole();
-    if (role == 'Candidat')
+    if (role == 'Condidat')
       return true;
     else return false;
+  }
+
+  public afficherProfile() {
+    this.idUser = this.userAuthentificationService.getUserId();
+    this.router.navigate(['/profile'], { queryParams: { id: this.idUser }});
+    setTimeout(function(){
+      window.location.reload();
+    }, 1);
   }
 
 }

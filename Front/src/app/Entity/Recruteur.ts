@@ -1,4 +1,5 @@
 import {Image} from "./Image";
+import {Offres} from "./Offres";
 
 export interface Recruteur{
     id: number,
@@ -10,5 +11,6 @@ export interface Recruteur{
     adresse: string,
     date_naissance: string,
     image: Image,
-    num_tel: number
+    num_tel: number,
+    offres: Offres[]
 }

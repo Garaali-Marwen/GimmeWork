@@ -10,10 +10,10 @@ export class ImageService {
 
   constructor(private sanitizer: DomSanitizer) { }
 
-  public createImage(candidat: Candidat){
-    const candidatImage: any = candidat.image;
+  public createImage(user: any){
+    const userImage: any = user.image;
 
-      const imageFileData = candidatImage;
+      const imageFileData = userImage;
       const imageBlob = this.dataURItoBlob(imageFileData.imageBytes, imageFileData.type);
 
       const imageFile = new File([imageBlob], imageFileData.nom, {type: imageFileData.type});
@@ -22,8 +22,8 @@ export class ImageService {
         url: this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(imageFile))
       }
 
-    candidat.image = imageFinal;
-    return candidat;
+    user.image = imageFinal;
+    return user;
 
   }
 

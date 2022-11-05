@@ -27,4 +27,7 @@ public class UserService {
         userRepository.save(admin);
     }
 
+    public User getUser(Long idUser){
+        return userRepository.findById(idUser).orElse(null);
+    }
 }

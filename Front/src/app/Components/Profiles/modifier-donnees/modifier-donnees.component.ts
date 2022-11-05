@@ -3,6 +3,8 @@ import {Candidat} from "../../../Entity/Candidat";
 import {UserAuthentificationService} from "../../../Services/user-authentification.service";
 import {CandidatService} from "../../../Services/candidat.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {Recruteur} from "../../../Entity/Recruteur";
+import {RecruteurService} from "../../../Services/recruteur.service";
 
 @Component({
   selector: 'app-modifier-donnees',
@@ -11,19 +13,22 @@ import {HttpErrorResponse} from "@angular/common/http";
 })
 export class ModifierDonneesComponent implements OnInit {
 
-  public candidat: any;
+  public user: any;
+  public role= "";
 
   constructor(private userAuthentificationService: UserAuthentificationService,
-              private candidatService: CandidatService) { }
+              private candidatService: CandidatService,
+              private recruteurService: RecruteurService) { }
 
   ngOnInit(): void {
-    this.findCandidat(this.userAuthentificationService.getUserId());
+      this.role = this.userAuthentificationService.getRole();
+      this.findCandidat(this.userAuthentificationService.getUserId());
   }
 
-  public findCandidat(candidatId: number): void{
-    this.candidatService.findCandidatById(candidatId).subscribe(
-        (responce: Candidat) => {
-          this.candidat = responce;
+  public findCandidat(userId: number): void{
+    this.userAuthentificationService.findUserById(userId).subscribe(
+        (responce: any) => {
+          this.user = responce;
         },
         (error: HttpErrorResponse) => {
           alert(error.message);
@@ -41,5 +46,16 @@ export class ModifierDonneesComponent implements OnInit {
         }
     );
   }
+
+    public updateRecruteur(recruteur: Recruteur): void{
+        this.recruteurService.updateRecruteur(recruteur).subscribe(
+            (response: Recruteur) => {
+                window.location.reload()
+            },
+            (error: HttpErrorResponse) => {
+                alert(error.message);
+            }
+        );
+    }
 
 }

@@ -3,25 +3,23 @@
     <span style="font-family: 'Impact';margin-left: 20px">Gimme<a style="color: #c2c2c2">Work</a></span>
 
     <div>
+        <button mat-icon-button matTooltip="Les offres" routerLink="/offres">
+            <span class="material-symbols-outlined">work</span>
+        </button>
+
         <button mat-icon-button *ngIf=" !isLogedIn()" (click)="openDialogSignin()" matTooltip="Creer un compte">
             <span class="material-symbols-outlined">person_add</span>
         </button>
 
-        <button mat-icon-button *ngIf=" !isLogedIn()" (click)="openDialog()" matTooltip="Login">
-            <span class="material-symbols-outlined">login</span>
-        </button>
-
-
-        <button mat-icon-button *ngIf=" isLogedIn() && isCandidat()" routerLink="/profile" matTooltip="Profile">
+        <button mat-icon-button *ngIf=" isLogedIn()" (click)="afficherProfile()" matTooltip="Profile">
             <span class="material-symbols-outlined">account_circle</span>
-        </button>
-
-        <button mat-icon-button *ngIf=" isLogedIn() && isRecruteur()" matTooltip="Mes offres">
-            <span class="material-symbols-outlined">work</span>
         </button>
 
         <button mat-icon-button *ngIf=" isLogedIn()" (click)="logout()" matTooltip="Logout">
             <span class="material-symbols-outlined">logout</span>
+        </button>
+        <button mat-icon-button *ngIf=" !isLogedIn()" (click)="openDialog()" matTooltip="Login">
+            <span class="material-symbols-outlined">login</span>
         </button>
     </div>
 

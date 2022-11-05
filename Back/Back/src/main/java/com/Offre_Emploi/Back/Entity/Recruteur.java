@@ -1,5 +1,6 @@
 package com.Offre_Emploi.Back.Entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,7 +17,8 @@ public class Recruteur extends User{
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "image_id", referencedColumnName = "id")
     private Image image ;
-    @OneToMany(mappedBy = "recruteur")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ro_id", referencedColumnName = "id")
     private Set<Offres> offres = new HashSet<>();
 }
 

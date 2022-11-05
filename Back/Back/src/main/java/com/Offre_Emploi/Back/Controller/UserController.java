@@ -29,4 +29,10 @@ public class UserController {
         userService.addAdmin(admin);
     }
 
+    @GetMapping("/get/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable("id") Long id){
+        User user = userService.getUser(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
 }

@@ -37,7 +37,10 @@ export class LoginComponent implements OnInit {
 
           const role = response.role;
           if (role === 'Condidat') {
-            this.router.navigate(['/']);
+            window.location.reload()
+          }
+          else if (role == 'Recruteur'){
+              window.location.reload()
           }
         },
         (error) => {
