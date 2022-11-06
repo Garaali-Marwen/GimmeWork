@@ -40,6 +40,17 @@ public class RecruteurService {
         return recruteurUpdate;
     }
 
+    @Transactional
+    public Recruteur updateRecruteurImage(Recruteur recruteur) {
+        Recruteur recruteurUpdate = recruteurRepository.findById(recruteur.getId()).orElse(null);
+        recruteurUpdate.setImage(recruteur.getImage());
+        return recruteurUpdate;
+    }
+
+    public Recruteur findRecruteurByIdOffre(Long id){
+        return recruteurRepository.getRecruteurByOffresId(id);
+    }
+
     public Recruteur findRecruteurById(Long id){
         return recruteurRepository.findById(id).orElse(null);
     }

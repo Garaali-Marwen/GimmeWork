@@ -5,6 +5,7 @@ import {Observable} from "rxjs";
 import {Candidat} from "../Entity/Candidat";
 import {Recruteur} from "../Entity/Recruteur";
 import {Offres} from "../Entity/Offres";
+import {Formation} from "../Entity/Formation";
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +32,12 @@ export class RecruteurService {
 
   public updateRecruteur(recruteur: Recruteur): Observable<Recruteur>{
     return this.http.put<Recruteur>(`${this.apiServerUrl}/recruteur/update`, recruteur);
+  }
+
+  public updateRecruteurImage(recruteur: FormData): Observable<Recruteur>{
+    return this.http.put<Recruteur>(`${this.apiServerUrl}/recruteur/update/image`, recruteur);
+  }
+  public findRecruteurByIdOffre(id: number): Observable<Recruteur>{
+    return this.http.get<Recruteur>(`${this.apiServerUrl}/recruteur/offre/${id}`);
   }
 }

@@ -8,6 +8,14 @@ import {Recruteur} from "../../../Entity/Recruteur";
 import {ImageService} from "../../../Services/image.service";
 import {RecruteurService} from "../../../Services/recruteur.service";
 import {UserAuthentificationService} from "../../../Services/user-authentification.service";
+import {CandidatService} from "../../../Services/candidat.service";
+import {Candidat} from "../../../Entity/Candidat";
+import {ModifierFormationComponent} from "../../Profiles/modifier-formation/modifier-formation.component";
+import {MatDialog} from "@angular/material/dialog";
+import {
+    ValiderSuppressionPostulationComponent
+} from "../../Profiles/valider-suppression-postulation/valider-suppression-postulation.component";
+import {LoginComponent} from "../../login/login.component";
 
 @Component({
   selector: 'app-detail-offre',
@@ -21,7 +29,9 @@ export class DetailOffreComponent implements OnInit {
               private imageService: ImageService,
               private recruteurService: RecruteurService,
               private userAuthentificationService: UserAuthentificationService,
-              private router: Router,) { }
+              private router: Router,
+              private candidatService: CandidatService,
+              public dialog: MatDialog) { }
 
   public offre: Offres={
     id: 0,
@@ -35,7 +45,8 @@ export class DetailOffreComponent implements OnInit {
     experience: "",
     etude: "",
     salaire: 0,
-    disponibilite: ""
+    disponibilite: "",
+    candidats: []
   };
   public recruteur: Recruteur= {
     nom: "",
@@ -53,8 +64,13 @@ export class DetailOffreComponent implements OnInit {
     offres: [],
     num_tel: 0
   }
+
+    public candidats: Candidat[] = [];
   private idO = 0;
   private idR = 0;
+  id = 0;
+  idCandidat =0
+  postuler = true;
 
   public role: string = "";
   ngOnInit(): void {
@@ -65,6 +81,10 @@ export class DetailOffreComponent implements OnInit {
           this.idR = params['idR']});
     this.getOffre();
     this.getRecruteur();
+    this.id = this.userAuthentificationService.getUserId();
+    this.idCandidat = this.userAuthentificationService.getUserId();
+    this.getIdCandidat(this.idO);
+    this.getCandidatPostulees(this.idO);
   }
 
   public getOffre(): void{
@@ -77,6 +97,7 @@ export class DetailOffreComponent implements OnInit {
             }
         );
   }
+
 
   public getRecruteur(): void{
     this.recruteurService.findRecruteurtById(this.idR)
@@ -91,7 +112,73 @@ export class DetailOffreComponent implements OnInit {
         );
   }
 
+
   public afficherProfile(idUser: number) {
     this.router.navigate(['/profile'], { queryParams: { id: idUser }});
   }
+
+  public addoffreToCandidat(candidatId: number, offreId: number): void{
+    this.candidatService.addOffreToCandidat(candidatId,offreId).subscribe(
+        (response: void) => {
+          window.location.reload()
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+    );
+  }
+
+  public getIdCandidat(idOffre: number): void{
+    this.candidatService.findCandidatByIdPostulation(idOffre).subscribe(
+        (responce:any) => {
+          this.postule(responce);
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+    );
+  }
+
+  public postule(idCandidats: number[]){
+    for (let i of idCandidats){
+      if (i == this.idCandidat)
+        this.postuler = false
+    }
+  }
+
+    public deletePostulation(id: number) {
+        this.dialog.open(ValiderSuppressionPostulationComponent, {
+            data: {
+                id: id
+            },
+        })
+    }
+
+    public isLogedIn(){
+        return this.userAuthentificationService.isLoggedIn();
+    }
+
+    public isRecruteur(){
+      if (this.userAuthentificationService.getUserId() == this.idR)
+          return true;
+        else return false;
+    }
+
+    openLogin() {
+        this.dialog.open(LoginComponent);
+    }
+
+    public getCandidatPostulees(idOffre: number): void{
+        this.candidatService.findCandidatsByIdPostulation(idOffre)
+            .pipe(
+                map((x: any[], i) => x.map((offre: Offres) => this.imageService.createImage(offre))))
+            .subscribe(
+                (responce:Candidat[]) => {
+                    this.candidats = responce;
+                },
+                (error: HttpErrorResponse) => {
+                    alert(error.message);
+                }
+            );
+    }
 }

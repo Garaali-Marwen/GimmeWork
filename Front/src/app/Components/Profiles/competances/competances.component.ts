@@ -7,6 +7,12 @@ import {UserAuthentificationService} from "../../../Services/user-authentificati
 import {Candidat} from "../../../Entity/Candidat";
 import {CandidatService} from "../../../Services/candidat.service";
 import {ActivatedRoute} from "@angular/router";
+import {MatDialog} from "@angular/material/dialog";
+import {ModifierCompetanceComponent} from "../modifier-competance/modifier-competance.component";
+import {ValiderSuppressionComponent} from "../../Offre/valider-suppression/valider-suppression.component";
+import {
+    ValiderSuppressionCompetanceComponent
+} from "../valider-suppression-competance/valider-suppression-competance.component";
 
 @Component({
   selector: 'app-competances',
@@ -28,7 +34,8 @@ export class CompetancesComponent implements OnInit {
   constructor(private competanceService: CompetanceService,
               private userAuthentificationService:UserAuthentificationService,
               private candidatService:CandidatService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              public dialog: MatDialog) { }
 
   ngOnInit(): void {
       this.route.queryParams
@@ -84,4 +91,19 @@ export class CompetancesComponent implements OnInit {
     this.addcompetances = !this.addcompetances;
   }
 
+    validerSuppression(id: number) {
+        this.dialog.open(ValiderSuppressionCompetanceComponent, {
+            data:{
+                id: id
+            },
+        })
+    }
+
+    public modifier(id: number) {
+        this.dialog.open(ModifierCompetanceComponent, {
+            data:{
+                id: id
+            },
+        })
+    }
 }

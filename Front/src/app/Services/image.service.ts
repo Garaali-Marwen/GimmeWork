@@ -2,13 +2,19 @@ import { Injectable } from '@angular/core';
 import {DomSanitizer} from "@angular/platform-browser";
 import {Candidat} from "../Entity/Candidat";
 import {Image} from "../Entity/Image";
+import {Observable} from "rxjs";
+import {environment} from "../../environments/environment";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImageService {
 
-  constructor(private sanitizer: DomSanitizer) { }
+  private apiServerUrl = environment.apiBaseUrl;
+
+  constructor(private sanitizer: DomSanitizer,
+              private http: HttpClient) { }
 
   public createImage(user: any){
     const userImage: any = user.image;
@@ -37,6 +43,10 @@ export class ImageService {
 
     const blob = new Blob([int8Array], {type: imageType});
     return blob;
+  }
+
+  public deleteImage(imageId: number): Observable<void>{
+    return this.http.delete<void>(`${this.apiServerUrl}/image/delete/${imageId}`);
   }
 
 }

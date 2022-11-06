@@ -24,4 +24,18 @@ public class CompetanceController {
         return competanceService.getAllCompetances();
     }
 
+    @GetMapping("/{id}")
+    public Competance findById(@PathVariable("id") Long id){
+        return competanceService.findCompetanceById(id);
+    }
+
+    @PutMapping("/update")
+    public Competance updateCompetance(@RequestBody Competance competance) {
+        return competanceService.updateCompetance(competance);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteCompetance(@PathVariable("id") Long id) {
+        competanceService.deleteCompetance(id);
+    }
 }

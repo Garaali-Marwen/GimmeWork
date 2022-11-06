@@ -45,6 +45,7 @@ export class ValiderSuppressionProfilComponent implements OnInit {
         }
     );
   }
+
   public deleteAccount() {
     if (this.role == 'Recruteur'){
       this.deleteRecruteur(this.userAuthentificationService.getUserId())

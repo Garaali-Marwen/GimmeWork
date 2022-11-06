@@ -32,20 +32,24 @@ export class LoginComponent implements OnInit {
   login(loginForm: NgForm) {
     this.userAuthentificationService.login(this.authentification.mail,this.authentification.mdp).subscribe(
         (response: any) => {
-          this.userAuthentificationService.setUserId(response.id);
-          this.userAuthentificationService.setRoles(response.role);
+            if (response == null){
+                alert("Vérifier vos coordonnées!")
+            }
+            else {
+                this.userAuthentificationService.setUserId(response.id);
+                this.userAuthentificationService.setRoles(response.role);
 
-          const role = response.role;
-          if (role === 'Condidat') {
-            window.location.reload()
-          }
-          else if (role == 'Recruteur'){
-              window.location.reload()
-          }
+                const role = response.role;
+                if (role === 'Condidat') {
+                    window.location.reload()
+                }
+                else if (role == 'Recruteur'){
+                    window.location.reload()
+                }
+            }
         },
         (error) => {
           console.log(error);
-          alert("Vérifier vos coordonnées!");
         }
     );
   }

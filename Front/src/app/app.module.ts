@@ -39,6 +39,12 @@ import {MatTableModule} from "@angular/material/table";
 import { ValiderSuppressionComponent } from './Components/Offre/valider-suppression/valider-suppression.component';
 import { ValiderSuppressionProfilComponent } from './Components/Profiles/valider-suppression-profil/valider-suppression-profil.component';
 import { ModifierOffreComponent } from './Components/Offre/modifier-offre/modifier-offre.component';
+import { ModifierCompetanceComponent } from './Components/Profiles/modifier-competance/modifier-competance.component';
+import { ValiderSuppressionCompetanceComponent } from './Components/Profiles/valider-suppression-competance/valider-suppression-competance.component';
+import { ModifierFormationComponent } from './Components/Profiles/modifier-formation/modifier-formation.component';
+import { ValiderSuppressionFormationComponent } from './Components/Profiles/valider-suppression-formation/valider-suppression-formation.component';
+import { PostulationCandidatComponent } from './Components/Profiles/postulation-candidat/postulation-candidat.component';
+import { ValiderSuppressionPostulationComponent } from './Components/Profiles/valider-suppression-postulation/valider-suppression-postulation.component';
 
 
 @NgModule({
@@ -58,7 +64,13 @@ import { ModifierOffreComponent } from './Components/Offre/modifier-offre/modifi
     DetailOffreComponent,
     ValiderSuppressionComponent,
     ValiderSuppressionProfilComponent,
-    ModifierOffreComponent
+    ModifierOffreComponent,
+    ModifierCompetanceComponent,
+    ValiderSuppressionCompetanceComponent,
+    ModifierFormationComponent,
+    ValiderSuppressionFormationComponent,
+    PostulationCandidatComponent,
+    ValiderSuppressionPostulationComponent,
   ],
     imports: [
         BrowserModule,

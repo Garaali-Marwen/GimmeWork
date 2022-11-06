@@ -13,7 +13,27 @@ import {RecruteurService} from "../../../Services/recruteur.service";
 })
 export class ModifierDonneesComponent implements OnInit {
 
-  public user: any;
+  public user: any={
+      nom: "",
+      prenom: "",
+      mdp: "",
+      mail: "",
+      adresse: "",
+      date_naissance: "",
+      image: {
+          file : new File([],""),
+          url : ""
+      },
+      role: "",
+      id: 0,
+      offres: [],
+      num_tel: 0,
+      fonction: "",
+      cv: [],
+      lettre_motivation: [],
+      competances: [],
+      formations: [],
+  };
   public role= "";
 
   constructor(private userAuthentificationService: UserAuthentificationService,

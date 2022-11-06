@@ -1,5 +1,6 @@
 package com.Offre_Emploi.Back.Entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -23,8 +24,8 @@ public class Candidat extends User{
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "condidat_Competance",
-            joinColumns =  @JoinColumn(name = "user_id"),
-            inverseJoinColumns =  @JoinColumn(name = "competance_id"))
+            joinColumns =  @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns =  @JoinColumn(name = "competance_id", referencedColumnName = "id"))
     private Set<Competance> competances = new HashSet<>();
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
@@ -32,4 +33,10 @@ public class Candidat extends User{
             joinColumns =  @JoinColumn(name = "user_id"),
             inverseJoinColumns =  @JoinColumn(name = "formation_id"))
     private Set<Formations> formations = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "candidat_offre",
+            joinColumns =  @JoinColumn(name = "candidat_id"),
+            inverseJoinColumns =  @JoinColumn(name = "offre_id"))
+    private Set<Offres> postulations = new HashSet<>();
 }

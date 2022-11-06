@@ -45,6 +45,18 @@ public class RecruteurController {
         return image;
     }
 
+    @PutMapping(value = "/update/image", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public Recruteur updateRecruteurImage(@RequestPart("user") Recruteur recruteur,
+                                          @RequestPart("imageFile") MultipartFile file) {
+        try {
+            Image images = uploadImage(file);
+            recruteur.setImage(images);
+            return recruteurService.updateRecruteurImage(recruteur);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 
     @GetMapping("/all")
     public List<Recruteur> addRecruteur(){
@@ -65,4 +77,11 @@ public class RecruteurController {
     public Recruteur findById(@PathVariable("id") Long id){
         return recruteurService.findRecruteurById(id);
     }
+
+    @GetMapping("/offre/{id}")
+    public Recruteur findByIdOffer(@PathVariable("id") Long id){
+        return recruteurService.findRecruteurByIdOffre(id);
+    }
+
+
 }

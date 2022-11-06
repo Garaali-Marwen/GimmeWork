@@ -37,6 +37,7 @@ export class OffresComponent implements OnInit {
         etude: "",
         salaire: 0,
         disponibilite: "",
+        candidats: []
     }
 
     public addoffre: boolean = false;

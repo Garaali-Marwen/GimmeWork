@@ -7,6 +7,12 @@ import {UserAuthentificationService} from "../../../Services/user-authentificati
 import {Candidat} from "../../../Entity/Candidat";
 import {CandidatService} from "../../../Services/candidat.service";
 import {ActivatedRoute} from "@angular/router";
+import {ModifierCompetanceComponent} from "../modifier-competance/modifier-competance.component";
+import {MatDialog} from "@angular/material/dialog";
+import {ModifierFormationComponent} from "../modifier-formation/modifier-formation.component";
+import {
+    ValiderSuppressionFormationComponent
+} from "../valider-suppression-formation/valider-suppression-formation.component";
 
 @Component({
   selector: 'app-formations',
@@ -27,7 +33,8 @@ export class FormationsComponent implements OnInit {
   constructor(private formationService:FormationService,
               private userAuthentificationService:UserAuthentificationService,
               private candidatService: CandidatService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              public dialog: MatDialog) { }
 
     private idUser = 0;
     private idUserConnecte = 0;
@@ -89,4 +96,19 @@ export class FormationsComponent implements OnInit {
     this.addformations = !this.addformations;
   }
 
+    validerSuppression(id: number) {
+        this.dialog.open(ValiderSuppressionFormationComponent, {
+            data: {
+                id: id
+            },
+        })
+    }
+
+    modifier(id: number) {
+        this.dialog.open(ModifierFormationComponent, {
+            data: {
+                id: id
+            },
+        })
+    }
 }

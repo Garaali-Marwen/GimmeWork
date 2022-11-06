@@ -22,9 +22,20 @@
 
     <div style="display: flex;flex-wrap: wrap;">
         <mat-card style="margin: 5px; width: 229px;" *ngFor="let formation of candidatFormations" >
-            <mat-card-title style="color: #3f51b4">{{formation.titre}}</mat-card-title>
+            <div style="display: flex; align-items: center; justify-content: space-between">
+                <mat-card-title style="color: #3f51b4;text-transform: uppercase;">{{formation.titre}}</mat-card-title>
+                <div style="display: flex; align-items: center" *ngIf="isLogedIn() && proprietaireCompte()">
+                    <button mat-icon-button (click)="validerSuppression(formation.id)" matTooltip="Supprimer">
+                        <mat-icon color="primary"><span class="material-symbols-outlined">delete</span></mat-icon>
+                    </button>
+                    <div style="border-left: 2px solid rgba(194,194,194,0.67);  height: 20px;"></div>
+                    <button mat-icon-button matTooltip="Modifier" (click)="modifier(formation.id)">
+                        <mat-icon color="primary"><span class="material-symbols-outlined">edit</span></mat-icon>
+                    </button>
+                </div>
+            </div>
             <mat-card-subtitle>{{formation.date}}</mat-card-subtitle>
-            à {{formation.centre_formation}}
+            <p style="text-transform: capitalize;">à  {{formation.centre_formation}}</p>
         </mat-card>
     </div>
 

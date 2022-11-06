@@ -1,3 +1,5 @@
+import {Candidat} from "./Candidat";
+
 export interface Offres{
     id : number,
     date_ajout: string,
@@ -11,4 +13,5 @@ export interface Offres{
     etude: string,
     salaire: number,
     disponibilite: string,
+    candidats: Candidat[]
 }

@@ -1,11 +1,10 @@
 package com.Offre_Emploi.Back.Service;
 
-import com.Offre_Emploi.Back.Entity.Candidat;
-import com.Offre_Emploi.Back.Entity.Competance;
-import com.Offre_Emploi.Back.Entity.Formations;
+import com.Offre_Emploi.Back.Entity.*;
 import com.Offre_Emploi.Back.Repository.CandidatRepository;
 import com.Offre_Emploi.Back.Repository.CompetanceRepository;
 import com.Offre_Emploi.Back.Repository.FormationRepository;
+import com.Offre_Emploi.Back.Repository.OffreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +20,8 @@ public class CandidatService {
     private CompetanceRepository competanceRepository;
     @Autowired
     private FormationRepository formationRepository;
+    @Autowired
+    private OffreRepository offreRepository;
 
     public Candidat addCondidat(Candidat candidat){
         candidat.setRole("Condidat");
@@ -71,5 +72,34 @@ public class CandidatService {
             candidat.getFormations().add(formations);
             candidatRepository.save(candidat);
         }
+    }
+
+
+    public void addOffreToCandidat(Long idCandidat, Long idOffre){
+        Candidat candidat = candidatRepository.findById(idCandidat).orElse(null);
+        Offres offres = offreRepository.findById(idOffre).orElse(null);
+
+        if (candidat!=null && offres!=null){
+            candidat.getPostulations().add(offres);
+            candidatRepository.save(candidat);
+        }
+    }
+
+    public List<Candidat> findCandidatByIdOffre(Long id){
+        return candidatRepository.getCandidatsByPostulationsId(id);
+    }
+
+    @Transactional
+    public Candidat updateCandidatImage(Candidat candidat) {
+        Candidat candidatUpdate = candidatRepository.findById(candidat.getId()).orElse(null);
+        candidatUpdate.setImage(candidat.getImage());
+        return candidatUpdate;
+    }
+
+    @Transactional
+    public Candidat updateCandidatPostulations(Candidat candidat) {
+        Candidat candidatUpdate = candidatRepository.findById(candidat.getId()).orElse(null);
+        candidatUpdate.setPostulations(candidat.getPostulations());
+        return candidatUpdate;
     }
 }

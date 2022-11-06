@@ -1,5 +1,5 @@
 <div style="display: flex; justify-content: space-between; align-items: center">
-    <form class="example-form" #editForm="ngForm" style="display: flex;flex-wrap: wrap; padding: 20px; width: 820px;">
+    <form class="example-form" #editForm="ngForm" style="display: flex;flex-wrap: wrap; padding: 20px; width: 730px;">
 
         <div style="width: 300px; margin: 10px">
             <mat-form-field appearance="fill">
@@ -10,7 +10,6 @@
                 <mat-label>date_expiration</mat-label>
                 <input matInput type="date" name="date_expiration" [(ngModel)]="offre.date_expiration" required>
             </mat-form-field>
-
 
             <mat-form-field appearance="fill">
                 <mat-label>Secteurs d'activité</mat-label>
@@ -85,9 +84,11 @@
                 <mat-label>Salaire (TND)</mat-label>
                 <input matInput type="number" name="salaire" [(ngModel)]="offre.salaire" required>
             </mat-form-field>
+
+
             <label>Type de poste:</label>
             <section style="margin-top: 10px">
-                <mat-radio-group name="domaine" [(ngModel)]="offre.type_poste">
+                <mat-radio-group name="type_poste" [(ngModel)]="offre.type_poste">
                     <table>
                         <tr>
                             <td><mat-radio-button class="example-margin" color="primary" value="CDI">CDI</mat-radio-button></td>
@@ -111,6 +112,7 @@
                     </table>
                 </mat-radio-group>
             </section>
+
         </div>
         <mat-form-field class="example-full-width" appearance="fill" style="margin: 10px; width: 350px">
             <mat-label>Description de l'offre</mat-label>
@@ -118,8 +120,7 @@
         </mat-form-field>
         <input type="number" style="display: none" name="id" matInput ngModel="{{offre.id}}">
 
-
-        <mat-card-actions>
+        <mat-card-actions style="margin: auto">
             <button mat-flat-button color="primary" [disabled]="editForm.invalid" (click)="updateOffre(editForm.value)">Confirmer</button>
             <button mat-flat-button mat-dialog-close color="primary" style="margin-left: 30px">Annuler</button>
         </mat-card-actions>

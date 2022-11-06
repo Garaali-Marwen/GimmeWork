@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RecruteurRepository extends JpaRepository<Recruteur,Long> {
+
+    public Recruteur getRecruteurByOffresId(Long Id);
 }

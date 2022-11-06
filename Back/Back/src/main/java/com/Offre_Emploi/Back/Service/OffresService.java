@@ -56,7 +56,6 @@ public class OffresService {
         offreUpdate.setExperience(offres.getExperience());
         offreUpdate.setLieu(offres.getLieu());
         offreUpdate.setSalaire(offres.getSalaire());
-        offreUpdate.setDate_ajout(offres.getDate_ajout());
         offreUpdate.setDate_expiration(offres.getDate_expiration());
         offreUpdate.setType_poste(offres.getType_poste());
         offreUpdate.setTitre(offres.getTitre());

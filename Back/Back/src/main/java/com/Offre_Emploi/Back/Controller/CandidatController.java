@@ -2,6 +2,7 @@ package com.Offre_Emploi.Back.Controller;
 
 import com.Offre_Emploi.Back.Entity.Candidat;
 import com.Offre_Emploi.Back.Entity.Image;
+import com.Offre_Emploi.Back.Entity.Recruteur;
 import com.Offre_Emploi.Back.Service.CandidatService;
 import com.Offre_Emploi.Back.Service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -52,7 +54,6 @@ public class CandidatController {
 
 
 
-
     @PostMapping(value = "/add", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public Candidat addCandidat(@RequestPart("candidat") Candidat candidat,
                              @RequestPart("imageFile") MultipartFile file) {
@@ -80,6 +81,25 @@ public class CandidatController {
     }
 
 
+    @PutMapping(value = "/update/image", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public Candidat updateCandidatImage(@RequestPart("user") Candidat candidat,
+                                          @RequestPart("imageFile") MultipartFile file) {
+        try {
+            Image images = uploadImage(file);
+            candidat.setImage(images);
+            return candidatService.updateCandidatImage(candidat);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    @PutMapping("/update/postulation")
+    public Candidat updateCandidatPostulations(@RequestBody Candidat candidat) {
+        return candidatService.updateCandidatPostulations(candidat);
+    }
+
+
     @GetMapping("/competance/{candidatId}/{competanceId}")
     public ResponseEntity<Candidat> addCompetanceToCandidat(@PathVariable("candidatId") long candidatId, @PathVariable("competanceId") long competanceId) {
         candidatService.addCompetanceToCandidat(candidatId, competanceId);
@@ -91,5 +111,26 @@ public class CandidatController {
         candidatService.addFormationToCandidat(candidatId, formationId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/offre/{candidatId}/{offreId}")
+    public void addOffreToCandidat(@PathVariable("candidatId") long candidatId, @PathVariable("offreId") long offreId) {
+        candidatService.addOffreToCandidat(candidatId, offreId);
+    }
+
+    @GetMapping("/postulation/{id}")
+    public List<Long> findByIdPostulation(@PathVariable("id") Long id){
+        List<Candidat> candidats = candidatService.findCandidatByIdOffre(id);
+        List<Long> ids = new ArrayList<>();
+        for (int i= 0; i<candidats.size(); i++){
+            ids.add(candidats.get(i).getId());
+        }
+        return ids;
+    }
+
+    @GetMapping("/postulations/{id}")
+    public List<Candidat> findCandidatByIdPostulation(@PathVariable("id") Long id){
+        return candidatService.findCandidatByIdOffre(id);
+    }
+
 
 }

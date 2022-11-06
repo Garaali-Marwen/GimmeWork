@@ -12,7 +12,6 @@ public class Offres {
     private String titre;
     private String date_ajout;
     private String date_expiration;
-
     @Column(length = 5000)
     private String description;
     private String domaine;

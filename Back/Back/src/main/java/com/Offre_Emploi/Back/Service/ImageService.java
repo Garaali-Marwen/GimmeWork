@@ -14,4 +14,8 @@ public class ImageService {
     public Image addImage(Image image){
         return imageRepository.save(image);
     }
+
+    public void deleteImage(Long imageId){
+        imageRepository.deleteById(imageId);
+    }
 }

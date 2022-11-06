@@ -35,4 +35,8 @@ public class FormationService {
         formationUpdate.setTitre(formations.getTitre());
         return formationUpdate;
     }
+
+    public Formations findFormationById(Long id){
+        return formationRepository.findById(id).orElse(null);
+    }
 }

@@ -21,15 +21,18 @@
     </mat-card>
 
     <mat-card class="example-card" style="text-align: center; margin: 10px; width: 220px">
-        <img [src]=user.image.url style="width: 180px; height: 180px;border-radius: 50%;">
-        <button mat-icon-button style="position: absolute; top: 160px; right: 10px" matTooltip="Changer la photo du profil" *ngIf="isLogedIn() && proprietaireCompte()">
-           <span class="material-symbols-outlined">edit_square</span>
-        </button>
+        <img [src]="user.image.url" style="width: 180px; height: 180px;border-radius: 50%;position: absolute" alt=" ">
+        <img src="../../../../assets/imgProfile.webp" style="width: 180px; height: 180px;border-radius: 50%;">
+
+        <label class="lab" *ngIf="isLogedIn() && proprietaireCompte()">
+            <span class="material-symbols-outlined" style="position: absolute; top: 160px; right: 10px" matTooltip="Changer la photo du profil">edit_square</span>
+            <input class="inputTag" type="file" required name="image" value="Ajout" accept="image/*" (change)="onFileSelected($event)">
+        </label>
         <mat-card-content>
             <br>
-            <mat-card-title>{{user.nom}} {{user.prenom}}</mat-card-title>
-            <mat-card-subtitle *ngIf="role == 'Condidat'">{{user.fonction}}</mat-card-subtitle>
-            <mat-card-subtitle *ngIf="role == 'Recruteur'" style="align-items: center; display: flex;margin-left: 50px">
+            <mat-card-title  style="text-transform: capitalize;">{{user.nom}} {{user.prenom}}</mat-card-title>
+            <mat-card-subtitle *ngIf="role == 'Condidat'"  style="text-transform: capitalize;">{{user.fonction}}</mat-card-subtitle>
+            <mat-card-subtitle *ngIf="role == 'Recruteur'" style="align-items: center; display: flex;margin-left: 50px ;text-transform: capitalize;">
                 <span class="material-symbols-outlined">call</span>
                 {{user.num_tel}}
             </mat-card-subtitle>
@@ -37,17 +40,18 @@
     </mat-card>
 
     <mat-card style="width: 510px; margin: 10px">
-        <mat-card style="margin: 5px"><table style="width: 400px"><tr><td>Nom</td><td>{{user.nom}}</td></tr></table></mat-card>
-        <mat-card style="margin: 5px"><table style="width: 400px"><tr><td>Prénom</td><td>{{user.prenom}}</td></tr></table></mat-card>
+        <mat-card style="margin: 5px"><table style="width: 400px"><tr><td>Nom</td><td style="text-transform: capitalize;">{{user.nom}}</td></tr></table></mat-card>
+        <mat-card style="margin: 5px"><table style="width: 400px"><tr><td>Prénom</td><td style="text-transform: capitalize;">{{user.prenom}}</td></tr></table></mat-card>
         <mat-card style="margin: 5px"><table style="width: 400px"><tr><td>Date de naissance</td><td>{{user.date_naissance}}</td></tr></table></mat-card>
         <mat-card style="margin: 5px"><table style="width: 400px"><tr><td>Mail</td><td>{{user.mail}}</td></tr></table></mat-card>
-        <mat-card style="margin: 5px"><table style="width: 400px"><tr><td>Adresse</td><td>{{user.adresse}}</td></tr></table></mat-card>
+        <mat-card style="margin: 5px"><table style="width: 400px"><tr><td>Adresse</td><td style="text-transform: capitalize;">{{user.adresse}}</td></tr></table></mat-card>
     </mat-card>
 
     <app-competances *ngIf="role == 'Condidat'"></app-competances>
 
     <app-formations *ngIf="role == 'Condidat'"></app-formations>
 
+    <app-postulation-candidat *ngIf="role == 'Condidat' && isLogedIn() && proprietaireCompte()"></app-postulation-candidat>
     <mat-card style="width: 750px;height: 40px;display: flex; justify-content: space-between;align-items: center;margin: 10px;" *ngIf="role == 'Condidat'">
         <mat-card-title>Documents</mat-card-title>
         <div style="display: flex; align-items: center;justify-content: space-between;width: 100px">

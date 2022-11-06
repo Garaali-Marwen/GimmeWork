@@ -13,14 +13,12 @@ import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 export class ModifierOffreComponent implements OnInit {
 
   constructor(private offreService: OffreService,
-              @Inject(MAT_DIALOG_DATA) public data: any,) { }
+              @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-    maDate = new Date();
-    d = this.maDate.getFullYear().toString()+'-'+this.maDate.getMonth().toString()+'-'+this.maDate.getDate().toString();
     public offre: Offres = {
         id: 0,
         titre: "",
-        date_ajout: this.d,
+        date_ajout: "",
         date_expiration: "",
         description: "",
         domaine: "",
@@ -30,14 +28,15 @@ export class ModifierOffreComponent implements OnInit {
         etude: "",
         salaire: 0,
         disponibilite: "",
+        candidats: []
     }
   ngOnInit(): void {
-      this.findOffre(this.data.id)
+      this.findOffre(this.data.id);
   }
 
   public findOffre(offreId: number): void{
     this.offreService.findOffreById(offreId).subscribe(
-        (responce: any) => {
+        (responce: Offres) => {
           this.offre = responce;
         },
         (error: HttpErrorResponse) => {

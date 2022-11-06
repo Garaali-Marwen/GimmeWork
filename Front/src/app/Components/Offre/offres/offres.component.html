@@ -1,7 +1,7 @@
 <mat-card style="width: 750px; margin: 10px">
     <mat-card-title style="display: flex; justify-content: space-between; align-items: center">
         Offres
-        <button mat-icon-button *ngIf="isLogedIn() && proprietaireCompte()" (click)="ajoutOffre()" matTooltip="Ajouter une formation">
+        <button mat-icon-button *ngIf="isLogedIn() && proprietaireCompte()" (click)="ajoutOffre()" matTooltip="Ajouter une offre">
             <span class="material-symbols-outlined">add_circle</span>
         </button>
     </mat-card-title>
@@ -82,19 +82,19 @@
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Lieu</mat-label>
-                <input matInput name="domaine" [(ngModel)]="offre.lieu" required>
+                <input matInput name="lieu" [(ngModel)]="offre.lieu" required>
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Disponibilite</mat-label>
-                <input matInput name="domaine" [(ngModel)]="offre.disponibilite" required>
+                <input matInput name="disponibilite" [(ngModel)]="offre.disponibilite" required>
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Salaire (TND)</mat-label>
-                <input matInput type="number" name="domaine" [(ngModel)]="offre.salaire" required>
+                <input matInput type="number" name="salaire" [(ngModel)]="offre.salaire" required>
             </mat-form-field>
             <label>Type de poste:</label>
             <section style="margin-top: 10px">
-                <mat-radio-group name="domaine" [(ngModel)]="offre.type_poste">
+                <mat-radio-group name="type_poste" [(ngModel)]="offre.type_poste">
                     <table>
                         <tr>
                             <td><mat-radio-button class="example-margin" color="primary" value="CDI">CDI</mat-radio-button></td>

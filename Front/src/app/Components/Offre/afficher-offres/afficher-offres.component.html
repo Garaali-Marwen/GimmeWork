@@ -21,6 +21,10 @@
             <div style="display: flex;align-items: center;">
                 <mat-icon color="primary"><span class="material-symbols-outlined">location_on</span></mat-icon>
                 {{offre.key.lieu.toUpperCase()}}
+                <mat-icon color="primary" style="margin-left: 20px"><span class="material-symbols-outlined">description</span></mat-icon>
+                {{offre.key.type_poste}}
+                <mat-icon color="primary" style="margin-left: 20px"><span class="material-symbols-outlined">schedule</span></mat-icon>
+                {{offre.key.disponibilite}}
             </div>
         </mat-card-content>
         <mat-divider inset></mat-divider>

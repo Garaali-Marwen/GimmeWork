@@ -13,6 +13,7 @@ import {Image} from "../../../Entity/Image";
 export class InscriptionCandidatComponent implements OnInit {
 
   candidat: Candidat= {
+    id: 0,
     nom: "",
     prenom: "",
     mdp: "",
@@ -28,6 +29,7 @@ export class InscriptionCandidatComponent implements OnInit {
     lettre_motivation: [],
     competances: [],
     formations: [],
+    postulations: []
   }
 
   constructor(private condidatService: CandidatService) { }

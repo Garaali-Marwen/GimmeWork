@@ -13,8 +13,8 @@ export class UserAuthentificationService {
 
   constructor(private http: HttpClient) { }
 
-  public login(mail: string, mdp: string){
-    return this.http.get(this.apiServerUrl + `/user/login/${mail}/${mdp}`);
+  public login(mail: string, mdp: string):Observable<any>{
+    return this.http.get<any>(this.apiServerUrl + `/user/login/${mail}/${mdp}`);
   }
 
   public getUserId(){
