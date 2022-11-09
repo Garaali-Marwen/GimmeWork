@@ -124,6 +124,8 @@ export class OffresComponent implements OnInit {
 
     public modifier(idOffre: number){
         this.dialog.open(ModifierOffreComponent, {
+            width: "800px",
+            height: "100%",
             data:{
                 id: idOffre
             },

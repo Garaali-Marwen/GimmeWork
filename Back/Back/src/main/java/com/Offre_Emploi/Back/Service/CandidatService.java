@@ -4,7 +4,7 @@ import com.Offre_Emploi.Back.Entity.*;
 import com.Offre_Emploi.Back.Repository.CandidatRepository;
 import com.Offre_Emploi.Back.Repository.CompetanceRepository;
 import com.Offre_Emploi.Back.Repository.FormationRepository;
-import com.Offre_Emploi.Back.Repository.OffreRepository;
+import com.Offre_Emploi.Back.Repository.OffrePriveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +21,7 @@ public class CandidatService {
     @Autowired
     private FormationRepository formationRepository;
     @Autowired
-    private OffreRepository offreRepository;
+    private OffrePriveRepository offrePriveRepository;
 
     public Candidat addCondidat(Candidat candidat){
         candidat.setRole("Condidat");
@@ -77,9 +77,9 @@ public class CandidatService {
 
     public void addOffreToCandidat(Long idCandidat, Long idOffre){
         Candidat candidat = candidatRepository.findById(idCandidat).orElse(null);
-        Offres offres = offreRepository.findById(idOffre).orElse(null);
+        Offres offres = offrePriveRepository.findById(idOffre).orElse(null);
 
-        if (candidat!=null && offres!=null){
+        if (candidat!=null && offres !=null){
             candidat.getPostulations().add(offres);
             candidatRepository.save(candidat);
         }

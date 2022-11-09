@@ -39,6 +39,7 @@ export class ValiderSuppressionPostulationComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
   public deletePostulation(idOffre: number): void{
     this.candidatService.findCandidatById(this.userAuthentificationService.getUserId())
         .subscribe(

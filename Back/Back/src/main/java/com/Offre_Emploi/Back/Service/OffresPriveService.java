@@ -1,10 +1,8 @@
 package com.Offre_Emploi.Back.Service;
 
-import com.Offre_Emploi.Back.Entity.Candidat;
-import com.Offre_Emploi.Back.Entity.Formations;
 import com.Offre_Emploi.Back.Entity.Offres;
 import com.Offre_Emploi.Back.Entity.Recruteur;
-import com.Offre_Emploi.Back.Repository.OffreRepository;
+import com.Offre_Emploi.Back.Repository.OffrePriveRepository;
 import com.Offre_Emploi.Back.Repository.RecruteurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,34 +11,34 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class OffresService {
+public class OffresPriveService {
 
     @Autowired
-    private OffreRepository offreRepository;
+    private OffrePriveRepository offrePriveRepository;
     @Autowired
     private RecruteurRepository recruteurRepository;
 
     public List<Offres> getOffres(){
-        return offreRepository.findAll();
+        return offrePriveRepository.findAll();
     }
 
     public Offres addOffre(Offres offres){
-        return offreRepository.save(offres);
+        return offrePriveRepository.save(offres);
     }
 
     public void deleteOffre(Long offreId){
-        offreRepository.deleteById(offreId);
+        offrePriveRepository.deleteById(offreId);
     }
 
     public Offres findById(Long id){
-        return offreRepository.findById(id).orElse(null);
+        return offrePriveRepository.findById(id).orElse(null);
     }
 
     public void addOffreToRecruteur(Long idRecruteur, Long idOffre){
         Recruteur recruteur = recruteurRepository.findById(idRecruteur).orElse(null);
-        Offres offres = offreRepository.findById(idOffre).orElse(null);
+        Offres offres = offrePriveRepository.findById(idOffre).orElse(null);
 
-        if (recruteur!=null && offres!=null){
+        if (recruteur!=null && offres !=null){
             recruteur.getOffres().add(offres);
             recruteurRepository.save(recruteur);
         }
@@ -48,7 +46,7 @@ public class OffresService {
 
     @Transactional
     public Offres updateOffre(Offres offres) {
-        Offres offreUpdate = offreRepository.findById(offres.getId()).orElse(null);
+        Offres offreUpdate = offrePriveRepository.findById(offres.getId()).orElse(null);
         offreUpdate.setEtude(offres.getEtude());
         offreUpdate.setDomaine(offres.getDomaine());
         offreUpdate.setDescription(offres.getDescription());

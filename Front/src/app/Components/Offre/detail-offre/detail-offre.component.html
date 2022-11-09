@@ -79,7 +79,7 @@
 
 
 
-    <mat-card  style="width: 920px; margin: 10px;" *ngIf="isRecruteur()">
+    <mat-card  style="width: 920px; margin: 10px;" *ngIf="isRecruteur() && candidats.length>0">
         <mat-card-title style="color: #3f51b4;">Candidats:</mat-card-title><br>
         <div style="display: flex;flex-wrap: wrap;">
             <mat-card *ngFor="let candidat of candidats" style="width: 250px; margin: 10px;">

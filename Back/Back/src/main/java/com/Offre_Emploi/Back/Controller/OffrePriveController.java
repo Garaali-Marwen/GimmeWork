@@ -2,7 +2,7 @@ package com.Offre_Emploi.Back.Controller;
 
 import com.Offre_Emploi.Back.Entity.Offres;
 import com.Offre_Emploi.Back.Entity.Recruteur;
-import com.Offre_Emploi.Back.Service.OffresService;
+import com.Offre_Emploi.Back.Service.OffresPriveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,43 +12,43 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/offres")
-public class OffreController {
+public class OffrePriveController {
 
 
 
     @Autowired
-    private OffresService offresService;
+    private OffresPriveService offresPriveService;
 
 
     @PostMapping("/add")
-    public Offres  addOffre(@RequestBody Offres offres){
-         return offresService.addOffre(offres);
+    public Offres addOffre(@RequestBody Offres offres){
+         return offresPriveService.addOffre(offres);
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<Offres>> getAllOffres(){
-        List<Offres> offres1 = offresService.getOffres();
+        List<Offres> offres1 = offresPriveService.getOffres();
         return new ResponseEntity<>(offres1, HttpStatus.OK);
     }
 
     @GetMapping("/{recruteurId}/{offreId}")
     public ResponseEntity<Recruteur> addOffreToRecruteur(@PathVariable("recruteurId") long recruteurId, @PathVariable("offreId") long offreId) {
-        offresService.addOffreToRecruteur(recruteurId,offreId);
+        offresPriveService.addOffreToRecruteur(recruteurId,offreId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
     public void deleteOffre(@PathVariable("id") Long id) {
-        offresService.deleteOffre(id);
+        offresPriveService.deleteOffre(id);
     }
 
     @GetMapping("/{id}")
     public Offres findById(@PathVariable("id") Long id){
-        return offresService.findById(id);
+        return offresPriveService.findById(id);
     }
 
     @PutMapping("/update")
     public Offres updateOffre(@RequestBody Offres offres) {
-        return offresService.updateOffre(offres);
+        return offresPriveService.updateOffre(offres);
     }
 }

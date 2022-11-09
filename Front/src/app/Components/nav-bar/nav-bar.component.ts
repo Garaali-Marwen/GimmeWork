@@ -33,6 +33,13 @@ export class NavBarComponent implements OnInit {
     return this.userAuthentificationService.isLoggedIn();
   }
 
+  public afficherOffre(){
+    this.router.navigate(['/offres']);
+    setTimeout(function(){
+      window.location.reload();
+    }, 1);
+  }
+
   public logout(){
     this.userAuthentificationService.clear();
     this.router.navigate(['/']);

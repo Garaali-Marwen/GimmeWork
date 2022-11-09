@@ -45,7 +45,9 @@ import { ModifierFormationComponent } from './Components/Profiles/modifier-forma
 import { ValiderSuppressionFormationComponent } from './Components/Profiles/valider-suppression-formation/valider-suppression-formation.component';
 import { PostulationCandidatComponent } from './Components/Profiles/postulation-candidat/postulation-candidat.component';
 import { ValiderSuppressionPostulationComponent } from './Components/Profiles/valider-suppression-postulation/valider-suppression-postulation.component';
-
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import { AfficherOffresPublicComponent } from './Components/OffrePublic/afficher-offres-public/afficher-offres-public.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +73,7 @@ import { ValiderSuppressionPostulationComponent } from './Components/Profiles/va
     ValiderSuppressionFormationComponent,
     PostulationCandidatComponent,
     ValiderSuppressionPostulationComponent,
+    AfficherOffresPublicComponent,
   ],
     imports: [
         BrowserModule,
@@ -96,6 +99,8 @@ import { ValiderSuppressionPostulationComponent } from './Components/Profiles/va
         MatRadioModule,
         MatSelectModule,
         MatTableModule,
+        MatSlideToggleModule,
+        MatCheckboxModule,
     ],
   providers: [
       FormationService
