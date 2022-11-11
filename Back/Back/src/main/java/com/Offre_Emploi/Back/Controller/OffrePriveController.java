@@ -1,5 +1,6 @@
 package com.Offre_Emploi.Back.Controller;
 
+import com.Offre_Emploi.Back.Entity.Candidat;
 import com.Offre_Emploi.Back.Entity.Offres;
 import com.Offre_Emploi.Back.Entity.Recruteur;
 import com.Offre_Emploi.Back.Service.OffresPriveService;
@@ -50,5 +51,10 @@ public class OffrePriveController {
     @PutMapping("/update")
     public Offres updateOffre(@RequestBody Offres offres) {
         return offresPriveService.updateOffre(offres);
+    }
+
+    @GetMapping("/postulations/{id}")
+    public Offres findOffresByIdPostulation(@PathVariable("id") Long id){
+        return offresPriveService.findOffresByIdPostulation(id);
     }
 }

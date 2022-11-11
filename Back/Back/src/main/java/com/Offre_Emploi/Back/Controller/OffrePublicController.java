@@ -23,8 +23,18 @@ public class OffrePublicController {
     @GetMapping("/all")
     public List<OffresPublic> getAllCandidat() throws IOException {
         List<OffresPublic> offresPublics = new ArrayList<>();
+        //List<OffresPublic> oc = new ArrayList<>();
         offresPublics.addAll(offrePublicService.getPrivateOffre());
+        //offresPublics.addAll(offrePublicService.getPrivateOffreFromLinkedin());
         offresPublics.addAll(offrePublicService.getPrivateOffreFromOtionCarriere());
+        /*for (OffresPublic o : offresPublics){
+            offrePublicService.setDetails_kj(o);
+        }
+        oc.addAll(offrePublicService.getPrivateOffreFromOtionCarriere());
+        for (OffresPublic of : oc){
+            offrePublicService.setDetails_oc(of);
+        }
+        offresPublics.addAll(oc);*/
         //offresPublics.addAll(offrePublicService.getPrivateOffreFromLinkedin());
         return offresPublics;
     }

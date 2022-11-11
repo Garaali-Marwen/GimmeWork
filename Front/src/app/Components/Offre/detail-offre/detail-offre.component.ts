@@ -10,12 +10,11 @@ import {RecruteurService} from "../../../Services/recruteur.service";
 import {UserAuthentificationService} from "../../../Services/user-authentification.service";
 import {CandidatService} from "../../../Services/candidat.service";
 import {Candidat} from "../../../Entity/Candidat";
-import {ModifierFormationComponent} from "../../Profiles/modifier-formation/modifier-formation.component";
 import {MatDialog} from "@angular/material/dialog";
-import {
-    ValiderSuppressionPostulationComponent
-} from "../../Profiles/valider-suppression-postulation/valider-suppression-postulation.component";
+import {ValiderSuppressionPostulationComponent} from "../../Profiles/valider-suppression-postulation/valider-suppression-postulation.component";
 import {LoginComponent} from "../../login/login.component";
+import {PostulationService} from "../../../Services/postulation.service";
+import {Postulation} from "../../../Entity/Postulation";
 
 @Component({
   selector: 'app-detail-offre',
@@ -31,7 +30,8 @@ export class DetailOffreComponent implements OnInit {
               private userAuthentificationService: UserAuthentificationService,
               private router: Router,
               private candidatService: CandidatService,
-              public dialog: MatDialog) { }
+              private dialog: MatDialog,
+              private postulationService: PostulationService) { }
 
   public offre: Offres={
     id: 0,
@@ -46,7 +46,7 @@ export class DetailOffreComponent implements OnInit {
     etude: "",
     salaire: 0,
     disponibilite: "",
-    candidats: []
+    postulations: []
   };
   public recruteur: Recruteur= {
     nom: "",
@@ -65,13 +65,41 @@ export class DetailOffreComponent implements OnInit {
     num_tel: 0
   }
 
-    public candidats: Candidat[] = [];
   private idO = 0;
   private idR = 0;
   id = 0;
   idCandidat =0
   postuler = true;
+  public postulation: Postulation= {
+      id: 0,
+      date_postulation: "2022-01-01",
+      decision_recruteur: "en attente"
+  }
 
+  idPostulation = 0;
+  public candidatPostulation = new Map<Candidat,Postulation>;
+
+  public Candidat: Candidat = {
+      adresse: "",
+      competances: [],
+      cv: [],
+      date_naissance: "",
+      fonction: "",
+      formations: [],
+      id: 0,
+      image: {
+          file: new File([], ""),
+          url: ""
+      },
+      lettre_motivation: [],
+      mail: "",
+      mdp: "",
+      nom: "",
+      postulations: [],
+      prenom: "",
+  };
+  public candidatAccepter= 0;
+  public candidatRefuser=0;
   public role: string = "";
   ngOnInit(): void {
     this.role = this.userAuthentificationService.getRole();
@@ -83,14 +111,37 @@ export class DetailOffreComponent implements OnInit {
     this.getRecruteur();
     this.id = this.userAuthentificationService.getUserId();
     this.idCandidat = this.userAuthentificationService.getUserId();
-    this.getIdCandidat(this.idO);
-    this.getCandidatPostulees(this.idO);
+    if (this.isLogedIn() && this.role == 'Condidat'){
+        this.getCandidatById(this.id);
+    }
   }
 
   public getOffre(): void{
     this.offreService.findOffreById(this.idO).subscribe(
         (responce:Offres) => {
               this.offre = responce;
+              for (let i of this.offre.postulations){
+                this.candidatService.findCandidatsByIdPostulation(i.id)
+                    .pipe(map(p => this.imageService.createImage(p)))
+                    .subscribe(
+                        (responce:Candidat) => {
+                            this.candidatPostulation.set(responce,i);
+                            this.candidatRefuser=0;
+                            this.candidatAccepter=0;
+                            for (let x of this.candidatPostulation.values()){
+                                if (x.decision_recruteur == 'Accepté'){
+                                    this.candidatAccepter=1+this.candidatAccepter;
+                                }
+                                else if (x.decision_recruteur == 'Refusé'){
+                                    this.candidatRefuser=1+this.candidatRefuser;
+                                }
+                            }
+                        },
+                        (error: HttpErrorResponse) => {
+                            alert(error.message);
+                        }
+                    );
+            }
             },
             (error: HttpErrorResponse) => {
               alert(error.message);
@@ -117,10 +168,46 @@ export class DetailOffreComponent implements OnInit {
     this.router.navigate(['/profile'], { queryParams: { id: idUser }});
   }
 
-  public addoffreToCandidat(candidatId: number, offreId: number): void{
-    this.candidatService.addOffreToCandidat(candidatId,offreId).subscribe(
-        (response: void) => {
-          window.location.reload()
+
+    public addPostulation(candidatId: number,offreId: number): void{
+        if (this.isLogedIn()){
+            this.postulationService.addPostulation(this.postulation).subscribe(
+                (response: Postulation) => {
+                    this.addPostulationToCandidat(candidatId, offreId, response.id)
+                },
+                (error: HttpErrorResponse) => {
+                    alert(error.message);
+                }
+            );
+        }
+        else this.openLogin();
+
+    }
+
+  public addPostulationToCandidat(candidatId: number, offreId: number, postulationId: number): void{
+          this.candidatService.addPostulationToCandidat(candidatId,offreId,postulationId).subscribe(
+              (response: void) => {
+                  window.location.reload()
+              },
+              (error: HttpErrorResponse) => {
+                  alert(error.message);
+              }
+          );
+  }
+
+  public getCandidatById(idCandidat: number){
+    this.candidatService.findCandidatById(idCandidat).subscribe(
+        (responce:Candidat) => {
+            this.Candidat = responce;
+            this.offreService.findOffreById(this.idO)
+                .subscribe(
+                    (responce: Offres) => {
+                        this.postule(this.Candidat.postulations,responce.postulations);
+                    },
+                    (error: HttpErrorResponse) => {
+                        alert(error.message);
+                    }
+                );
         },
         (error: HttpErrorResponse) => {
           alert(error.message);
@@ -128,28 +215,21 @@ export class DetailOffreComponent implements OnInit {
     );
   }
 
-  public getIdCandidat(idOffre: number): void{
-    this.candidatService.findCandidatByIdPostulation(idOffre).subscribe(
-        (responce:any) => {
-          this.postule(responce);
-        },
-        (error: HttpErrorResponse) => {
-          alert(error.message);
+  public postule(postulationCandidat: Postulation[], postulationOffre: Postulation[]){
+    for (let i of postulationCandidat){
+        for (let j of postulationOffre){
+            if (i.id == j.id){
+                this.postuler = false
+                this.idPostulation = i.id;
+            }
         }
-    );
-  }
-
-  public postule(idCandidats: number[]){
-    for (let i of idCandidats){
-      if (i == this.idCandidat)
-        this.postuler = false
     }
   }
 
-    public deletePostulation(id: number) {
+    public deletePostulation() {
         this.dialog.open(ValiderSuppressionPostulationComponent, {
             data: {
-                id: id
+                id: this.idPostulation
             },
         })
     }
@@ -168,17 +248,24 @@ export class DetailOffreComponent implements OnInit {
         this.dialog.open(LoginComponent);
     }
 
-    public getCandidatPostulees(idOffre: number): void{
-        this.candidatService.findCandidatsByIdPostulation(idOffre)
-            .pipe(
-                map((x: any[], i) => x.map((offre: Offres) => this.imageService.createImage(offre))))
-            .subscribe(
-                (responce:Candidat[]) => {
-                    this.candidats = responce;
-                },
-                (error: HttpErrorResponse) => {
-                    alert(error.message);
-                }
-            );
+
+    public updatePostulation(decision: string, id: number): void{
+        this.postulationService.findPostulationById(id).subscribe(
+            (response: Postulation) => {
+                let p = response;
+                p.decision_recruteur = decision;
+                this.postulationService.updatePostulation(p).subscribe(
+                    (response: Postulation) => {
+                        window.location.reload();
+                    },
+                    (error: HttpErrorResponse) => {
+                        alert(error.message);
+                    }
+                );
+            },
+            (error: HttpErrorResponse) => {
+                alert(error.message);
+            }
+        );
     }
 }

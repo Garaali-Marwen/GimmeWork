@@ -3,7 +3,7 @@
           matRipple
           [matRippleCentered]="centered"
           [matRippleDisabled]="disabled"
-          [matRippleUnbounded]="unbounded">
+          [matRippleUnbounded]="unbounded" (click)="visiter(offrePublic.link)">
     <mat-card-header style="margin-top: 10px;display: flex; align-items: center;">
         <mat-card-title>
             <img alt=" " [src]="offrePublic.image" style="width: 100px; height: 100px; border-radius: 50%">
@@ -17,15 +17,14 @@
         <div style="display: flex;">
             <p style="font-weight: bold">{{offrePublic.company}}</p>
             <div style="border-left: 1.5px solid rgb(0,0,0);margin-right: 10px;margin-left: 10px; height: 20px;"></div>
-            <p style="color: #818181"></p>
+            <p style="color: #818181">{{offrePublic.sector}}</p>
         </div><br>
         <div style="display: flex;align-items: center;">
             <mat-icon color="primary"><span class="material-symbols-outlined">location_on</span></mat-icon>
-
+            {{offrePublic.location}}
             <mat-icon color="primary" style="margin-left: 20px"><span class="material-symbols-outlined">description</span></mat-icon>
-
+            {{offrePublic.type}}
             <mat-icon color="primary" style="margin-left: 20px"><span class="material-symbols-outlined">schedule</span></mat-icon>
-
         </div>
     </mat-card-content>
     <mat-divider inset></mat-divider>

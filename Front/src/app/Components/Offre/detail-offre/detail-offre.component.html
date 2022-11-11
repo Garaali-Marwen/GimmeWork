@@ -49,6 +49,9 @@
             </div><br>
             <mat-card-footer style="height: 40px">
                 <mat-divider style="margin-bottom: 1px"></mat-divider>
+                <mat-card-footer style="color: #3f51b4;font-weight: bold;font-family: Arial ;position: absolute; bottom: 25px; left: 30px">
+                    {{candidatPostulation.size}} Postulation <b *ngIf="role == 'Recruteur' && recruteur.id == id">({{candidatAccepter}} Acceptées / {{candidatRefuser}} Refusées)</b>
+                </mat-card-footer>
                 <button mat-icon-button (click)="afficherProfile(recruteur.id)" style="display: flex;align-items: center;position: absolute;right: 110px">
                     <mat-icon color="primary"><span class="material-symbols-outlined">account_circle</span></mat-icon>
                     <span style="color: #3f51b4">Consulter le profil</span>
@@ -65,55 +68,70 @@
             </mat-card-content>
             <mat-card-footer style="height: 40px"  *ngIf="role != 'Recruteur'">
                 <mat-divider style="margin-bottom: 3px"></mat-divider>
-                <button *ngIf="role != 'Recruteur' && postuler == true && isLogedIn()" mat-button (click)="addoffreToCandidat(id,offre.id)" style="position: absolute; right: 20px;height: 30px;display: flex;align-items: center; background-color: rgba(194,194,194,0.24); font-weight: bold; color: #3f51b4">
+                <button *ngIf="role != 'Recruteur' && postuler == true" mat-button (click)="addPostulation(id,offre.id)" style="position: absolute; right: 20px;height: 30px;display: flex;align-items: center; background-color: rgba(194,194,194,0.24); font-weight: bold; color: #3f51b4">
                     Postuler
                 </button>
-                <button *ngIf="role != 'Recruteur' && postuler == false" mat-button (click)="deletePostulation(offre.id)" style="position: absolute; right: 20px;height: 30px;display: flex;align-items: center; background-color: rgba(194,194,194,0.24); font-weight: bold; color: #3f51b4">
-                    Annuler la postulation
-                </button>
-                <mat-card-subtitle *ngIf="role != 'Recruteur' && postuler == false" style="position: absolute;margin-top: 5px; left: 20px;height: 30px;color: #3f51b4;">Vous avez postulé à cette offre</mat-card-subtitle>
-                <mat-card-subtitle (click)="openLogin()" *ngIf="role != 'Recruteur' && postuler == true && !isLogedIn()" style="cursor:pointer;position: absolute;margin-top: 5px; left: 20px;height: 30px;color: #3f51b4;">Connecter vous pour postuler</mat-card-subtitle>
+                <div *ngFor="let candidat of candidatPostulation| keyvalue">
+                    <button *ngIf="role != 'Recruteur' && postuler == false && candidat.key.id == Candidat.id && candidat.value.decision_recruteur != 'Refusé'" mat-button (click)="deletePostulation()" style="position: absolute; right: 20px;height: 30px;display: flex;align-items: center; background-color: rgba(194,194,194,0.24); font-weight: bold; color: #3f51b4">
+                        Annuler la postulation
+                    </button>
+                </div>
+                <mat-card-subtitle *ngIf="role != 'Recruteur' && postuler == false" style="position: absolute;margin-top: 5px; left: 20px;height: 30px;color: #3f51b4;"></mat-card-subtitle>
+                <mat-card-subtitle style="position: absolute;margin-top: 5px; left: 20px;height: 30px;color: #3f51b4;" *ngFor="let candidat of candidatPostulation| keyvalue">
+                    <p style="color: #1eb81e" *ngIf="candidat.key.id == Candidat.id && candidat.value.decision_recruteur == 'Accepté'">Votre postulation est {{candidat.value.decision_recruteur}}</p>
+                    <p style="color: #d92121" *ngIf="candidat.key.id == Candidat.id && candidat.value.decision_recruteur == 'Refusé'">Votre postulation est {{candidat.value.decision_recruteur}}</p>
+                    <p style="color: #3e50b0" *ngIf="candidat.key.id == Candidat.id && candidat.value.decision_recruteur == 'en attente'">Votre postulation est {{candidat.value.decision_recruteur}}</p>
+                </mat-card-subtitle>
             </mat-card-footer>
         </mat-card>
     </div>
 
 
 
-    <mat-card  style="width: 920px; margin: 10px;" *ngIf="isRecruteur() && candidats.length>0">
+    <mat-card  style="width: 920px; margin: 10px;" *ngIf="isRecruteur() && candidatPostulation.size>0">
         <mat-card-title style="color: #3f51b4;">Candidats:</mat-card-title><br>
         <div style="display: flex;flex-wrap: wrap;">
-            <mat-card *ngFor="let candidat of candidats" style="width: 250px; margin: 10px;">
-                <img [src]=candidat.image.url style="width: 100px; height: 100px;border: #c2c2c2 solid 3px;border-radius: 50%;">
+            <mat-card *ngFor="let candidat of candidatPostulation| keyvalue" style="width: 420px; margin: 10px;">
+                <img [src]=candidat.key.image.url style="width: 100px; height: 100px;border: #c2c2c2 solid 3px;border-radius: 50%;">
+                <div style="position: absolute;top: 20px; right: 20px">
+                    <button mat-icon-button *ngIf="candidat.value.decision_recruteur == 'en attente'" (click)="updatePostulation('Refusé',candidat.value.id)">
+                        <mat-icon color="warn"><span class="material-symbols-outlined">do_not_disturb_on</span></mat-icon>
+                    </button>
+                    <button mat-icon-button *ngIf="candidat.value.decision_recruteur == 'en attente'" (click)="updatePostulation('Accepté',candidat.value.id)">
+                        <mat-icon><span style="color: #1eb91e" class="material-symbols-outlined">check_circle</span></mat-icon>
+                    </button>
+                    <h2 style="color: #1eb81e" *ngIf="candidat.value.decision_recruteur == 'Accepté'">{{candidat.value.decision_recruteur}}</h2>
+                    <h2 style="color: #da2121" *ngIf="candidat.value.decision_recruteur == 'Refusé'">{{candidat.value.decision_recruteur}}</h2>
+                </div>
                 <div>
                     <mat-card-content>
                         <p style="font-weight: bold;display: flex; align-items: center;">
                             <mat-icon color="primary" style="margin-right: 10px">
                                 <span class="material-symbols-outlined">person</span>
                             </mat-icon>
-                            {{candidat.prenom}} {{candidat.nom}}
+                            {{candidat.key.prenom}} {{candidat.key.nom}}
                         </p>
                         <p style="display: flex; align-items: center;">
                             <mat-icon color="primary" style="margin-right: 10px">
                                 <span class="material-symbols-outlined">mail</span>
                             </mat-icon>
-                            {{candidat.mail}}
+                            {{candidat.key.mail}}
                         </p>
                         <p style="display: flex; align-items: center">
                             <mat-icon color="primary" style="margin-right: 10px">
                                 <span class="material-symbols-outlined">work</span>
                             </mat-icon>
-                            {{candidat.fonction}}
+                            {{candidat.key.fonction}}
                         </p>
                     </mat-card-content>
                 </div>
                 <br>
                 <mat-card-footer style="height: 40px; padding-left: 20px">
                     <mat-divider style="margin-bottom: 1px"></mat-divider>
-                    <button mat-icon-button (click)="afficherProfile(candidat.id)">
+                    <button mat-icon-button (click)="afficherProfile(candidat.key.id)">
                         <mat-icon color="primary"><span class="material-symbols-outlined">account_circle</span></mat-icon>
                         <span style="color: #3f51b4">Consulter le profil</span>
                     </button>
-
                 </mat-card-footer>
 
             </mat-card>

@@ -94,11 +94,6 @@ public class CandidatController {
         }
     }
 
-    @PutMapping("/update/postulation")
-    public Candidat updateCandidatPostulations(@RequestBody Candidat candidat) {
-        return candidatService.updateCandidatPostulations(candidat);
-    }
-
 
     @GetMapping("/competance/{candidatId}/{competanceId}")
     public ResponseEntity<Candidat> addCompetanceToCandidat(@PathVariable("candidatId") long candidatId, @PathVariable("competanceId") long competanceId) {
@@ -112,24 +107,26 @@ public class CandidatController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/offre/{candidatId}/{offreId}")
-    public void addOffreToCandidat(@PathVariable("candidatId") long candidatId, @PathVariable("offreId") long offreId) {
-        candidatService.addOffreToCandidat(candidatId, offreId);
+    @GetMapping("/postulation/{candidatId}/{offreId}/{postulationId}")
+    public void addOffreToCandidat(@PathVariable("candidatId") long candidatId,
+                                   @PathVariable("offreId") long offreId,
+                                   @PathVariable("postulationId") Long postulationId) {
+        candidatService.addPostulationToCandidat(candidatId, offreId, postulationId);
     }
 
-    @GetMapping("/postulation/{id}")
+   /* @GetMapping("/postulation/{id}")
     public List<Long> findByIdPostulation(@PathVariable("id") Long id){
-        List<Candidat> candidats = candidatService.findCandidatByIdOffre(id);
+        List<Candidat> candidats = candidatService.findCandidatByIdPostulation(id);
         List<Long> ids = new ArrayList<>();
         for (int i= 0; i<candidats.size(); i++){
             ids.add(candidats.get(i).getId());
         }
         return ids;
-    }
+    }*/
 
     @GetMapping("/postulations/{id}")
-    public List<Candidat> findCandidatByIdPostulation(@PathVariable("id") Long id){
-        return candidatService.findCandidatByIdOffre(id);
+    public Candidat findCandidatByIdPostulation(@PathVariable("id") Long id){
+        return candidatService.findCandidatByIdPostulation(id);
     }
 
 

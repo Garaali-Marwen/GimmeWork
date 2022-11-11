@@ -3,7 +3,6 @@ import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Candidat} from "../Entity/Candidat";
-import {Recruteur} from "../Entity/Recruteur";
 
 @Injectable({
   providedIn: 'root'
@@ -38,15 +37,15 @@ export class CandidatService {
     return this.http.put<Candidat>(`${this.apiServerUrl}/candidat/update/image`, candidat);
   }
 
-  public addOffreToCandidat(candidatId: number, offreId: number): Observable<void>{
-    return this.http.get<void>(`${this.apiServerUrl}/candidat/offre/${candidatId}/${offreId}`);
+  public addPostulationToCandidat(candidatId: number, offreId: number, postulationId: number): Observable<void>{
+    return this.http.get<void>(`${this.apiServerUrl}/candidat/postulation/${candidatId}/${offreId}/${postulationId}`);
   }
 
   public findCandidatByIdPostulation(id: number): Observable<number[]>{
     return this.http.get<number[]>(`${this.apiServerUrl}/candidat/postulation/${id}`);
   }
-  public findCandidatsByIdPostulation(id: number): Observable<Candidat[]>{
-    return this.http.get<Candidat[]>(`${this.apiServerUrl}/candidat/postulations/${id}`);
+  public findCandidatsByIdPostulation(id: number): Observable<Candidat>{
+    return this.http.get<Candidat>(`${this.apiServerUrl}/candidat/postulations/${id}`);
   }
 
 }

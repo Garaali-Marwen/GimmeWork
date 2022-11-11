@@ -1,6 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {HttpErrorResponse} from "@angular/common/http";
-import {Candidat} from "../../../Entity/Candidat";
 import {OffreService} from "../../../Services/offre.service";
 import {Offres} from "../../../Entity/Offres";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
@@ -28,7 +27,7 @@ export class ModifierOffreComponent implements OnInit {
         etude: "",
         salaire: 0,
         disponibilite: "",
-        candidats: []
+        postulations: []
     }
   ngOnInit(): void {
       this.findOffre(this.data.id);

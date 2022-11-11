@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface CandidatRepository extends JpaRepository<Candidat,Long> {
 
-    public List<Candidat> getCandidatsByPostulationsId(Long Id);
+    Candidat getCandidatsByPostulationsId(Long Id);
 }

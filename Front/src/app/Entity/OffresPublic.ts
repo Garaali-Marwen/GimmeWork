@@ -4,4 +4,7 @@ export interface OffresPublic{
     link: string;
     company: string;
     image: string;
+    location: string;
+    type: string;
+    sector: string;
 }

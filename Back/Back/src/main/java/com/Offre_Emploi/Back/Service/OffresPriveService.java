@@ -1,5 +1,6 @@
 package com.Offre_Emploi.Back.Service;
 
+import com.Offre_Emploi.Back.Entity.Candidat;
 import com.Offre_Emploi.Back.Entity.Offres;
 import com.Offre_Emploi.Back.Entity.Recruteur;
 import com.Offre_Emploi.Back.Repository.OffrePriveRepository;
@@ -58,6 +59,11 @@ public class OffresPriveService {
         offreUpdate.setType_poste(offres.getType_poste());
         offreUpdate.setTitre(offres.getTitre());
         return offreUpdate;
+    }
+
+
+    public Offres findOffresByIdPostulation(Long id){
+        return offrePriveRepository.getOffresByPostulationsId(id);
     }
 
 }

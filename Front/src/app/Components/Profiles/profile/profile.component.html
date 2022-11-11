@@ -52,6 +52,7 @@
     <app-formations *ngIf="role == 'Condidat'"></app-formations>
 
     <app-postulation-candidat *ngIf="role == 'Condidat' && isLogedIn() && proprietaireCompte()"></app-postulation-candidat>
+
     <mat-card style="width: 750px;height: 40px;display: flex; justify-content: space-between;align-items: center;margin: 10px;" *ngIf="role == 'Condidat'">
         <mat-card-title>Documents</mat-card-title>
         <div style="display: flex; align-items: center;justify-content: space-between;width: 100px">

@@ -10,7 +10,8 @@ import {Router} from "@angular/router";
 export class AppComponent {
   title = 'Front';
 
-  constructor(private userAuthentificationService: UserAuthentificationService, public router: Router){}
+  constructor(private userAuthentificationService: UserAuthentificationService,
+              public router: Router){}
 
   public isLogedIn(){
     return this.userAuthentificationService.isLoggedIn();

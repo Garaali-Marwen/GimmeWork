@@ -3,23 +3,30 @@
     <span style="font-family: 'Impact';margin-left: 20px">Gimme<a style="color: #c2c2c2">Work</a></span>
 
     <div>
-        <button mat-icon-button matTooltip="Les offres" (click)="afficherOffre()">
+        <button mat-button (click)="afficherOffre()">
             <span class="material-symbols-outlined">work</span>
+            <span style="margin-left: 10px">Liste des offres</span>
         </button>
 
-        <button mat-icon-button *ngIf=" !isLogedIn()" (click)="openDialogSignin()" matTooltip="Creer un compte">
-            <span class="material-symbols-outlined">person_add</span>
-        </button>
 
-        <button mat-icon-button *ngIf=" isLogedIn()" (click)="afficherProfile()" matTooltip="Profile">
-            <span class="material-symbols-outlined">account_circle</span>
+        <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf=" isLogedIn()" [matTooltip]="user.nom +' '+ user.prenom">
+            <img alt=" " [src]="user.image.url" style="width: 30px; height: 30px; border-radius: 50%">
         </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item style="width: 150px;display: flex;align-items: center;" (click)="afficherProfile()">
+                <span class="material-symbols-outlined">account_circle</span>
+                <span style="margin-left: 10px">Profile</span>
+            </button>
+            <button mat-menu-item style="width: 150px; display: flex;align-items: center;" (click)="logout()">
+                <span class="material-symbols-outlined">logout</span>
+                <span style="margin-left: 10px">Deconnexion</span>
+            </button>
+        </mat-menu>
 
-        <button mat-icon-button *ngIf=" isLogedIn()" (click)="logout()" matTooltip="Logout">
-            <span class="material-symbols-outlined">logout</span>
-        </button>
-        <button mat-icon-button *ngIf=" !isLogedIn()" (click)="openDialog()" matTooltip="Login">
+
+        <button mat-button *ngIf=" !isLogedIn()" (click)="openDialog()" matTooltip="Login">
             <span class="material-symbols-outlined">login</span>
+            <span style="margin-left: 10px">Ce connecter</span>
         </button>
     </div>
 

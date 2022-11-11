@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {NgForm} from "@angular/forms";
 import {UserAuthentificationService} from "../../Services/user-authentification.service";
 import {Router} from "@angular/router";
+import {InsccriptionComponent} from "../Inscription/insccription/insccription.component";
+import {MatDialog} from "@angular/material/dialog";
 
 
 interface log {
@@ -23,7 +25,8 @@ export class LoginComponent implements OnInit {
   }
 
   constructor(private userAuthentificationService:UserAuthentificationService,
-              private router: Router) { }
+              private router: Router,
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
@@ -53,5 +56,9 @@ export class LoginComponent implements OnInit {
         }
     );
   }
+
+    openDialogSignin() {
+        this.dialog.open(InsccriptionComponent);
+    }
 
 }

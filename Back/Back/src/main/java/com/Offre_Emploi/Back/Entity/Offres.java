@@ -2,6 +2,8 @@ package com.Offre_Emploi.Back.Entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -21,5 +23,8 @@ public class Offres {
     private String etude;
     private Double salaire;
     private String disponibilite;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "offre_id", referencedColumnName = "id")
+    private Set<Postulation> postulations = new HashSet<>();
 
 }

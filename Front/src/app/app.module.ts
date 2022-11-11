@@ -48,6 +48,7 @@ import { ValiderSuppressionPostulationComponent } from './Components/Profiles/va
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { AfficherOffresPublicComponent } from './Components/OffrePublic/afficher-offres-public/afficher-offres-public.component';
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 @NgModule({
   declarations: [
@@ -101,6 +102,7 @@ import { AfficherOffresPublicComponent } from './Components/OffrePublic/afficher
         MatTableModule,
         MatSlideToggleModule,
         MatCheckboxModule,
+        MatPaginatorModule,
     ],
   providers: [
       FormationService

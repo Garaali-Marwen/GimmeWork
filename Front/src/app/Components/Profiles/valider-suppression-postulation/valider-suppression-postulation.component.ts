@@ -4,6 +4,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {CandidatService} from "../../../Services/candidat.service";
 import {UserAuthentificationService} from "../../../Services/user-authentification.service";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {PostulationService} from "../../../Services/postulation.service";
 
 @Component({
   selector: 'app-valider-suppression-postulation',
@@ -34,37 +35,23 @@ export class ValiderSuppressionPostulationComponent implements OnInit {
 
   constructor(private candidatService: CandidatService,
               private userAuthentificationService: UserAuthentificationService,
+              private postulationService: PostulationService,
               @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
   }
 
 
-  public deletePostulation(idOffre: number): void{
-    this.candidatService.findCandidatById(this.userAuthentificationService.getUserId())
+  public deletePostulation(): void{
+    this.postulationService.deletePostulation(this.data.id)
         .subscribe(
-            (responce:Candidat) => {
-              this.candidat = responce;
-              this.candidat.postulations.forEach((element,index)=>{
-                if(element.id==idOffre) this.candidat.postulations.splice(index, 1);
-              });
-              this.updateCandidatPostulations(this.candidat)
+            (responce:void) => {
+                window.location.reload();
             },
             (error: HttpErrorResponse) => {
               alert(error.message);
             }
         );
-  }
-
-  public updateCandidatPostulations(candidat: any): void{
-    this.candidatService.updateCandidatPostulation(candidat).subscribe(
-        (response: Candidat) => {
-          window.location.reload()
-        },
-        (error: HttpErrorResponse) => {
-          alert(error.message);
-        }
-    );
   }
 
 }

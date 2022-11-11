@@ -1,4 +1,4 @@
 <app-nav-bar></app-nav-bar>
 <div class="center"><router-outlet></router-outlet></div>
-<!--
-<app-login *ngIf="! isLogedIn() && router.url!='/user-add'"></app-login>-->
+<!--<app-login *ngIf="! isLogedIn() && router.url!='/user-add'"></app-login>-->
+<app-afficher-offres class="center" *ngIf="router.url =='/'"></app-afficher-offres>

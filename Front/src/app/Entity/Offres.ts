@@ -1,4 +1,4 @@
-import {Candidat} from "./Candidat";
+import {Postulation} from "./Postulation";
 
 export interface Offres{
     id : number,
@@ -13,5 +13,5 @@ export interface Offres{
     etude: string,
     salaire: number,
     disponibilite: string,
-    candidats: Candidat[]
+    postulations: Postulation[]
 }

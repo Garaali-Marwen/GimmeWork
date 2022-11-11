@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Offres} from "../Entity/Offres";
 import {Recruteur} from "../Entity/Recruteur";
+import {Candidat} from "../Entity/Candidat";
 
 @Injectable({
   providedIn: 'root'
@@ -36,5 +37,9 @@ export class OffreService {
 
   public updateOffre(offres: Offres): Observable<Offres>{
     return this.http.put<Offres>(`${this.apiServerUrl}/offres/update`, offres);
+  }
+
+  public findOffresByIdPostulation(id: number): Observable<Offres>{
+    return this.http.get<Offres>(`${this.apiServerUrl}/offres/postulations/${id}`);
   }
 }

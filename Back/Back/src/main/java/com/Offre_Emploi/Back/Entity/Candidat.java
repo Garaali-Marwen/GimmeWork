@@ -32,10 +32,7 @@ public class Candidat extends User{
             joinColumns =  @JoinColumn(name = "user_id"),
             inverseJoinColumns =  @JoinColumn(name = "formation_id"))
     private Set<Formations> formations = new HashSet<>();
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinTable(
-            name = "candidat_offre",
-            joinColumns =  @JoinColumn(name = "candidat_id"),
-            inverseJoinColumns =  @JoinColumn(name = "offre_id"))
-    private Set<Offres> postulations = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "candidat_id", referencedColumnName = "id")
+    private Set<Postulation> postulations = new HashSet<>();
 }

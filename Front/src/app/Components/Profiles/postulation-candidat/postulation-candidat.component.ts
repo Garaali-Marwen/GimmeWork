@@ -5,6 +5,9 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {NgbCarouselConfig} from "@ng-bootstrap/ng-bootstrap";
 import {RecruteurService} from "../../../Services/recruteur.service";
 import {Recruteur} from "../../../Entity/Recruteur";
+import {OffreService} from "../../../Services/offre.service";
+import {Candidat} from "../../../Entity/Candidat";
+import {Offres} from "../../../Entity/Offres";
 
 @Component({
   selector: 'app-postulation-candidat',
@@ -17,13 +20,14 @@ export class PostulationCandidatComponent implements OnInit {
               private route: ActivatedRoute,
               config: NgbCarouselConfig,
               private recruteurService: RecruteurService,
-              private router: Router) {
+              private router: Router,
+              private offreService: OffreService) {
       config.showNavigationArrows = true;
       config.showNavigationIndicators = true;
   }
 
   idUser = 0;
-  postulations: any[] = [];
+  postulations: Offres[] = [];
   ngOnInit(): void {
     this.route.queryParams
         .subscribe(params => {
@@ -34,8 +38,19 @@ export class PostulationCandidatComponent implements OnInit {
   public getUser(): void{
     this.userAuthentificationService.findUserById(this.idUser)
         .subscribe(
-            (responce:any) => {
-              this.postulations = responce.postulations;
+            (responce:Candidat) => {
+                for (let i of responce.postulations){
+                    this.offreService.findOffresByIdPostulation(i.id)
+                        .subscribe(
+                            (responce:Offres) => {
+                                console.log(responce)
+                                this.postulations.push(responce);
+                            },
+                            (error: HttpErrorResponse) => {
+                                alert(error.message);
+                            }
+                        );
+                }
             },
             (error: HttpErrorResponse) => {
               alert(error.message);

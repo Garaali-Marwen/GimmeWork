@@ -20,7 +20,7 @@ public class RecruteurService {
     }
 
     public List<Recruteur> getRecruteurs(){
-        return recruteurRepository.findAll();
+        return (List<Recruteur>) recruteurRepository.findAll();
     }
 
     public void deleteRecruteur(Long id){

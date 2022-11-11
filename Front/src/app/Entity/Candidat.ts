@@ -1,5 +1,6 @@
 import {Image} from "./Image";
 import {Offres} from "./Offres";
+import {Postulation} from "./Postulation";
 
 export interface Candidat {
     id: number;
@@ -15,7 +16,7 @@ export interface Candidat {
     lettre_motivation: [];
     competances: [];
     formations: [];
-    postulations: Offres[];
+    postulations: Postulation[];
 
 
 }

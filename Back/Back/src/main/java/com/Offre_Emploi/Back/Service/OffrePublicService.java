@@ -56,6 +56,7 @@ public class OffrePublicService {
                 .toList();
     }
 
+
     private OffresPublic extractInfoFromOtionCarriere(Element offer){
         OffresPublic  o=new OffresPublic();
         //link
@@ -72,12 +73,85 @@ public class OffrePublicService {
     }
 
 
+
+
+    public void setDetails_kj(OffresPublic o) throws IOException {
+
+        String link=o.getLink();
+
+        var det = Jsoup.connect(link).get();
+
+        var  details= det.getElementsByClass("dl-horizontal");
+
+
+        for (Element detail: details){
+            var sector=detail.getElementsByTag("dd").get(0).text();
+            var location=detail.getElementsByTag("dd").get(3).text();
+            o.setSector(sector);
+            if (location.length()==4)
+                location=detail.getElementsByTag("dd").get(4).text();
+            o.setLocation(location);
+            //type
+
+        }
+
+    }
+    public void setDetails_li(OffresPublic o) throws IOException {
+
+        String link = o.getLink();
+
+        var det = Jsoup.connect(link).get();
+        var details = det.getElementsByClass("container");
+        for (Element detail : details) {
+            var sector = detail.getElementsByTag("p").get(0).text();
+            var location = detail.getElementsByTag("li").get(0).text();
+            var type = detail.getElementsByTag("li").get(1).text();
+            o.setSector(sector);
+            o.setLocation(location);
+            if (type.length() < 8)
+                o.setType(type);
+        }
+
+
+    }
+    public void setDetails_oc(OffresPublic o) throws IOException {
+
+        String link=o.getLink();
+
+        var det = Jsoup.connect(link).get();
+        var  details= det.getElementsByClass("container");
+        for (Element detail: details) {
+            var sector = detail.getElementsByTag("p").get(0).text();
+            var location = detail.getElementsByTag("li").get(0).text();
+            var type = detail.getElementsByTag("li").get(1).text();
+            o.setSector(sector);
+            o.setLocation(location);
+            if (type.length() < 8)
+                o.setType(type);
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public List<OffresPublic> getPrivateOffreFromLinkedin() throws IOException {
         return Jsoup.connect("https://www.linkedin.com/jobs/search?keywords=&location=Tunisie&geoId=102134353&trk=public_jobs_jobs-search-bar_search-submit&position=1&pageNum=0").get()
                 .getElementsByClass("base-card relative w-full hover:no-underline focus:no-underline base-card--link base-search-card base-search-card--link job-search-card")
                 .stream()
-                //  .filter(o->o.getElementsByTag("a").size()>2)
-                .map(o->extractInfo(o))
+                .map(o->extractInfoFromLinkedin(o))
                 .toList();
     }
 
@@ -100,7 +174,6 @@ public class OffrePublicService {
         Elements elements = offer.getElementsByTag("a");
         String companyName = elements.get(1).text();
         o.setCompany(companyName);
-
         return o;
     }
 

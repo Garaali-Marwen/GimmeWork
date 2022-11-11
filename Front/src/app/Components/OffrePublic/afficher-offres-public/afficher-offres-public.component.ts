@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {OffresPublic} from "../../../Entity/OffresPublic";
 import {OffrePublicService} from "../../../Services/offre-public.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-afficher-offres-public',
@@ -15,7 +16,8 @@ export class AfficherOffresPublicComponent implements OnInit {
   checked = false;
   disabled = false;
   public OffresPublic: OffresPublic[] = [];
-  constructor(private offrePublicService: OffrePublicService) { }
+  constructor(private offrePublicService: OffrePublicService,
+              private router: Router) { }
 
 
   ngOnInit(): void {
@@ -33,6 +35,10 @@ export class AfficherOffresPublicComponent implements OnInit {
             (error: HttpErrorResponse) => {
               alert(error.message);
             });
+  }
+
+  public visiter(url: string){
+    window.open(url);
   }
 
 }

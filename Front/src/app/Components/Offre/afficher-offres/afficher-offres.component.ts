@@ -1,14 +1,15 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpErrorResponse} from "@angular/common/http";
 import {RecruteurService} from "../../../Services/recruteur.service";
 import {Recruteur} from "../../../Entity/Recruteur";
 import {Offres} from "../../../Entity/Offres";
-import {debounceTime, distinctUntilChanged, filter, map, merge, Observable, OperatorFunction, Subject} from "rxjs";
+import {debounceTime, distinctUntilChanged, map , Observable, OperatorFunction} from "rxjs";
 import {ImageService} from "../../../Services/image.service";
 import {Router} from "@angular/router";
 import {NgForm} from "@angular/forms";
 import {OffrePublicService} from "../../../Services/offre-public.service";
 import {OffresPublic} from "../../../Entity/OffresPublic";
+import {PageEvent} from "@angular/material/paginator";
 
 
 @Component({
@@ -18,6 +19,20 @@ import {OffresPublic} from "../../../Entity/OffresPublic";
 })
 export class AfficherOffresComponent implements OnInit {
 
+
+    length = 100;
+    pageSize = 10;
+    pageSizeOptions: number[] = [5, 10, 25, 100];
+
+    // MatPaginator Output
+    // @ts-ignore
+    pageEvent: PageEvent;
+
+    setPageSizeOptions(setPageSizeOptionsInput: string) {
+        if (setPageSizeOptionsInput) {
+            this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
+        }
+    }
 
     public offresTitres: string[] = [];
     public offresLieu: string[] = [];
