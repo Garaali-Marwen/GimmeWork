@@ -15,6 +15,7 @@ import {ValiderSuppressionPostulationComponent} from "../../Profiles/valider-sup
 import {LoginComponent} from "../../login/login.component";
 import {PostulationService} from "../../../Services/postulation.service";
 import {Postulation} from "../../../Entity/Postulation";
+import {AddPostulationComponent} from "../add-postulation/add-postulation.component";
 
 @Component({
   selector: 'app-detail-offre',
@@ -73,16 +74,27 @@ export class DetailOffreComponent implements OnInit {
   public postulation: Postulation= {
       id: 0,
       date_postulation: "2022-01-01",
-      decision_recruteur: "en attente"
+      decision_recruteur: "en attente",
+      cv: {
+          file: new File([], ""),
+          url: ""
+      },
+      lettre_motivation: {
+          file: new File([], ""),
+          url: ""
+      }
   }
 
   idPostulation = 0;
-  public candidatPostulation = new Map<Candidat,Postulation>;
+  public candidatPostulation = new Map<Candidat,any>;
 
   public Candidat: Candidat = {
       adresse: "",
       competances: [],
-      cv: [],
+      cv: {
+          file: new File([], ""),
+          url: ""
+      },
       date_naissance: "",
       fonction: "",
       formations: [],
@@ -91,7 +103,10 @@ export class DetailOffreComponent implements OnInit {
           file: new File([], ""),
           url: ""
       },
-      lettre_motivation: [],
+      lettre_motivation: {
+          file: new File([], ""),
+          url: ""
+      },
       mail: "",
       mdp: "",
       nom: "",
@@ -129,6 +144,8 @@ export class DetailOffreComponent implements OnInit {
                             this.candidatRefuser=0;
                             this.candidatAccepter=0;
                             for (let x of this.candidatPostulation.values()){
+                                this.imageService.createCv(x)
+                                this.imageService.createLm(x)
                                 if (x.decision_recruteur == 'Accepté'){
                                     this.candidatAccepter=1+this.candidatAccepter;
                                 }
@@ -148,6 +165,7 @@ export class DetailOffreComponent implements OnInit {
             }
         );
   }
+
 
 
   public getRecruteur(): void{
@@ -171,29 +189,16 @@ export class DetailOffreComponent implements OnInit {
 
     public addPostulation(candidatId: number,offreId: number): void{
         if (this.isLogedIn()){
-            this.postulationService.addPostulation(this.postulation).subscribe(
-                (response: Postulation) => {
-                    this.addPostulationToCandidat(candidatId, offreId, response.id)
+            this.dialog.open(AddPostulationComponent, {
+                data: {
+                    candidatId: candidatId,
+                    offreId: offreId
                 },
-                (error: HttpErrorResponse) => {
-                    alert(error.message);
-                }
-            );
+            })
         }
         else this.openLogin();
 
     }
-
-  public addPostulationToCandidat(candidatId: number, offreId: number, postulationId: number): void{
-          this.candidatService.addPostulationToCandidat(candidatId,offreId,postulationId).subscribe(
-              (response: void) => {
-                  window.location.reload()
-              },
-              (error: HttpErrorResponse) => {
-                  alert(error.message);
-              }
-          );
-  }
 
   public getCandidatById(idCandidat: number){
     this.candidatService.findCandidatById(idCandidat).subscribe(
@@ -267,5 +272,12 @@ export class DetailOffreComponent implements OnInit {
                 alert(error.message);
             }
         );
+    }
+
+    public afficherCV(url: any) {
+        window.open(url);
+    }
+    public afficherLM(url: any) {
+        window.open(url);
     }
 }

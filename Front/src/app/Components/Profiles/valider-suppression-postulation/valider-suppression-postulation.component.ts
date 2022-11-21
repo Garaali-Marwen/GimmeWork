@@ -26,8 +26,14 @@ export class ValiderSuppressionPostulationComponent implements OnInit {
       file : new File([],""),
       url : ""
     },
-    cv: [],
-    lettre_motivation: [],
+    cv: {
+      file: new File([], ""),
+      url: ""
+    },
+    lettre_motivation: {
+      file: new File([], ""),
+      url: ""
+    },
     competances: [],
     formations: [],
     postulations: []

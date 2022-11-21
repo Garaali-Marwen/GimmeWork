@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
-public class Image {
+public class File {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,13 +17,13 @@ public class Image {
     @Column(length = 50000000)
     private byte[] imageBytes;
 
-    public Image(String nom, String type, byte[] imageBytes) {
+    public File(String nom, String type, byte[] imageBytes) {
         this.nom = nom;
         this.type = type;
         this.imageBytes = imageBytes;
     }
 
-    public Image() {
+    public File() {
 
     }
 }

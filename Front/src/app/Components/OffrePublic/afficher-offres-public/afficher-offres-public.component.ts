@@ -20,6 +20,9 @@ export class AfficherOffresPublicComponent implements OnInit {
               private router: Router) { }
 
 
+  p: number = 1;
+
+
   ngOnInit(): void {
     this.getOffresPublic();
   }
@@ -28,8 +31,10 @@ export class AfficherOffresPublicComponent implements OnInit {
     this.offrePublicService.getOffresPublic()
         .subscribe(
             (responce:OffresPublic[]) => {
-              this.OffresPublic = responce;
-              console.log(responce)
+              for (let o of responce){
+                if (o.source == 'keejob')
+                  this.OffresPublic.push(o);
+              }
 
             },
             (error: HttpErrorResponse) => {

@@ -43,7 +43,6 @@ export class PostulationCandidatComponent implements OnInit {
                     this.offreService.findOffresByIdPostulation(i.id)
                         .subscribe(
                             (responce:Offres) => {
-                                console.log(responce)
                                 this.postulations.push(responce);
                             },
                             (error: HttpErrorResponse) => {

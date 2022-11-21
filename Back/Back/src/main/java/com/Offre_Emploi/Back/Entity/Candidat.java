@@ -13,13 +13,15 @@ public class Candidat extends User{
     private String adresse;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "image_id", referencedColumnName = "id")
-    private Image image ;
+    private File image;
     private String fonction;
     private String date_naissance;
-    @Column(length = 50000000)
-    private byte[] cv;
-    @Column(length = 50000000)
-    private byte[] lettre_motivation;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cv_id", referencedColumnName = "id")
+    private File cv;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "lettre_id", referencedColumnName = "id")
+    private File lettre_motivation;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "condidat_Competance",

@@ -30,4 +30,12 @@ export class PostulationService {
     return this.http.get<Postulation>(`${this.apiServerUrl}/postulation/${id}`);
   }
 
+  public updatePostulationCV(postulation: FormData): Observable<Postulation>{
+    return this.http.put<Postulation>(`${this.apiServerUrl}/postulation/update/cv`, postulation);
+  }
+
+  public updatePostulationLM(postulation: FormData): Observable<Postulation>{
+    return this.http.put<Postulation>(`${this.apiServerUrl}/postulation/update/lm`, postulation);
+  }
+
 }

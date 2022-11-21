@@ -7,4 +7,5 @@ export interface OffresPublic{
     location: string;
     type: string;
     sector: string;
+    source: string;
 }

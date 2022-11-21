@@ -35,7 +35,10 @@ export class NavBarComponent implements OnInit {
     offres: [],
     num_tel: 0,
     fonction: "",
-    cv: [],
+    cv: {
+      file : new File([],""),
+      url : ""
+    },
     lettre_motivation: [],
     competances: [],
     formations: []

@@ -3,6 +3,7 @@ import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Candidat} from "../Entity/Candidat";
+import {Offres} from "../Entity/Offres";
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,14 @@ export class CandidatService {
     return this.http.put<Candidat>(`${this.apiServerUrl}/candidat/update/postulation`, candidat);
   }
 
+  public updateCandidatCV(candidat: FormData): Observable<Candidat>{
+    return this.http.put<Candidat>(`${this.apiServerUrl}/candidat/update/cv`, candidat);
+  }
+
+  public updateCandidatLM(candidat: FormData): Observable<Candidat>{
+    return this.http.put<Candidat>(`${this.apiServerUrl}/candidat/update/lm`, candidat);
+  }
+
   public deleteCandidat(candidatId: number): Observable<void>{
     return this.http.delete<void>(`${this.apiServerUrl}/candidat/delete/${candidatId}`);
   }
@@ -47,5 +56,6 @@ export class CandidatService {
   public findCandidatsByIdPostulation(id: number): Observable<Candidat>{
     return this.http.get<Candidat>(`${this.apiServerUrl}/candidat/postulations/${id}`);
   }
+
 
 }

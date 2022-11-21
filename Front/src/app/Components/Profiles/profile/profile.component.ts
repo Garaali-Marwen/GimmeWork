@@ -3,15 +3,15 @@ import {UserAuthentificationService} from "../../../Services/user-authentificati
 import {CandidatService} from "../../../Services/candidat.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ImageService} from "../../../Services/image.service";
-import {map} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {ModifierDonneesComponent} from "../modifier-donnees/modifier-donnees.component";
 import {RecruteurService} from "../../../Services/recruteur.service";
 import {ActivatedRoute} from "@angular/router";
 import {ValiderSuppressionProfilComponent} from "../valider-suppression-profil/valider-suppression-profil.component";
-import {Image} from "../../../Entity/Image";
+import {Image} from "../../../Entity/image";
 import {Recruteur} from "../../../Entity/Recruteur";
 import {Candidat} from "../../../Entity/Candidat";
+import {map} from "rxjs";
 
 @Component({
   selector: 'app-profile',
@@ -37,8 +37,14 @@ export class ProfileComponent implements OnInit {
       offres: [],
       num_tel: 0,
       fonction: "",
-      cv: [],
-      lettre_motivation: [],
+      cv: {
+          file: new File([], ""),
+          url: ""
+      },
+      lettre_motivation: {
+          file: new File([], ""),
+          url: ""
+      },
       competances: [],
       formations: []
   }
@@ -46,6 +52,11 @@ export class ProfileComponent implements OnInit {
   public idUser = 0;
   public idUserConnecte = 0;
   public imageId: number = 0;
+  public cvId: number = 0;
+  public LmId: number = 0;
+    centered = false;
+    unbounded = false;
+    disabled = false;
 
   constructor(private userAuthentificationService:UserAuthentificationService,
               private candidatService: CandidatService,
@@ -61,6 +72,9 @@ export class ProfileComponent implements OnInit {
       this.getUserImageId();
       this.getUser();
       this.idUserConnecte = this.userAuthentificationService.getUserId();
+      if (this.userAuthentificationService.getRole()=='Condidat'){
+          this.getUserCvLmId();
+      }
   }
 
     public isLogedIn(){
@@ -84,6 +98,14 @@ export class ProfileComponent implements OnInit {
             (responce:any) => {
                 this.user = responce;
                 this.role = responce.role;
+
+                if (this.user.role == 'Condidat'){
+                    if (this.user.cv){
+                        this.imageService.createCv(this.user);
+                    }
+                    if (this.user.lettre_motivation)
+                        this.imageService.createLm(this.user);
+                }
             },
             (error: HttpErrorResponse) => {
                 alert(error.message);
@@ -120,6 +142,58 @@ export class ProfileComponent implements OnInit {
             );
     }
 
+    public updateCandidatCV(): void{
+        const userFormData = this.prepareFormDataCv(this.user)
+        this.candidatService.updateCandidatCV(userFormData).subscribe(
+            (response: Candidat) => {
+                this.deleteImage(this.cvId);
+            },
+            (error: HttpErrorResponse) => {
+                alert(error.message);
+            }
+        );
+    }
+
+    public updateCandidatLm(): void{
+        const userFormData = this.prepareFormDataLm(this.user)
+        this.candidatService.updateCandidatLM(userFormData).subscribe(
+            (response: Candidat) => {
+                this.deleteImage(this.LmId);
+            },
+            (error: HttpErrorResponse) => {
+                alert(error.message);
+            }
+        );
+    }
+
+    prepareFormDataCv(candidat: Candidat): FormData{
+        const formData = new FormData();
+        formData.append(
+            'user',
+            new Blob([JSON.stringify(candidat)], {type: 'application/json'})
+        );
+        formData.append(
+            'cv',
+            candidat.cv.file,
+            candidat.cv.file.name
+        );
+        return formData;
+    }
+
+    prepareFormDataLm(candidat: Candidat): FormData{
+        const formData = new FormData();
+        formData.append(
+            'user',
+            new Blob([JSON.stringify(candidat)], {type: 'application/json'})
+        );
+        formData.append(
+            'lm',
+            candidat.lettre_motivation.file,
+            candidat.lettre_motivation.file.name
+        );
+        return formData;
+    }
+
     prepareFormData(recruteur: Recruteur): FormData{
         const formData = new FormData();
         formData.append(
@@ -134,10 +208,91 @@ export class ProfileComponent implements OnInit {
         return formData;
     }
 
+
+    updateCv(event: any){
+        if (event.target.files){
+            const file = event.target.files[0];
+
+            const image: Image = {
+                file: file,
+                // @ts-ignore
+                url: null
+            }
+            this.user.cv=image;
+        }
+        this.updateCandidatCV();
+    }
+
+    updateLm(event: any){
+        if (event.target.files){
+            const file = event.target.files[0];
+
+            const image: Image = {
+                file: file,
+                // @ts-ignore
+                url: null
+            }
+            this.user.lettre_motivation=image;
+        }
+        this.updateCandidatLm();
+    }
+
+    addCv(event: any){
+        if (event.target.files){
+            const file = event.target.files[0];
+
+            const image: Image = {
+                file: file,
+                // @ts-ignore
+                url: null
+            }
+            this.user.cv=image;
+        }
+        this.addCandidatCV();
+    }
+
+    addLettreMotivation(event: any){
+        if (event.target.files){
+            const file = event.target.files[0];
+
+            const image: Image = {
+                file: file,
+                // @ts-ignore
+                url: null
+            }
+            this.user.lettre_motivation=image;
+        }
+        this.addCandidatLettreMotivation();
+    }
+
+    public addCandidatLettreMotivation(): void{
+        const userFormData = this.prepareFormDataLm(this.user)
+        this.candidatService.updateCandidatLM(userFormData).subscribe(
+            (response: Candidat) => {
+                window.location.reload();
+            },
+            (error: HttpErrorResponse) => {
+                alert(error.message);
+            }
+        );
+    }
+
+    public addCandidatCV(): void{
+        const userFormData = this.prepareFormDataCv(this.user)
+        this.candidatService.updateCandidatCV(userFormData).subscribe(
+            (response: Candidat) => {
+                window.location.reload();
+            },
+            (error: HttpErrorResponse) => {
+                alert(error.message);
+            }
+        );
+    }
+
+
     onFileSelected(event: any){
         if (event.target.files){
             const file = event.target.files[0];
-            console.log(event.target.files[0])
 
             const image: Image = {
                 file: file,
@@ -161,10 +316,23 @@ export class ProfileComponent implements OnInit {
                 }
             );
     }
+
+    public getUserCvLmId(): void{
+        this.userAuthentificationService.findUserById(this.idUser)
+            .subscribe(
+                (responce:any) => {
+                    this.cvId = responce.cv.id;
+                    this.LmId = responce.lettre_motivation.id;
+                },
+                (error: HttpErrorResponse) => {
+                    alert(error.message);
+                }
+            );
+    }
     public deleteImage(imageId: number): void{
         this.imageService.deleteImage(imageId).subscribe(
             (response: void) => {
-                window.location.reload();
+                window.location.reload()
             },
             (error: HttpErrorResponse) => {
                 alert(error.message);
@@ -172,4 +340,8 @@ export class ProfileComponent implements OnInit {
         );
     }
 
+
+    ouvrirPdf(url: any) {
+        window.open(url)
+    }
 }

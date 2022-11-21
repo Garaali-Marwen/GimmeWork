@@ -15,7 +15,7 @@ public class Recruteur extends User{
     private String date_naissance;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "image_id", referencedColumnName = "id")
-    private Image image ;
+    private File image;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "ro_id", referencedColumnName = "id")
     private Set<Offres> offres = new HashSet<>();

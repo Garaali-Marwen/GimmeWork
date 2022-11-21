@@ -1,5 +1,6 @@
 package com.Offre_Emploi.Back.Service;
 
+import com.Offre_Emploi.Back.Entity.Candidat;
 import com.Offre_Emploi.Back.Entity.Postulation;
 import com.Offre_Emploi.Back.Repository.PostulationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,4 +30,19 @@ public class PostulationService {
         postulationUpdate.setDecision_recruteur(postulation.getDecision_recruteur());
         return postulationUpdate;
     }
+
+    @Transactional
+    public Postulation updatePostulationCV(Postulation postulation) {
+        Postulation postulationUpdate = postulationRepository.findById(postulation.getId()).orElse(null);
+        postulationUpdate.setCv(postulation.getCv());
+        return postulationUpdate;
+    }
+
+    @Transactional
+    public Postulation updatePostulationLM(Postulation postulation) {
+        Postulation postulationUpdate = postulationRepository.findById(postulation.getId()).orElse(null);
+        postulationUpdate.setLettre_motivation(postulation.getLettre_motivation());
+        return postulationUpdate;
+    }
+
 }

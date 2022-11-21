@@ -3,7 +3,6 @@ package com.Offre_Emploi.Back.Service;
 import com.Offre_Emploi.Back.Entity.*;
 import com.Offre_Emploi.Back.Repository.*;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -93,6 +92,21 @@ public class CandidatService {
     public Candidat updateCandidatImage(Candidat candidat) {
         Candidat candidatUpdate = candidatRepository.findById(candidat.getId()).orElse(null);
         candidatUpdate.setImage(candidat.getImage());
+        return candidatUpdate;
+    }
+
+    @Transactional
+    public Candidat updateCandidatCV(Candidat candidat) {
+        Candidat candidatUpdate = candidatRepository.findById(candidat.getId()).orElse(null);
+        candidatUpdate.setCv(candidat.getCv());
+        return candidatUpdate;
+    }
+
+
+    @Transactional
+    public Candidat updateCandidatLm(Candidat candidat) {
+        Candidat candidatUpdate = candidatRepository.findById(candidat.getId()).orElse(null);
+        candidatUpdate.setLettre_motivation(candidat.getLettre_motivation());
         return candidatUpdate;
     }
 

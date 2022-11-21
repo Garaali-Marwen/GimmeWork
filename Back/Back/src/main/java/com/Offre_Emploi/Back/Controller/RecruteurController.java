@@ -1,8 +1,8 @@
 package com.Offre_Emploi.Back.Controller;
 
-import com.Offre_Emploi.Back.Entity.Image;
+import com.Offre_Emploi.Back.Entity.File;
 import com.Offre_Emploi.Back.Entity.Recruteur;
-import com.Offre_Emploi.Back.Service.ImageService;
+import com.Offre_Emploi.Back.Service.FileService;
 import com.Offre_Emploi.Back.Service.RecruteurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -19,14 +19,14 @@ public class RecruteurController {
     @Autowired
     private RecruteurService recruteurService;
     @Autowired
-    private ImageService imageService;
+    private FileService fileService;
 
 
     @PostMapping(value = "/add", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public Recruteur addRecruteur(@RequestPart("recruteur") Recruteur recruteur,
                                 @RequestPart("imageFile") MultipartFile file) {
         try {
-            Image images = uploadImage(file);
+            File images = uploadImage(file);
             recruteur.setImage(images);
             Recruteur newRecruteur = recruteurService.addRecruteur(recruteur);
             return newRecruteur;
@@ -35,21 +35,21 @@ public class RecruteurController {
             return null;
         }
     }
-    public Image uploadImage(MultipartFile multipartFiles) throws IOException {
-        Image image = new Image(
+    public File uploadImage(MultipartFile multipartFiles) throws IOException {
+        File file = new File(
                 multipartFiles.getOriginalFilename(),
                 multipartFiles.getContentType(),
                 multipartFiles.getBytes()
         );
-        imageService.addImage(image);
-        return image;
+        fileService.addFile(file);
+        return file;
     }
 
     @PutMapping(value = "/update/image", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public Recruteur updateRecruteurImage(@RequestPart("user") Recruteur recruteur,
                                           @RequestPart("imageFile") MultipartFile file) {
         try {
-            Image images = uploadImage(file);
+            File images = uploadImage(file);
             recruteur.setImage(images);
             return recruteurService.updateRecruteurImage(recruteur);
         }catch (Exception e){

@@ -1,10 +1,9 @@
 package com.Offre_Emploi.Back.Controller;
 
 import com.Offre_Emploi.Back.Entity.Candidat;
-import com.Offre_Emploi.Back.Entity.Image;
-import com.Offre_Emploi.Back.Entity.Recruteur;
+import com.Offre_Emploi.Back.Entity.File;
 import com.Offre_Emploi.Back.Service.CandidatService;
-import com.Offre_Emploi.Back.Service.ImageService;
+import com.Offre_Emploi.Back.Service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,10 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/candidat")
@@ -25,7 +21,7 @@ public class CandidatController {
     @Autowired
     private CandidatService candidatService;
     @Autowired
-    private ImageService imageService;
+    private FileService fileService;
 
     @PostMapping("/add")
     public Candidat addCandidat(@RequestBody Candidat candidat){
@@ -58,7 +54,7 @@ public class CandidatController {
     public Candidat addCandidat(@RequestPart("candidat") Candidat candidat,
                              @RequestPart("imageFile") MultipartFile file) {
         try {
-            Image images = uploadImage(file);
+            File images = uploadFile(file);
             candidat.setImage(images);
             Candidat newCandidat = candidatService.addCondidat(candidat);
             return newCandidat;
@@ -70,22 +66,21 @@ public class CandidatController {
 
 
 
-    public Image uploadImage(MultipartFile multipartFiles) throws IOException {
-            Image image = new Image(
+    public File uploadFile(MultipartFile multipartFiles) throws IOException {
+            File file = new File(
                     multipartFiles.getOriginalFilename(),
                     multipartFiles.getContentType(),
                     multipartFiles.getBytes()
             );
-            imageService.addImage(image);
-        return image;
+            fileService.addFile(file);
+        return file;
     }
-
 
     @PutMapping(value = "/update/image", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public Candidat updateCandidatImage(@RequestPart("user") Candidat candidat,
                                           @RequestPart("imageFile") MultipartFile file) {
         try {
-            Image images = uploadImage(file);
+            File images = uploadFile(file);
             candidat.setImage(images);
             return candidatService.updateCandidatImage(candidat);
         }catch (Exception e){
@@ -94,6 +89,32 @@ public class CandidatController {
         }
     }
 
+
+    @PutMapping(value = "/update/cv", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public Candidat updateCandidatCv(@RequestPart("user") Candidat candidat,
+                                        @RequestPart("cv") MultipartFile file) {
+        try {
+            File cv = uploadFile(file);
+            candidat.setCv(cv);
+            return candidatService.updateCandidatCV(candidat);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    @PutMapping(value = "/update/lm", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public Candidat updateCandidatLm(@RequestPart("user") Candidat candidat,
+                                     @RequestPart("lm") MultipartFile file) {
+        try {
+            File lm = uploadFile(file);
+            candidat.setLettre_motivation(lm);
+            return candidatService.updateCandidatLm(candidat);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 
     @GetMapping("/competance/{candidatId}/{competanceId}")
     public ResponseEntity<Candidat> addCompetanceToCandidat(@PathVariable("candidatId") long candidatId, @PathVariable("competanceId") long competanceId) {

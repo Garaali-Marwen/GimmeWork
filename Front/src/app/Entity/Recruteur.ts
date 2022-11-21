@@ -1,4 +1,4 @@
-import {Image} from "./Image";
+import {Image} from "./image";
 import {Offres} from "./Offres";
 
 export interface Recruteur{

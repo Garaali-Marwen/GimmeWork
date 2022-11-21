@@ -9,7 +9,6 @@ import {Router} from "@angular/router";
 import {NgForm} from "@angular/forms";
 import {OffrePublicService} from "../../../Services/offre-public.service";
 import {OffresPublic} from "../../../Entity/OffresPublic";
-import {PageEvent} from "@angular/material/paginator";
 
 
 @Component({
@@ -20,25 +19,15 @@ import {PageEvent} from "@angular/material/paginator";
 export class AfficherOffresComponent implements OnInit {
 
 
-    length = 100;
-    pageSize = 10;
-    pageSizeOptions: number[] = [5, 10, 25, 100];
-
-    // MatPaginator Output
-    // @ts-ignore
-    pageEvent: PageEvent;
-
-    setPageSizeOptions(setPageSizeOptionsInput: string) {
-        if (setPageSizeOptionsInput) {
-            this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
-        }
-    }
+    active = 1;
+    page = 1;
+    isDisabled = false;
 
     public offresTitres: string[] = [];
     public offresLieu: string[] = [];
-    public titre: any;
-    public lieu: any;
-    public domaine :any;
+    public titre= "";
+    public lieu= "";
+    public domaine= "";
 
     formatter = (result: string) => result.toUpperCase();
 
@@ -70,7 +59,7 @@ export class AfficherOffresComponent implements OnInit {
     public rechercheParDomaine = false;
     public aucuneOffre = false;
     public OffresPublic: OffresPublic[] = [];
-
+    p: number = 1;
 
   public Offres = new Map<Offres,Recruteur>;
   constructor(private recruteurService: RecruteurService,
@@ -115,17 +104,6 @@ export class AfficherOffresComponent implements OnInit {
                     this.offresLieu.push(ofr.lieu)
                 }
             }
-            this.offrePublicService.getOffresPublic()
-                .subscribe(
-                    (responce:OffresPublic[]) => {
-                        for (let ofr of responce){
-                            this.offresTitres.push(ofr.title);
-                        }
-                    },
-                    (error: HttpErrorResponse) => {
-                        alert(error.message);
-                    });
-
         },
         (error: HttpErrorResponse) => {
             alert(error.message);
@@ -148,7 +126,7 @@ export class AfficherOffresComponent implements OnInit {
                     {
                         for (let rec of responce){
                             for (let ofr of rec.offres) {
-                                if (ofr.titre == this.titre)
+                                if (ofr.titre.toUpperCase() == this.titre.toUpperCase())
                                     this.Offres.set(ofr,rec);
                             }
                         }
@@ -157,7 +135,7 @@ export class AfficherOffresComponent implements OnInit {
                     {
                         for (let rec of responce){
                             for (let ofr of rec.offres) {
-                                if (ofr.lieu == this.lieu)
+                                if (ofr.lieu.toUpperCase() == this.lieu.toUpperCase())
                                     this.Offres.set(ofr,rec);
                             }
                         }

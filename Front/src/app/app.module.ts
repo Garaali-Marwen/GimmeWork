@@ -49,6 +49,11 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { AfficherOffresPublicComponent } from './Components/OffrePublic/afficher-offres-public/afficher-offres-public.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatTabsModule} from "@angular/material/tabs";
+import {NgxPaginationModule} from "ngx-pagination";
+import {PdfViewerModule} from "ng2-pdf-viewer";
+import { AddPostulationComponent } from './Components/Offre/add-postulation/add-postulation.component';
+import { FooterComponent } from './Components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +80,8 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     PostulationCandidatComponent,
     ValiderSuppressionPostulationComponent,
     AfficherOffresPublicComponent,
+    AddPostulationComponent,
+    FooterComponent,
   ],
     imports: [
         BrowserModule,
@@ -103,6 +110,9 @@ import {MatPaginatorModule} from "@angular/material/paginator";
         MatSlideToggleModule,
         MatCheckboxModule,
         MatPaginatorModule,
+        MatTabsModule,
+        NgxPaginationModule,
+        PdfViewerModule,
     ],
   providers: [
       FormationService

@@ -18,6 +18,7 @@ public class OffresPublic {
     private String location;
     private String type;
     private String sector;
+    private String source;
 
 
 }

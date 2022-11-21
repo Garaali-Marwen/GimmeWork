@@ -1,5 +1,4 @@
-import {Image} from "./Image";
-import {Offres} from "./Offres";
+import {Image} from "./image";
 import {Postulation} from "./Postulation";
 
 export interface Candidat {
@@ -12,8 +11,8 @@ export interface Candidat {
     date_naissance: string;
     fonction: string;
     image: Image;
-    cv: [];
-    lettre_motivation: [];
+    cv: Image;
+    lettre_motivation: Image;
     competances: [];
     formations: [];
     postulations: Postulation[];

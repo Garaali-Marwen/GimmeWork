@@ -3,7 +3,7 @@ import {Candidat} from "../../../Entity/Candidat";
 import {CandidatService} from "../../../Services/candidat.service";
 import {NgForm} from "@angular/forms";
 import {HttpErrorResponse} from "@angular/common/http";
-import {Image} from "../../../Entity/Image";
+import {Image} from "../../../Entity/image";
 
 @Component({
   selector: 'app-inscription-candidat',
@@ -25,8 +25,14 @@ export class InscriptionCandidatComponent implements OnInit {
       file : new File([],""),
       url : ""
     },
-    cv: [],
-    lettre_motivation: [],
+    cv: {
+      file : new File([],""),
+      url : ""
+    },
+    lettre_motivation: {
+      file: new File([], ""),
+      url: ""
+    },
     competances: [],
     formations: [],
     postulations: []

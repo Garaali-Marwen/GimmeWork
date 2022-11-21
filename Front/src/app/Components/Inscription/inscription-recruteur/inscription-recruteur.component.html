@@ -51,7 +51,9 @@
             <td style="text-align: left">
                 <mat-form-field class="example-full-width" appearance="fill">
                     <mat-label>Tel</mat-label>
-                    <input matInput type="number" [(ngModel)]="recruteur.num_tel" name="fonction" ngModel required>
+                    <input matInput type="number" [(ngModel)]="recruteur.num_tel" name="fonction" ngModel required
+                           oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                           maxlength="8">
                 </mat-form-field>
             </td>
 

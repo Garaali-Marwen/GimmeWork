@@ -43,6 +43,7 @@ public class OffrePublicService {
         Element  imageElement=offer.getElementsByTag("img").get(0);
         String absoluteUrl = imageElement.absUrl("src");  //absolute URL on src
         o.setImage(absoluteUrl);
+        o.setSource("keejob");
         return o;
     }
 
@@ -68,6 +69,7 @@ public class OffrePublicService {
         String linkHref = link.attr("href");
         linkHref="https://www.optioncarriere.tn"+linkHref;
         o.setLink(linkHref);
+        o.setSource("OtionCarriere");
 
         return o;
     }
@@ -174,6 +176,7 @@ public class OffrePublicService {
         Elements elements = offer.getElementsByTag("a");
         String companyName = elements.get(1).text();
         o.setCompany(companyName);
+        o.setSource("Linkedin");
         return o;
     }
 

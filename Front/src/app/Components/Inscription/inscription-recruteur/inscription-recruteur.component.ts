@@ -4,7 +4,7 @@ import {Recruteur} from "../../../Entity/Recruteur";
 import {NgForm} from "@angular/forms";
 import {RecruteurService} from "../../../Services/recruteur.service";
 import {HttpErrorResponse} from "@angular/common/http";
-import {Image} from "../../../Entity/Image";
+import {Image} from "../../../Entity/image";
 
 @Component({
   selector: 'app-inscription-recruteur',
