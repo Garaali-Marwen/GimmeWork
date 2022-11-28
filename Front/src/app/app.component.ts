@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserAuthentificationService} from "./Services/user-authentification.service";
 import {Router} from "@angular/router";
 
@@ -7,12 +7,16 @@ import {Router} from "@angular/router";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'Front';
 
   constructor(private userAuthentificationService: UserAuthentificationService,
               public router: Router){}
 
+  public role: string= "";
+  ngOnInit(): void {
+    this.role= this.userAuthentificationService.getRole();
+  }
   public isLogedIn(){
     return this.userAuthentificationService.isLoggedIn();
   }

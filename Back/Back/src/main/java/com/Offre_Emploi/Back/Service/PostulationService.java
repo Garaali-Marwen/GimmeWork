@@ -2,6 +2,7 @@ package com.Offre_Emploi.Back.Service;
 
 import com.Offre_Emploi.Back.Entity.Candidat;
 import com.Offre_Emploi.Back.Entity.Postulation;
+import com.Offre_Emploi.Back.Repository.CandidatRepository;
 import com.Offre_Emploi.Back.Repository.PostulationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,9 @@ public class PostulationService {
 
     @Autowired
     private PostulationRepository postulationRepository;
+    @Autowired
+    private CandidatRepository candidatRepository;
+
     public Postulation addPostulation(Postulation postulation){
         return postulationRepository.save(postulation);
     }
@@ -33,6 +37,13 @@ public class PostulationService {
 
     @Transactional
     public Postulation updatePostulationCV(Postulation postulation) {
+        Postulation postulationUpdate = postulationRepository.findById(postulation.getId()).orElse(null);
+        postulationUpdate.setCv(postulation.getCv());
+        return postulationUpdate;
+    }
+
+    @Transactional
+    public Postulation updatePostulationCVUserCV(Postulation postulation) {
         Postulation postulationUpdate = postulationRepository.findById(postulation.getId()).orElse(null);
         postulationUpdate.setCv(postulation.getCv());
         return postulationUpdate;

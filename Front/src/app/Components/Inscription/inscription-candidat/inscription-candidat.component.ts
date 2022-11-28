@@ -12,7 +12,7 @@ import {Image} from "../../../Entity/image";
 })
 export class InscriptionCandidatComponent implements OnInit {
 
-  candidat: Candidat= {
+  candidat: any= {
     id: 0,
     nom: "",
     prenom: "",
@@ -24,14 +24,6 @@ export class InscriptionCandidatComponent implements OnInit {
     image: {
       file : new File([],""),
       url : ""
-    },
-    cv: {
-      file : new File([],""),
-      url : ""
-    },
-    lettre_motivation: {
-      file: new File([], ""),
-      url: ""
     },
     competances: [],
     formations: [],

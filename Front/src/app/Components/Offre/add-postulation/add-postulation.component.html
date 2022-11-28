@@ -1,18 +1,22 @@
-<h1 style="color: #3f51b4">Veuiller ajouter votre CV et une lettre de motivation</h1>
+<mat-card-title style="color: #3f51b4; margin-bottom: 50px">Veuiller ajouter votre CV et une lettre de motivation</mat-card-title>
 <div style="display: flex; align-items: center; justify-content: space-around;text-align: center; width: content-box">
-    <label for="file1" class="label-file" (dragover)="onDragOverCV($event)" (drop)="onDropSuccessCV($event)">
-        CV<span class="material-symbols-outlined">note_add</span>
-    </label>
-    <input id="file1" class="input-file" type="file" (change)="onChangeCV($event)">
+    <div style="text-align: center">
+        <label for="file1" class="label-file" (dragover)="onDragOverCV($event)" (drop)="onDropSuccessCV($event)">
+            CV<span class="material-symbols-outlined">note_add</span>
+        </label>
+        <input id="file1" class="input-file" type="file" accept="application/pdf" (change)="onChangeCV($event)">
+ </div>
 
-    <label for="file2" class="label-file" (dragover)="onDragOverLM($event)" (drop)="onDropSuccessLM($event)">
-        <p>Lettre de motivation<span class="material-symbols-outlined">note_add</span></p>
-    </label>
-    <input id="file2" class="input-file" type="file" (change)="onChangeLM($event)">
+    <div style="text-align: center">
+        <label for="file2" class="label-file" (dragover)="onDragOverLM($event)" (drop)="onDropSuccessLM($event)">
+            <p>Lettre de motivation<span class="material-symbols-outlined">note_add</span></p>
+        </label>
+        <input id="file2" class="input-file" type="file" accept="application/pdf" (change)="onChangeLM($event)">
+    </div>
 </div>
 
 
 <div style="text-align: center; width: content-box; margin-top: 50px">
-    <button mat-button> Annumer</button>
-    <button mat-button [disabled]="!ajoutLM || !ajoutCV" (click)="addPostulation(data.candidatId, data.offreId)"> Confirmer</button>
+    <button mat-button mat-dialog-close> Annuler</button>
+    <button mat-button [disabled]="confirm()" (click)="addPostulation(data.candidatId, data.offreId)"> Confirmer</button>
 </div>

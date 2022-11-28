@@ -45,4 +45,8 @@ export class UserAuthentificationService {
   public findUserById(id: number): Observable<any>{
     return this.http.get<any>(`${this.apiServerUrl}/user/get/${id}`);
   }
+
+  public getAllUsers(): Observable<any[]>{
+    return this.http.get<any[]>(`${this.apiServerUrl}/user/get/all`);
+  }
 }

@@ -6,6 +6,8 @@ import com.Offre_Emploi.Back.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -29,5 +31,9 @@ public class UserService {
 
     public User getUser(Long idUser){
         return userRepository.findById(idUser).orElse(null);
+    }
+
+    public List<User> getUsers(){
+        return userRepository.findAll();
     }
 }

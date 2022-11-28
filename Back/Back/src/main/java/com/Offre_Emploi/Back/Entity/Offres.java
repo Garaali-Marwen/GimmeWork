@@ -2,6 +2,7 @@ package com.Offre_Emploi.Back.Entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,8 +13,8 @@ public class Offres {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String titre;
-    private String date_ajout;
-    private String date_expiration;
+    private LocalDate date_ajout;
+    private LocalDate date_expiration;
     @Column(length = 5000)
     private String description;
     private String domaine;

@@ -77,7 +77,7 @@
             </mat-card-content>
             <mat-card-footer style="height: 40px" *ngIf="role != 'Recruteur'">
                 <mat-divider style="margin-bottom: 3px"></mat-divider>
-                <button *ngIf="role != 'Recruteur' && postuler == true" mat-button (click)="addPostulation(id,offre.id)"
+                <button *ngIf="role != 'Recruteur' && role!='Admin' && postuler == true" mat-button (click)="addPostulation(id,offre.id)"
                         style="position: absolute; right: 20px;height: 30px;display: flex;align-items: center; background-color: rgba(194,194,194,0.24); font-weight: bold; color: #3f51b4">
                     Postuler
                 </button>
@@ -116,11 +116,13 @@
                      style="width: 100px; height: 100px;border: #c2c2c2 solid 3px;border-radius: 50%;">
                 <div style="position: absolute;top: 20px; right: 20px">
                     <button mat-icon-button *ngIf="candidat.value.decision_recruteur == 'en attente'"
+                            matTooltip="Refuser"
                             (click)="updatePostulation('Refusé',candidat.value.id)">
                         <mat-icon color="warn"><span class="material-symbols-outlined">do_not_disturb_on</span>
                         </mat-icon>
                     </button>
                     <button mat-icon-button *ngIf="candidat.value.decision_recruteur == 'en attente'"
+                            matTooltip="Accepter"
                             (click)="updatePostulation('Accepté',candidat.value.id)">
                         <mat-icon><span style="color: #1eb91e" class="material-symbols-outlined">check_circle</span>
                         </mat-icon>
@@ -153,28 +155,44 @@
                     </mat-card-content>
                 </div>
                 <br>
-                <mat-card-footer style="height: 40px; padding-left: 20px">
+                <mat-card-footer style="height: 40px;">
                     <mat-divider style="margin-bottom: 1px"></mat-divider>
-                    <button mat-icon-button (click)="afficherProfile(candidat.key.id)">
-                        <mat-icon color="primary"><span class="material-symbols-outlined">account_circle</span>
-                        </mat-icon>
-                        <span style="color: #3f51b4">Consulter le profil</span>
-                    </button>
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding-right: 20px; padding-left: 20px">
+                        <button mat-icon-button (click)="afficherProfile(candidat.key.id)">
+                            <mat-icon color="primary">
+                                <span class="material-symbols-outlined">account_circle</span>
+                            </mat-icon>
+                            <span style="color: #3f51b4">Consulter le profil</span>
+                        </button>
+                        <p style="margin-top: 10px">{{candidat.value.date_postulation | date: 'dd-MM-yyyy'}}</p>
+                    </div>
                 </mat-card-footer>
 
-               <div style="display: flex; width: 390px; justify-content: space-around">
-                   <pdf-viewer (click)="afficherLM(candidat.value.lettre_motivation.url.changingThisBreaksApplicationSecurity)"
-                               [src]="candidat.value.lettre_motivation.url.changingThisBreaksApplicationSecurity"
-                               [render-text]="false"
-                               [original-size]="false"
-                               style="width: 170px; height: 300px;cursor: pointer">
-                   </pdf-viewer>
-                   <pdf-viewer id="tst" (click)="afficherCV(candidat.value.cv.url.changingThisBreaksApplicationSecurity)"
-                               [src]="candidat.value.cv.url.changingThisBreaksApplicationSecurity"
-                               [render-text]="false"
-                               [original-size]="false"
-                               style="width: 170px; height: 300px; cursor: pointer;">
-                   </pdf-viewer>
+               <div style="display: flex; width: 390px; justify-content: space-around; position: relative;margin-bottom: 10px">
+                   <div class="card">
+                       <pdf-viewer [src]="candidat.value.lettre_motivation.url.changingThisBreaksApplicationSecurity"
+                                   [render-text]="false"
+                                   [original-size]="false"
+                                   style="width: 170px; height: 255px;">
+                       </pdf-viewer>
+                   </div>
+                   <div class="card">
+                       <pdf-viewer id="tst" [src]="candidat.value.cv.url.changingThisBreaksApplicationSecurity"
+                                   [render-text]="false"
+                                   [original-size]="false"
+                                   style="width: 170px; height: 255px;">
+                       </pdf-viewer>
+                   </div>
+                   <button mat-icon-button color="primary" style="position: absolute;right: 10px"
+                           matTooltip="Ouvrir"
+                           (click)="afficherCV(candidat.value.cv.url.changingThisBreaksApplicationSecurity)">
+                       <span class="material-symbols-outlined">open_in_new</span>
+                   </button>
+                   <button mat-icon-button color="primary" style="position: absolute;left: 145px"
+                           matTooltip="Ouvrir"
+                           (click)="afficherLM(candidat.value.lettre_motivation.url.changingThisBreaksApplicationSecurity)">
+                       <span class="material-symbols-outlined">open_in_new</span>
+                   </button>
                </div>
 
             </mat-card>

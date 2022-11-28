@@ -47,17 +47,20 @@
         <mat-card style="margin: 5px"><table style="width: 400px"><tr><td>Adresse</td><td style="text-transform: capitalize;">{{user.adresse}}</td></tr></table></mat-card>
     </mat-card>
 
-    <app-competances *ngIf="role == 'Condidat'"></app-competances>
+    <app-competances  *ngIf="role == 'Condidat'"></app-competances>
 
     <app-formations *ngIf="role == 'Condidat'"></app-formations>
 
-    <app-postulation-candidat *ngIf="role == 'Condidat' && isLogedIn() && proprietaireCompte()"></app-postulation-candidat>
+    <app-postulation-candidat
+            *ngIf="(role == 'Condidat' && isLogedIn() && proprietaireCompte()) || roleUserConnecte == 'Admin'">
+    </app-postulation-candidat>
 
-    <mat-card style="width: 750px;margin: 10px;" *ngIf="role == 'Condidat' && isLogedIn() && proprietaireCompte()">
+    <mat-card style="width: 750px;margin: 10px;" *ngIf="(role == 'Condidat' && isLogedIn() && proprietaireCompte()) || (roleUserConnecte == 'Admin' && role == 'Condidat')">
         <div style="display: flex; justify-content: space-between;align-items: center">
             <mat-card-title>Documents</mat-card-title>
 
-            <button mat-icon-button [matMenuTriggerFor]="menuDoc" matTooltip="Ajouter un document" *ngIf="isLogedIn() && proprietaireCompte() && !user.cv && !user.lettre_motivation">
+            <button mat-icon-button [matMenuTriggerFor]="menuDoc" matTooltip="Ajouter un document"
+                    *ngIf="isLogedIn() && proprietaireCompte() && (!user.cv || !user.lettre_motivation)">
                 <span class="material-symbols-outlined">add_circle</span>
             </button>
             <mat-menu #menuDoc="matMenu">
@@ -82,7 +85,9 @@
                     <mat-card-title style="color: #3f51b4">CV</mat-card-title>
                     <div style="display: flex; align-items: center; justify-content: right;">
 
-                        <label class="lab" style="display: flex; align-items: center;margin-bottom: 0; margin-left: 7px; margin-right: 7px">
+                        <label class="lab"
+                               *ngIf="role == 'Condidat' && isLogedIn() && proprietaireCompte()"
+                               style="display: flex; align-items: center;margin-bottom: 0; margin-left: 7px; margin-right: 7px">
                             <mat-icon color="primary"><span matTooltip="Modifier" class="material-symbols-outlined">edit</span></mat-icon>
                             <input class="inputTag" name="cv" type="file" accept="application/pdf" (change)="updateCv($event)"/>
                         </label>
@@ -97,7 +102,7 @@
                 </div>
 
 
-                <pdf-viewer *ngIf="role == 'Condidat' && isLogedIn() && proprietaireCompte()"
+                <pdf-viewer *ngIf="role == 'Condidat' && isLogedIn() && proprietaireCompte() || roleUserConnecte == 'Admin'"
                             [src]="user.cv.url.changingThisBreaksApplicationSecurity"
                             [render-text]="true"
                             [original-size]="false"
@@ -114,7 +119,9 @@
                     <mat-card-title style="color: #3f51b4">LM</mat-card-title>
                     <div style="display: flex; align-items: center; justify-content: right;">
 
-                        <label class="lab" style="display: flex; align-items: center;margin-bottom: 0; margin-left: 7px; margin-right: 7px">
+                        <label class="lab"
+                               *ngIf="role == 'Condidat' && isLogedIn() && proprietaireCompte()"
+                               style="display: flex; align-items: center;margin-bottom: 0; margin-left: 7px; margin-right: 7px">
                             <mat-icon color="primary"><span matTooltip="Modifier" class="material-symbols-outlined">edit</span></mat-icon>
                             <input class="inputTag" name="lettre_motivation" accept="application/pdf" type="file" (change)="updateLm($event)"/>
                         </label>
@@ -129,7 +136,7 @@
                 </div>
 
 
-                <pdf-viewer *ngIf="role == 'Condidat' && isLogedIn() && proprietaireCompte()"
+                <pdf-viewer *ngIf="role == 'Condidat' && isLogedIn() && proprietaireCompte() || roleUserConnecte == 'Admin'"
                             [src]="user.lettre_motivation.url.changingThisBreaksApplicationSecurity"
                             [render-text]="true"
                             [original-size]="false"

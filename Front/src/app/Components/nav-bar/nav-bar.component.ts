@@ -39,16 +39,21 @@ export class NavBarComponent implements OnInit {
       file : new File([],""),
       url : ""
     },
-    lettre_motivation: [],
+    lettre_motivation: {
+      file : new File([],""),
+      url : ""
+    },
     competances: [],
     formations: []
   }
   private idUser: number = 0;
-
+  public role: string = "";
   ngOnInit(): void {
-    if (this.isLogedIn()){
+    if (this.isLogedIn() && this.userAuthentificationService.getRole() != 'Admin'){
       this.getUser();
     }
+    this.role= this.userAuthentificationService.getRole();
+
   }
 
   openDialog() {
@@ -70,20 +75,9 @@ export class NavBarComponent implements OnInit {
   public logout(){
     this.userAuthentificationService.clear();
     this.router.navigate(['/']);
-  }
-
-  public isRecruteur(){
-    const role = this.userAuthentificationService.getRole();
-    if (role == 'Recruteur')
-      return true;
-    else return false;
-  }
-
-  public isCandidat(){
-    const role = this.userAuthentificationService.getRole();
-    if (role == 'Condidat')
-      return true;
-    else return false;
+    setTimeout(function(){
+      window.location.reload();
+    }, 1);
   }
 
   public afficherProfile() {

@@ -38,4 +38,8 @@ export class PostulationService {
     return this.http.put<Postulation>(`${this.apiServerUrl}/postulation/update/lm`, postulation);
   }
 
+  public updatePostulationCVCandidatCV(postulation: Postulation): Observable<Postulation>{
+    return this.http.put<Postulation>(`${this.apiServerUrl}/postulation/update/cv/candidat/cv`, postulation);
+  }
+
 }

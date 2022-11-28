@@ -9,25 +9,23 @@ import {Recruteur} from "../../../Entity/Recruteur";
 import {MatDialog} from "@angular/material/dialog";
 import {ValiderSuppressionComponent} from "../valider-suppression/valider-suppression.component";
 import {ActivatedRoute, Router} from "@angular/router";
-import {ModifierDonneesComponent} from "../../Profiles/modifier-donnees/modifier-donnees.component";
 import {ModifierOffreComponent} from "../modifier-offre/modifier-offre.component";
+import {DatePipe} from "@angular/common";
 @Component({
   selector: 'app-offres',
   templateUrl: './offres.component.html',
-  styleUrls: ['./offres.component.css']
+  styleUrls: ['./offres.component.css'],
+    providers: [DatePipe]
 })
 export class OffresComponent implements OnInit {
 
     centered = false;
     disabled = false;
-    unbounded = false;
 
-    maDate = new Date();
-    d = this.maDate.getFullYear().toString()+'-'+this.maDate.getMonth().toString()+'-'+this.maDate.getDate().toString();
     public offre: Offres = {
         id: 0,
         titre: "",
-        date_ajout: this.d,
+        date_ajout: "",
         date_expiration: "",
         description: "",
         domaine: "",
@@ -45,12 +43,17 @@ export class OffresComponent implements OnInit {
     public idUser = 0;
     private idUserConnecte = 0;
     public recruteur: any;
+    myDate = new Date();
+    date: any;
       constructor(private userAuthentificationService:UserAuthentificationService,
                   private offreService: OffreService,
                   private recruteurService: RecruteurService,
                   public dialog: MatDialog,
                   private route: ActivatedRoute,
-                  private router: Router) {}
+                  private router: Router,
+                  private datePipe: DatePipe){
+          this.date = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
+      }
 
 
 
@@ -94,6 +97,7 @@ export class OffresComponent implements OnInit {
       }
 
       public addOffres(addForm: NgForm) {
+          this.offre.date_ajout = this.date;
         this.offreService.addOffre(this.offre).subscribe(
             (response: Offres) => {
               this.addOffreToRecruteur(this.userAuthentificationService.getUserId(), response.id)

@@ -57,6 +57,7 @@ export class ProfileComponent implements OnInit {
     centered = false;
     unbounded = false;
     disabled = false;
+    roleUserConnecte = "";
 
   constructor(private userAuthentificationService:UserAuthentificationService,
               private candidatService: CandidatService,
@@ -75,6 +76,7 @@ export class ProfileComponent implements OnInit {
       if (this.userAuthentificationService.getRole()=='Condidat'){
           this.getUserCvLmId();
       }
+      this.roleUserConnecte = this.userAuthentificationService.getRole();
   }
 
     public isLogedIn(){

@@ -54,6 +54,12 @@ import {NgxPaginationModule} from "ngx-pagination";
 import {PdfViewerModule} from "ng2-pdf-viewer";
 import { AddPostulationComponent } from './Components/Offre/add-postulation/add-postulation.component';
 import { FooterComponent } from './Components/footer/footer.component';
+import { UtilisateursComponent } from './Components/Admin/utilisateurs/utilisateurs.component';
+import { ValiderSuppressionUserComponent } from './Components/Admin/valider-suppression-user/valider-suppression-user.component';
+import { StatistiquesComponent } from './Components/Admin/Statis/statistiques/statistiques.component';
+import { TestComponent } from './test/test.component';
+import { AreaChartsBasicComponent } from './Components/Admin/Statis/area-charts-basic/area-charts-basic.component';
+import {NgApexchartsModule} from "ng-apexcharts";
 
 @NgModule({
   declarations: [
@@ -82,6 +88,11 @@ import { FooterComponent } from './Components/footer/footer.component';
     AfficherOffresPublicComponent,
     AddPostulationComponent,
     FooterComponent,
+    UtilisateursComponent,
+    ValiderSuppressionUserComponent,
+    StatistiquesComponent,
+    TestComponent,
+    AreaChartsBasicComponent,
   ],
     imports: [
         BrowserModule,
@@ -113,6 +124,7 @@ import { FooterComponent } from './Components/footer/footer.component';
         MatTabsModule,
         NgxPaginationModule,
         PdfViewerModule,
+        NgApexchartsModule,
     ],
   providers: [
       FormationService

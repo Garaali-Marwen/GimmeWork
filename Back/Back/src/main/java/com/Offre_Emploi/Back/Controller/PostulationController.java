@@ -55,6 +55,11 @@ public class PostulationController {
         }
     }
 
+    @PutMapping(value = "/update/cv/candidat/cv")
+    public Postulation updatePostulationCvCandidatCV(@RequestBody Postulation postulation) {
+        return postulationService.updatePostulationCVUserCV(postulation);
+    }
+
     @PutMapping(value = "/update/lm", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public Postulation updatePostulationLm(@RequestPart("postulation") Postulation postulation,
                                            @RequestPart("lm") MultipartFile file) {
