@@ -32,6 +32,12 @@ public class OffrePriveController {
         return new ResponseEntity<>(offres1, HttpStatus.OK);
     }
 
+    @GetMapping("/all/cy")
+    public ResponseEntity<List<Offres>> getAllOffresByYear(){
+        List<Offres> offres1 = offresPriveService.getOffresAnneeCourante();
+        return new ResponseEntity<>(offres1, HttpStatus.OK);
+    }
+
     @GetMapping("/{recruteurId}/{offreId}")
     public ResponseEntity<Recruteur> addOffreToRecruteur(@PathVariable("recruteurId") long recruteurId, @PathVariable("offreId") long offreId) {
         offresPriveService.addOffreToRecruteur(recruteurId,offreId);

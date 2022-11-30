@@ -27,6 +27,10 @@ export class OffreService {
     return this.http.delete<void>(`${this.apiServerUrl}/offres/delete/${offreId}`);
   }
 
+  public getOffresByYear(): Observable<Offres[]>{
+    return this.http.get<Offres[]>(`${this.apiServerUrl}/offres/all/cy`);
+  }
+
   public getOffres(): Observable<Offres[]>{
     return this.http.get<Offres[]>(`${this.apiServerUrl}/offres/all`);
   }

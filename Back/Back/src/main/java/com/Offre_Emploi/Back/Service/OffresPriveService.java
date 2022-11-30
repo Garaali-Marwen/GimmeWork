@@ -9,11 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Year;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class OffresPriveService {
 
+    int year = Year.now().getValue();
     @Autowired
     private OffrePriveRepository offrePriveRepository;
     @Autowired
@@ -65,5 +68,18 @@ public class OffresPriveService {
     public Offres findOffresByIdPostulation(Long id){
         return offrePriveRepository.getOffresByPostulationsId(id);
     }
+
+
+    public List<Offres> getOffresAnneeCourante(){
+        List<Offres> offres = offrePriveRepository.findAll();
+        List<Offres> o = new ArrayList<>();
+        for (Offres offre : offres){
+            if (offre.getDate_ajout().getYear() == year){
+                o.add(offre);
+            }
+        }
+        return o;
+    }
+
 
 }

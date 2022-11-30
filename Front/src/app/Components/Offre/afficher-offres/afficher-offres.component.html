@@ -173,8 +173,17 @@
                     <pagination-controls (pageChange)="p = $event" id="no" *ngIf="Offres.size>4"></pagination-controls>
                 </div>
             </mat-tab>
+
             <mat-tab label="Keejob">
                 <app-afficher-offres-public></app-afficher-offres-public>
+            </mat-tab>
+            app-afficher-offres-linkedin
+            <mat-tab label="Option Carrier">
+                <app-afficher-offres-option-carrier></app-afficher-offres-option-carrier>
+            </mat-tab>
+
+            <mat-tab label="Linkedin">
+                <app-afficher-offres-linkedin></app-afficher-offres-linkedin>
             </mat-tab>
         </mat-tab-group>
 

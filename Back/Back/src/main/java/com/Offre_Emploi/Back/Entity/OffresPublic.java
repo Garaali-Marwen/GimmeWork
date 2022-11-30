@@ -19,6 +19,9 @@ public class OffresPublic {
     private String type;
     private String sector;
     private String source;
+    private String availablity;
+    private String description;
+    private String details_offre;
 
 
 }

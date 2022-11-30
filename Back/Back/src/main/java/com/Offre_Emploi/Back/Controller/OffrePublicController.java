@@ -27,6 +27,7 @@ public class OffrePublicController {
         offresPublics.addAll(offrePublicService.getPrivateOffre());
         //offresPublics.addAll(offrePublicService.getPrivateOffreFromLinkedin());
         offresPublics.addAll(offrePublicService.getPrivateOffreFromOtionCarriere());
+        offresPublics.addAll(offrePublicService.getPrivateOffreFromLinkedin());
         /*for (OffresPublic o : offresPublics){
             offrePublicService.setDetails_kj(o);
         }

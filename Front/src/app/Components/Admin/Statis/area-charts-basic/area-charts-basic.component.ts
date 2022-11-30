@@ -38,6 +38,8 @@ export class AreaChartsBasicComponent implements OnInit {
   annee: number = new Date().getFullYear();
   offres: Offres[] = [];
   offrePourcentage!: number[];
+
+
   ngOnInit(): void {
     this.getOffres();
   }
@@ -45,30 +47,28 @@ export class AreaChartsBasicComponent implements OnInit {
   constructor(private offreService: OffreService) {}
 
   public getOffres(): void{
-    this.offreService.getOffres().subscribe(
+    this.offreService.getOffresByYear().subscribe(
             (responce:Offres[]) => {
-              /*this.offres = responce;
+              this.offres = responce;
               this.offrePourcentage = [];
-              let a = 1;
-              let b = 2;
-              for (let j=0;j<10; j++){
+              let m = 1;
+              for (let j=0;j<12; j++){
                 var n = 0;
                 for (let offre of this.offres){
-                  if((offre.date_ajout <= "01-01-"+this.annee) && (offre.date_ajout < "01-12-"+this.annee)){
+                  const [year, month, day] = offre.date_ajout.split('-');
+                  if(Number(month) == m){
                     n++;
                   }
                 }
                 this.offrePourcentage.push(Math.round((100/(this.offres.length/n))*100)/100);
-                a+=1;
-                b+=1;
+                m+=1;
               }
-              console.log(this.offrePourcentage)*/
 
               this.chartOptions = {
                 series: [
                   {
-                    name: "Inflation",
-                    data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5, 0.2]
+                    name: "Offre",
+                    data: this.offrePourcentage
                   }
                 ],
                 chart: {
