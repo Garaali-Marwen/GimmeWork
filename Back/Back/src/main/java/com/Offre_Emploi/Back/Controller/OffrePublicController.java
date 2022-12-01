@@ -20,24 +20,19 @@ public class OffrePublicController {
     private OffrePublicService offrePublicService;
 
 
-    @GetMapping("/all")
-    public List<OffresPublic> getAllCandidat() throws IOException {
-        List<OffresPublic> offresPublics = new ArrayList<>();
-        //List<OffresPublic> oc = new ArrayList<>();
-        offresPublics.addAll(offrePublicService.getPrivateOffre());
-        //offresPublics.addAll(offrePublicService.getPrivateOffreFromLinkedin());
-        offresPublics.addAll(offrePublicService.getPrivateOffreFromOtionCarriere());
-        offresPublics.addAll(offrePublicService.getPrivateOffreFromLinkedin());
-        /*for (OffresPublic o : offresPublics){
-            offrePublicService.setDetails_kj(o);
-        }
-        oc.addAll(offrePublicService.getPrivateOffreFromOtionCarriere());
-        for (OffresPublic of : oc){
-            offrePublicService.setDetails_oc(of);
-        }
-        offresPublics.addAll(oc);*/
-        //offresPublics.addAll(offrePublicService.getPrivateOffreFromLinkedin());
-        return offresPublics;
+    @GetMapping("/keejob")
+    public List<OffresPublic> getkeejobOffres() throws IOException {
+        return offrePublicService.getPrivateOffre();
+    }
+
+    @GetMapping("/optioncarrier")
+    public List<OffresPublic> getOptioncarrierOffres() throws IOException {
+        return offrePublicService.getPrivateOffreFromOtionCarriere();
+    }
+
+    @GetMapping("/linkedin")
+    public List<OffresPublic> getLinkedinOffres() throws IOException {
+        return offrePublicService.getPrivateOffreFromLinkedin();
     }
 
 

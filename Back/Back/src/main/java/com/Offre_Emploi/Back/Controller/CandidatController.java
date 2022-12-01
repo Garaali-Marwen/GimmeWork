@@ -2,8 +2,10 @@ package com.Offre_Emploi.Back.Controller;
 
 import com.Offre_Emploi.Back.Entity.Candidat;
 import com.Offre_Emploi.Back.Entity.File;
+import com.Offre_Emploi.Back.Entity.Offres;
 import com.Offre_Emploi.Back.Service.CandidatService;
 import com.Offre_Emploi.Back.Service.FileService;
+import com.Offre_Emploi.Back.Service.OffresPriveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,6 +24,8 @@ public class CandidatController {
     private CandidatService candidatService;
     @Autowired
     private FileService fileService;
+    @Autowired
+    private OffresPriveService offresPriveService;
 
     @PostMapping("/add")
     public Candidat addCandidat(@RequestBody Candidat candidat){
@@ -48,7 +52,10 @@ public class CandidatController {
         candidatService.deleteCandidat(id);
     }
 
-
+    @GetMapping("/offre_rec/{id}")
+    public List<Offres> findByIdOFR(@PathVariable("id") Long id) {
+        return offresPriveService.getlist_offre_recommande(id);
+    }
 
     @PostMapping(value = "/add", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public Candidat addCandidat(@RequestPart("candidat") Candidat candidat,

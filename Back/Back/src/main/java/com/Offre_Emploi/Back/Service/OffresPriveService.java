@@ -1,8 +1,6 @@
 package com.Offre_Emploi.Back.Service;
 
-import com.Offre_Emploi.Back.Entity.Candidat;
-import com.Offre_Emploi.Back.Entity.Offres;
-import com.Offre_Emploi.Back.Entity.Recruteur;
+import com.Offre_Emploi.Back.Entity.*;
 import com.Offre_Emploi.Back.Repository.OffrePriveRepository;
 import com.Offre_Emploi.Back.Repository.RecruteurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class OffresPriveService {
 
     int year = Year.now().getValue();
+    private int e1;
+    private int e2;
+    @Autowired
+    private CandidatService candidatService;
     @Autowired
     private OffrePriveRepository offrePriveRepository;
     @Autowired
@@ -80,6 +83,33 @@ public class OffresPriveService {
         }
         return o;
     }
+
+
+    public List<Offres> getlist_offre_recommande(long id_candidat) {
+        List<Offres> l = getOffres();
+        List<Offres> offre_recommandations = new ArrayList<>();
+        Candidat candidat = candidatService.findCandidatById(id_candidat);
+        Neurone n = new Neurone(0.6, 0.3, 0.8);
+        Set<Competance> list_competence_candidat = candidat.getCompetances();
+
+        for (Competance c : list_competence_candidat) {
+            for (Offres o : l) {
+                if (o.getDescription().toLowerCase().contains(c.getNom().toLowerCase()))
+                    e1 = 1;
+                if (o.getDescription().toLowerCase().contains(c.getNom().toLowerCase()) & (c.getNiveau() > 40))
+                    e2 = 1;
+                if (n.evaluer(e1, e2)) {
+                    boolean isExisteOffre = offre_recommandations.contains(o);
+                    if(!isExisteOffre) offre_recommandations.add(o);
+                }
+
+                e1 = 0;
+                e2 = 0;
+            }
+        }
+        return offre_recommandations;
+    }
+
 
 
 }

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {OffresPublic} from "../../../Entity/OffresPublic";
 import {OffrePublicService} from "../../../Services/offre-public.service";
 import {HttpErrorResponse} from "@angular/common/http";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-afficher-offres-public',
@@ -16,8 +15,7 @@ export class AfficherOffresPublicComponent implements OnInit {
   checked = false;
   disabled = false;
   public OffresPublic: OffresPublic[] = [];
-  constructor(private offrePublicService: OffrePublicService,
-              private router: Router) { }
+  constructor(private offrePublicService: OffrePublicService) {}
 
 
   p: number = 1;
@@ -28,14 +26,10 @@ export class AfficherOffresPublicComponent implements OnInit {
   }
 
   public getOffresPublic(): void{
-    this.offrePublicService.getOffresPublic()
+    this.offrePublicService.getOffresKeejob()
         .subscribe(
             (responce:OffresPublic[]) => {
-              for (let o of responce){
-                if (o.source == 'keejob')
-                  this.OffresPublic.push(o);
-              }
-
+              this.OffresPublic = responce;
             },
             (error: HttpErrorResponse) => {
               alert(error.message);

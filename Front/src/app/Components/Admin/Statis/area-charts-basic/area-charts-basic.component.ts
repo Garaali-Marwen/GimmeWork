@@ -111,7 +111,7 @@ export class AreaChartsBasicComponent implements OnInit {
                   ],
                   position: "top",
                   labels: {
-                    offsetY: -18
+                    offsetY: -10
                   },
                   axisBorder: {
                     show: false
@@ -164,7 +164,7 @@ export class AreaChartsBasicComponent implements OnInit {
                   }
                 },
                 title: {
-                  text: "Offres ajoutées par mois pour l'année " + this.annee,
+                  text: "",
                   floating: 0,
                   offsetY: 320,
                   align: "center",

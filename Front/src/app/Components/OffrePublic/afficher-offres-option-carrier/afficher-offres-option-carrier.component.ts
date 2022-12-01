@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {OffrePublicService} from "../../../Services/offre-public.service";
-import {Router} from "@angular/router";
 import {HttpErrorResponse} from "@angular/common/http";
 import {OffresPublic} from "../../../Entity/OffresPublic";
 
@@ -16,8 +15,7 @@ export class AfficherOffresOptionCarrierComponent implements OnInit {
   checked = false;
   disabled = false;
   public OffresPublic: OffresPublic[] = [];
-  constructor(private offrePublicService: OffrePublicService,
-              private router: Router) { }
+  constructor(private offrePublicService: OffrePublicService) {}
 
 
   p: number = 1;
@@ -28,14 +26,10 @@ export class AfficherOffresOptionCarrierComponent implements OnInit {
   }
 
   public getOffresPublic(): void{
-    this.offrePublicService.getOffresPublic()
+    this.offrePublicService.getOffresOptioncarrier()
         .subscribe(
             (responce:OffresPublic[]) => {
-              for (let o of responce){
-                if (o.source == 'OtionCarriere')
-                  this.OffresPublic.push(o);
-              }
-
+              this.OffresPublic = responce
             },
             (error: HttpErrorResponse) => {
               alert(error.message);

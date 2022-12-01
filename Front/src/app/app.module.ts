@@ -60,10 +60,17 @@ import { StatistiquesComponent } from './Components/Admin/Statis/statistiques/st
 import { TestComponent } from './test/test.component';
 import { AreaChartsBasicComponent } from './Components/Admin/Statis/area-charts-basic/area-charts-basic.component';
 import {NgApexchartsModule} from "ng-apexcharts";
-import { AfficherOffresOptionCarrierComponent } from './Components/Offre/afficher-offres-option-carrier/afficher-offres-option-carrier.component';
-import { AfficherOffresLinkedinComponent } from './Components/Offre/afficher-offres-linkedin/afficher-offres-linkedin.component';
+import { AfficherOffresOptionCarrierComponent } from './Components/OffrePublic/afficher-offres-option-carrier/afficher-offres-option-carrier.component';
+import { AfficherOffresLinkedinComponent } from './Components/OffrePublic/afficher-offres-linkedin/afficher-offres-linkedin.component';
 import { AngleCircleComponent } from './Components/Admin/Statis/angle-circle/angle-circle.component';
 import { Test2Component } from './test2/test2.component';
+import { BarChartsBasicComponent } from './Components/Admin/Statis/bar-charts-basic/bar-charts-basic.component';
+import { FormulaireCVComponent } from './Components/CV/formulaire-cv/formulaire-cv.component';
+import { CvComponent } from './Components/CV/cv/cv.component';
+import { ModeleOneComponent } from './Components/CV/modele-one/modele-one.component';
+import { ModeleTwoComponent } from './Components/CV/modele-two/modele-two.component';
+import { OffresRecommanderComponent } from './Components/Offre/offres-recommander/offres-recommander.component';
+import { AideComponent } from './Components/aide/aide.component';
 
 @NgModule({
   declarations: [
@@ -101,6 +108,13 @@ import { Test2Component } from './test2/test2.component';
     AfficherOffresLinkedinComponent,
     AngleCircleComponent,
     Test2Component,
+    BarChartsBasicComponent,
+    FormulaireCVComponent,
+    CvComponent,
+    ModeleOneComponent,
+    ModeleTwoComponent,
+    OffresRecommanderComponent,
+    AideComponent,
   ],
     imports: [
         BrowserModule,

@@ -9,6 +9,10 @@
     </div>
 
     <div style="display: flex">
+        <button mat-button routerLink="/cv" *ngIf="role != 'Admin'">
+            <img src="assets/cv.png" style="width: 20px; height: 20px">
+            <span style="margin-left: 5px; color: #3f51b4; font-weight: bold">Creer votre CV</span>
+        </button>
         <button mat-button (click)="afficherOffre()">
             <mat-icon color="primary"><span class="material-symbols-outlined">work</span></mat-icon>
             <span style="margin-left: 5px; color: #3f51b4; font-weight: bold">Offres</span>

@@ -136,28 +136,24 @@ export class DetailOffreComponent implements OnInit {
         (responce:Offres) => {
               this.offre = responce;
               for (let i of this.offre.postulations){
-                this.candidatService.findCandidatsByIdPostulation(i.id)
-                    .pipe(map(p => this.imageService.createImage(p)))
-                    .subscribe(
-                        (responce:Candidat) => {
-                            this.candidatPostulation.set(responce,i);
-                            this.candidatRefuser=0;
-                            this.candidatAccepter=0;
-                            for (let x of this.candidatPostulation.values()){
-                                this.imageService.createCv(x)
-                                this.imageService.createLm(x)
-                                if (x.decision_recruteur == 'Accepté'){
-                                    this.candidatAccepter=1+this.candidatAccepter;
-                                }
-                                else if (x.decision_recruteur == 'Refusé'){
-                                    this.candidatRefuser=1+this.candidatRefuser;
-                                }
-                            }
-                        },
-                        (error: HttpErrorResponse) => {
-                            alert(error.message);
-                        }
-                    );
+                  this.imageService.createCv(i)
+                  this.imageService.createLm(i)
+                  if (i.decision_recruteur == 'Accepté'){
+                      this.candidatAccepter=1+this.candidatAccepter;
+                  }
+                  else if (i.decision_recruteur == 'Refusé'){
+                      this.candidatRefuser=1+this.candidatRefuser;
+                  }
+                  this.candidatService.findCandidatsByIdPostulation(i.id)
+                      .pipe(map(p => this.imageService.createImage(p)))
+                      .subscribe(
+                          (responce:Candidat) => {
+                              this.candidatPostulation.set(responce,i);
+                          },
+                          (error: HttpErrorResponse) => {
+                              alert(error.message);
+                          }
+                      );
             }
             },
             (error: HttpErrorResponse) => {

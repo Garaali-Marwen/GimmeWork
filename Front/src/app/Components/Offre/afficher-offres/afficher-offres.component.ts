@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 import {NgForm} from "@angular/forms";
 import {OffrePublicService} from "../../../Services/offre-public.service";
 import {OffresPublic} from "../../../Entity/OffresPublic";
+import {UserAuthentificationService} from "../../../Services/user-authentification.service";
 
 
 @Component({
@@ -60,15 +61,16 @@ export class AfficherOffresComponent implements OnInit {
     public aucuneOffre = false;
     public OffresPublic: OffresPublic[] = [];
     p: number = 1;
-
+    role = "";
   public Offres = new Map<Offres,Recruteur>;
   constructor(private recruteurService: RecruteurService,
               private imageService: ImageService,
               private router: Router,
-              private offrePublicService:OffrePublicService) { }
+              private userAuthentificationService: UserAuthentificationService) { }
 
   ngOnInit(): void {
     this.getRecruteurs();
+    this.role = this.userAuthentificationService.getRole();
   }
 
 

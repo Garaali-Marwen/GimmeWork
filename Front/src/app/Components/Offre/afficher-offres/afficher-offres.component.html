@@ -185,6 +185,11 @@
             <mat-tab label="Linkedin">
                 <app-afficher-offres-linkedin></app-afficher-offres-linkedin>
             </mat-tab>
+
+            <mat-tab label="Offres Recommandées" *ngIf="role == 'Condidat'">
+                <app-offres-recommander></app-offres-recommander>
+            </mat-tab>
+
         </mat-tab-group>
 
 

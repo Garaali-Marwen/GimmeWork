@@ -57,5 +57,9 @@ export class CandidatService {
     return this.http.get<Candidat>(`${this.apiServerUrl}/candidat/postulations/${id}`);
   }
 
+  public findOffresForCandidat(id: number): Observable<Offres[]>{
+    return this.http.get<Offres[]>(`${this.apiServerUrl}/candidat/offre_rec/${id}`);
+  }
+
 
 }

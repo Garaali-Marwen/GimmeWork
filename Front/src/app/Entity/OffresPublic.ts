@@ -8,4 +8,7 @@ export interface OffresPublic{
     type: string;
     sector: string;
     source: string;
+    availablity: string;
+    description:string;
+    details_offre:string;
 }

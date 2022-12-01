@@ -13,7 +13,13 @@ export class OffrePublicService {
 
   constructor(private http: HttpClient) { }
 
-  public getOffresPublic(): Observable<OffresPublic[]>{
-    return this.http.get<OffresPublic[]>(`${this.apiServerUrl}/offres/public/all`);
+  public getOffresKeejob(): Observable<OffresPublic[]>{
+    return this.http.get<OffresPublic[]>(`${this.apiServerUrl}/offres/public/keejob`);
+  }
+  public getOffresOptioncarrier(): Observable<OffresPublic[]>{
+    return this.http.get<OffresPublic[]>(`${this.apiServerUrl}/offres/public/optioncarrier`);
+  }
+  public getOffresLikedin(): Observable<OffresPublic[]>{
+    return this.http.get<OffresPublic[]>(`${this.apiServerUrl}/offres/public/linkedin`);
   }
 }

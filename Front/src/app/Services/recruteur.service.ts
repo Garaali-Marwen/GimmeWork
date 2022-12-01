@@ -2,10 +2,8 @@ import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Candidat} from "../Entity/Candidat";
 import {Recruteur} from "../Entity/Recruteur";
-import {Offres} from "../Entity/Offres";
-import {Formation} from "../Entity/Formation";
+
 
 @Injectable({
   providedIn: 'root'
