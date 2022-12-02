@@ -34,8 +34,8 @@ export class FormationService {
     return this.http.put<Formation>(`${this.apiServerUrl}/formation/update`, formation);
   }
 
-  public deleteFormation(formationId: number): Observable<void>{
-    return this.http.delete<void>(`${this.apiServerUrl}/formation/delete/${formationId}`);
+  public deleteFormation(formationId: number, candidatId: number): Observable<void>{
+    return this.http.delete<void>(`${this.apiServerUrl}/formation/delete/${formationId}/${candidatId}`);
   }
 
 }

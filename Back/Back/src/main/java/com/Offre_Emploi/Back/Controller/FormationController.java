@@ -30,9 +30,9 @@ public class FormationController {
     }
 
 
-    @DeleteMapping("/delete/{id}")
-    public void deleteFormation(@PathVariable("id") Long id) {
-        formationService.deleteFormation(id);
+    @DeleteMapping("/delete/{id}/{idf}")
+    public void deleteFormation(@PathVariable("id") Long id, @PathVariable("idf") Long idf) {
+        formationService.deleteFormation(id, idf);
     }
 
 

@@ -1,5 +1,6 @@
 package com.Offre_Emploi.Back.Service;
 
+import com.Offre_Emploi.Back.Entity.Candidat;
 import com.Offre_Emploi.Back.Entity.Formations;
 import com.Offre_Emploi.Back.Repository.FormationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ public class FormationService {
 
     @Autowired
     private FormationRepository formationRepository;
+    @Autowired
+    private CandidatService candidatService;
 
 
     public Formations addFormation(Formations formations){
@@ -23,10 +26,13 @@ public class FormationService {
        return formationRepository.findAll();
     }
 
-    public void deleteFormation(Long id){
+    @Transactional
+    public void deleteFormation(Long id, Long idCandidat){
+        Candidat candidat = candidatService.findCandidatById(idCandidat);
+        Formations formations = findFormationById(id);
+        candidat.getFormations().remove(formations);
         formationRepository.deleteById(id);
     }
-
     @Transactional
     public Formations updateFormation(Formations formations){
         Formations formationUpdate = formationRepository.findById(formations.getId()).orElse(null);

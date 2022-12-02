@@ -32,7 +32,7 @@ export class CompetanceService {
     return this.http.put<Competance>(`${this.apiServerUrl}/competance/update`, competance);
   }
 
-  public deleteCompetance(competanceId: number): Observable<void>{
-    return this.http.delete<void>(`${this.apiServerUrl}/competance/delete/${competanceId}`);
+  public deleteCompetance(competanceId: number, candidatId: number): Observable<void>{
+    return this.http.delete<void>(`${this.apiServerUrl}/competance/delete/${competanceId}/${candidatId}`);
   }
 }

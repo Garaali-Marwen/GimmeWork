@@ -14,7 +14,8 @@ public class CompetanceService {
 
     @Autowired
     private CompetanceRepository competanceRepository;
-
+    @Autowired
+    private CandidatService candidatService;
 
     public Competance addCompetance(Competance competance){
         return competanceRepository.save(competance);
@@ -36,7 +37,10 @@ public class CompetanceService {
         return competanceUpdate;
     }
 
-    public void deleteCompetance(Long id){
+    @Transactional
+    public void deleteCompetance(Long id, Long idCandidat){
+        Candidat candidat = candidatService.findCandidatById(idCandidat);
+        Competance competance = findCompetanceById(id);
+        candidat.getCompetances().remove(competance);
         competanceRepository.deleteById(id);
-    }
-}
+    }}
