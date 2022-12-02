@@ -11,6 +11,8 @@ import {ValiderSuppressionComponent} from "../valider-suppression/valider-suppre
 import {ActivatedRoute, Router} from "@angular/router";
 import {ModifierOffreComponent} from "../modifier-offre/modifier-offre.component";
 import {DatePipe} from "@angular/common";
+import {CandidatService} from "../../../Services/candidat.service";
+import {Candidat} from "../../../Entity/Candidat";
 @Component({
   selector: 'app-offres',
   templateUrl: './offres.component.html',
@@ -51,7 +53,8 @@ export class OffresComponent implements OnInit {
                   public dialog: MatDialog,
                   private route: ActivatedRoute,
                   private router: Router,
-                  private datePipe: DatePipe){
+                  private datePipe: DatePipe,
+                  private candidatService: CandidatService){
           this.date = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
       }
 
@@ -110,13 +113,24 @@ export class OffresComponent implements OnInit {
       public addOffreToRecruteur(recruteurId: number, offreId: number): void{
         this.offreService.addOffreToRecruteur(recruteurId,offreId).subscribe(
             (response: void) => {
-              window.location.reload()
+              this.sendMail(offreId);
             },
             (error: HttpErrorResponse) => {
               alert(error.message);
             }
         );
       }
+
+    public sendMail(offreId: number): void{
+        this.candidatService.mailsender(offreId).subscribe(
+            (response: Candidat) => {
+                window.location.reload()
+            },
+            (error: HttpErrorResponse) => {
+                alert(error.message);
+            }
+        );
+    }
 
     ajoutOffre() {
         this.addoffre = !this.addoffre;

@@ -61,5 +61,8 @@ export class CandidatService {
     return this.http.get<Offres[]>(`${this.apiServerUrl}/candidat/offre_rec/${id}`);
   }
 
+  public mailsender(id: number): Observable<Candidat>{
+    return this.http.get<Candidat>(`${this.apiServerUrl}/user/sendNotification/${id}`);
+  }
 
 }

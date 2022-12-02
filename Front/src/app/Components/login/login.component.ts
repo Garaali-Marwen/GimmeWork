@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
                     window.location.reload()
                 }
                 else if (role == 'Recruteur'){
-                    window.location.reload()
+                    this.router.navigate(['/offre']);
                 }
                 else if (role == 'Admin'){
                     this.router.navigate(['/users']);

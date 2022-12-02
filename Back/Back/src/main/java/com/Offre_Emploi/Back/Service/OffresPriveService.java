@@ -110,6 +110,31 @@ public class OffresPriveService {
         return offre_recommandations;
     }
 
+    public List<Candidat> mail(Long id ) {
+        Offres offre = findById(id);
+        List<Candidat> candidat_mail = new ArrayList<>();
+        List<Candidat> candidat = candidatService.getCondidats();
+        Neurone n = new Neurone(0.6, 0.3, 0.8);
+        for (Candidat candidat1:candidat){
+            for (Competance c :candidat1.getCompetances() ) {
+                if (offre.getDescription().toLowerCase().contains(c.getNom().toLowerCase()))
+                    e1 = 1;
+                if (offre.getDescription().toLowerCase().contains(c.getNom().toLowerCase()) & (c.getNiveau() > 40))
+                    e2 = 1;
+                if (n.evaluer(e1, e2)) {
+                    boolean isExisteOffre = candidat_mail.contains(candidat1);
+                    if(!isExisteOffre) candidat_mail.add(candidat1);
+                }
+
+                e1 = 0;
+                e2 = 0;
+            }
+        }
+
+        return candidat_mail;
+    }
+
+
 
 
 }

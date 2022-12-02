@@ -1,8 +1,10 @@
 package com.Offre_Emploi.Back.Controller;
 
 import com.Offre_Emploi.Back.Entity.Admin;
+import com.Offre_Emploi.Back.Entity.Candidat;
 import com.Offre_Emploi.Back.Entity.User;
 import com.Offre_Emploi.Back.Repository.UserRepository;
+import com.Offre_Emploi.Back.Service.OffresPriveService;
 import com.Offre_Emploi.Back.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,8 @@ public class UserController {
     private UserRepository userRepository;
     @Autowired
     private JavaMailSender javaMailSender;
+    @Autowired
+    private OffresPriveService offresPriveService;
 
     @GetMapping("/login/{mail}/{mdp}")
     public ResponseEntity<User> addRoleToUser(@PathVariable("mail") String mail, @PathVariable("mdp") String mdp){
@@ -79,4 +83,20 @@ public class UserController {
         return null;
     }
 
+
+    @GetMapping("/sendNotification/{id}")
+    public ResponseEntity<User> sendNotification(@PathVariable ("id") Long id) {
+        List<Candidat> users = offresPriveService.mail(id);
+        for (Candidat user : users) {
+            SimpleMailMessage sm = new SimpleMailMessage();
+            sm.setFrom("gimmework3@gmail.com");
+            sm.setTo(user.getMail());
+            sm.setText(" Bonjour " + user.getNom() + " ," + "\n\n merci de consulter notre siteweb lien .............................. \n nous avons  nous avons recommandé des offres d'emploi correspondent vraiment à votre profil.");
+            sm.setSubject("Nouvelles Offres d'emploi");
+            javaMailSender.send(sm);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+
+
+    }
 }
