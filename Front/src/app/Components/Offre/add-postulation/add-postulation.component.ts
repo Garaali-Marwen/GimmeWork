@@ -3,10 +3,19 @@ import {Postulation} from "../../../Entity/Postulation";
 import {HttpErrorResponse} from "@angular/common/http";
 import {CandidatService} from "../../../Services/candidat.service";
 import {PostulationService} from "../../../Services/postulation.service";
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {Image} from "../../../Entity/image";
 import {DatePipe} from "@angular/common";
 import {UserAuthentificationService} from "../../../Services/user-authentification.service";
+import {OffreService} from "../../../Services/offre.service";
+import {Offres} from "../../../Entity/Offres";
+import {OffresComponent} from "../offres/offres.component";
+import {TestNiveauService} from "../../../Services/test-niveau.service";
+import {Candidat} from "../../../Entity/Candidat";
+import {Router} from "@angular/router";
+import {Score} from "../../TestNiveau/afficher-test/afficher-test.component";
+import {PasserTestComponent} from "../../TestNiveau/passer-test/passer-test.component";
+import {TestNiveau} from "../../../Entity/TestNiveau";
 
 @Component({
   selector: 'app-add-postulation',
@@ -16,13 +25,36 @@ import {UserAuthentificationService} from "../../../Services/user-authentificati
 })
 export class AddPostulationComponent implements OnInit {
 
+  resultat:number = -1;
+  valider!: boolean;
+  score: Score[] = [];
   myDate = new Date();
   date: any;
+  public offre: Offres={
+    id: 0,
+    titre: "",
+    date_ajout: "",
+    date_expiration: "",
+    description: "",
+    domaine: "",
+    type_poste: "",
+    lieu: "",
+    experience: "",
+    etude: "",
+    salaire: 0,
+    disponibilite: "",
+    postulations: [],
+    testNiveaus:[]
+  };
   constructor(private candidatService: CandidatService,
               private postulationService: PostulationService,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private datePipe: DatePipe,
-              private userAuthentificationService: UserAuthentificationService) {
+              private userAuthentificationService: UserAuthentificationService,
+              private offreService:OffreService,
+              private testNiveauService:TestNiveauService,
+              private router: Router,
+              private dialog: MatDialog) {
     this.date = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
   }
 
@@ -46,6 +78,8 @@ export class AddPostulationComponent implements OnInit {
   public ajoutLM: boolean = false;
 
   ngOnInit(): void {
+    this.getOffre();
+    this.getScoreByIdCandidat();
   }
 
   onDragOverCV(event:any) {
@@ -186,6 +220,58 @@ export class AddPostulationComponent implements OnInit {
     }
     return true;
   }
+
+
+  public getOffre(): void{
+    this.offreService.findOffreById(this.data.offreId).subscribe(
+        (response: Offres) => {
+          this.offre = response
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+    );
+  }
+
+  public getScoreByIdCandidat(): void{
+    this.testNiveauService.getScoreByIdCandidat(this.userAuthentificationService.getUserId()).subscribe(
+        (response: Score[]) => {
+          this.score = response;
+
+          this.offreService.findOffreById(this.data.offreId).subscribe(
+              (response: Offres) => {
+                for (let score of this.score){
+                  if (response.testNiveaus[0].scoreTests.indexOf(score)){
+                    this.resultat = score.score;
+                    if (score.score >= response.testNiveaus[0].score_min)
+                      this.valider = true;
+                  }
+
+                }
+
+              },
+              (error: HttpErrorResponse) => {
+                alert(error.message);
+              }
+          );
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+    );
+  }
+
+  public getDetailsTest(test: TestNiveau, idoffre: number, idrec: number) {
+    this.dialog.open(PasserTestComponent, {
+      data: {
+        test: test,
+        idoffre: idoffre,
+        idrec: idrec
+      },
+    })
+  }
+
+
 
 
 }

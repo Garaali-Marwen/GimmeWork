@@ -18,6 +18,8 @@ public class CandidatService {
     private OffrePriveRepository offrePriveRepository;
 
     private PostulationRepository postulationRepository;
+    private TestNiveauRepository testNiveauRepository;
+    private ScoreRepository scoreRepository;
 
     public Candidat addCondidat(Candidat candidat){
         candidat.setRole("Condidat");
@@ -28,7 +30,15 @@ public class CandidatService {
         return candidatRepository.findAll();
     }
 
+    @Transactional
     public void deleteCandidat(Long id){
+        List<ScoreTest> scoreTests = scoreRepository.getScoreTestsByCandidat_Id(id);
+        for (ScoreTest scoreTest: scoreTests){
+            TestNiveau testNiveau = testNiveauRepository.getTestNiveauByScoreTests_Id(scoreTest.getId());
+            testNiveau.getScoreTests().remove(scoreTest);
+            scoreRepository.delete(scoreTest);
+        }
+
         candidatRepository.deleteById(id);
     }
 
@@ -108,6 +118,13 @@ public class CandidatService {
         Candidat candidatUpdate = candidatRepository.findById(candidat.getId()).orElse(null);
         candidatUpdate.setLettre_motivation(candidat.getLettre_motivation());
         return candidatUpdate;
+    }
+
+    @Transactional
+    public Candidat updateCandidatNotification(Long id) {
+        Candidat candidat = candidatRepository.findById(id).orElse(null);
+        candidat.setMailNotifications(!candidat.getMailNotifications());
+        return candidat;
     }
 
 

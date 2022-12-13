@@ -3,7 +3,9 @@ package com.Offre_Emploi.Back.Entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -37,4 +39,10 @@ public class Candidat extends User{
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "candidat_id", referencedColumnName = "id")
     private Set<Postulation> postulations = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<Notification> notification = new ArrayList<>();
+
+    private Boolean mailNotifications = false;
+
 }

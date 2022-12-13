@@ -2,6 +2,7 @@ package com.Offre_Emploi.Back.Controller;
 
 import com.Offre_Emploi.Back.Entity.File;
 import com.Offre_Emploi.Back.Entity.Recruteur;
+import com.Offre_Emploi.Back.Entity.TestNiveau;
 import com.Offre_Emploi.Back.Service.FileService;
 import com.Offre_Emploi.Back.Service.RecruteurService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,5 +84,10 @@ public class RecruteurController {
         return recruteurService.findRecruteurByIdOffre(id);
     }
 
+
+    @GetMapping("/{idrecruteur}/{idtest}")
+    public Recruteur addTestToRecruteur(@PathVariable("idrecruteur") Long idrecruteur, @PathVariable("idtest") Long idtest) {
+        return recruteurService.addTestToRecruteur(idrecruteur, idtest);
+    }
 
 }

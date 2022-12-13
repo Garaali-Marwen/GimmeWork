@@ -1,4 +1,6 @@
 package com.Offre_Emploi.Back.Entity;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,6 +10,7 @@ import java.util.Set;
 
 @Entity
 @Data
+@JsonIdentityInfo(property = "id",generator = ObjectIdGenerators.PropertyGenerator.class)
 public class Offres {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,5 +30,12 @@ public class Offres {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "offre_id", referencedColumnName = "id")
     private Set<Postulation> postulations = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "offre_test",
+            joinColumns =  @JoinColumn(name = "offre_id"),
+            inverseJoinColumns =  @JoinColumn(name = "test_niveau_id"))
+    private Set<TestNiveau> testNiveaus = new HashSet<>();
 
 }

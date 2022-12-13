@@ -13,6 +13,8 @@ import {ModifierOffreComponent} from "../modifier-offre/modifier-offre.component
 import {DatePipe} from "@angular/common";
 import {CandidatService} from "../../../Services/candidat.service";
 import {Candidat} from "../../../Entity/Candidat";
+import {AddTestOffreComponent} from "../add-test-offre/add-test-offre.component";
+import {NotificationService} from "../../../Services/notification.service";
 @Component({
   selector: 'app-offres',
   templateUrl: './offres.component.html',
@@ -37,14 +39,15 @@ export class OffresComponent implements OnInit {
         etude: "",
         salaire: 0,
         disponibilite: "",
-        postulations: []
+        postulations: [],
+        testNiveaus:[]
     }
 
     public addoffre: boolean = false;
     public recruteurOfres: Offres[] = [];
     public idUser = 0;
     private idUserConnecte = 0;
-    public recruteur: any;
+    public recruteur!: Recruteur;
     myDate = new Date();
     date: any;
       constructor(private userAuthentificationService:UserAuthentificationService,
@@ -54,7 +57,8 @@ export class OffresComponent implements OnInit {
                   private route: ActivatedRoute,
                   private router: Router,
                   private datePipe: DatePipe,
-                  private candidatService: CandidatService){
+                  private candidatService: CandidatService,
+                  private notificationService: NotificationService){
           this.date = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
       }
 
@@ -90,7 +94,20 @@ export class OffresComponent implements OnInit {
         this.recruteurService.findRecruteurtById(this.idUser)
             .subscribe(
                 (responce:Recruteur) => {
-                  this.recruteurOfres = responce.offres;
+                  for (let offre of responce.offres){
+                      if (Number(offre)){
+                          this.offreService.findOffreById(offre).subscribe(
+                              (responce: Offres)=>{
+                                  this.recruteurOfres.push(responce)
+
+                              },(error: HttpErrorResponse)=>{
+                                  alert(error.message);
+                              }
+                          );
+                      }else {
+                          this.recruteurOfres.push(offre)
+                      }
+                  }
                   this.recruteur = responce;
                 },
                 (error: HttpErrorResponse) => {
@@ -113,7 +130,8 @@ export class OffresComponent implements OnInit {
       public addOffreToRecruteur(recruteurId: number, offreId: number): void{
         this.offreService.addOffreToRecruteur(recruteurId,offreId).subscribe(
             (response: void) => {
-              this.sendMail(offreId);
+                this.sendMail(offreId);
+                this.sendNotification(offreId);
             },
             (error: HttpErrorResponse) => {
               alert(error.message);
@@ -124,7 +142,18 @@ export class OffresComponent implements OnInit {
     public sendMail(offreId: number): void{
         this.candidatService.mailsender(offreId).subscribe(
             (response: Candidat) => {
-                window.location.reload()
+
+            },
+            (error: HttpErrorResponse) => {
+                alert(error.message);
+            }
+        );
+    }
+
+    public sendNotification(offreId: number): void{
+        this.notificationService.sendNotification(offreId).subscribe(
+            (response: any) => {
+                window.location.reload();
             },
             (error: HttpErrorResponse) => {
                 alert(error.message);
@@ -148,6 +177,27 @@ export class OffresComponent implements OnInit {
                 id: idOffre
             },
         })
+    }
+
+    public addTestToOffre(idOffre: number){
+        this.dialog.open(AddTestOffreComponent, {
+            data:{
+                idoffre: idOffre,
+                idRecruteur: this.recruteur.id
+            },
+        })
+    }
+
+
+    public deleteTestFromOffre(offreId: number, testId: number): void{
+        this.offreService.removeTestFromOffre(offreId, testId).subscribe(
+            (response: any) => {
+                window.location.reload()
+            },
+            (error: HttpErrorResponse) => {
+                alert(error.message);
+            }
+        );
     }
 
 }

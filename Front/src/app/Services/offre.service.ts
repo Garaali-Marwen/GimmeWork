@@ -35,7 +35,7 @@ export class OffreService {
     return this.http.get<Offres[]>(`${this.apiServerUrl}/offres/all`);
   }
 
-  public findOffreById(id: number): Observable<Offres>{
+  public findOffreById(id: any): Observable<Offres>{
     return this.http.get<Offres>(`${this.apiServerUrl}/offres/${id}`);
   }
 
@@ -45,5 +45,9 @@ export class OffreService {
 
   public findOffresByIdPostulation(id: number): Observable<Offres>{
     return this.http.get<Offres>(`${this.apiServerUrl}/offres/postulations/${id}`);
+  }
+
+  public removeTestFromOffre(offreId: number, testId: number): Observable<void>{
+    return this.http.get<void>(`${this.apiServerUrl}/offres/testrem/${offreId}/${testId}`);
   }
 }

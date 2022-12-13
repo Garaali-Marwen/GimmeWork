@@ -3,6 +3,7 @@ package com.Offre_Emploi.Back.Controller;
 import com.Offre_Emploi.Back.Entity.Candidat;
 import com.Offre_Emploi.Back.Entity.Offres;
 import com.Offre_Emploi.Back.Entity.Recruteur;
+import com.Offre_Emploi.Back.Entity.TestNiveau;
 import com.Offre_Emploi.Back.Service.OffresPriveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -62,5 +63,15 @@ public class OffrePriveController {
     @GetMapping("/postulations/{id}")
     public Offres findOffresByIdPostulation(@PathVariable("id") Long id){
         return offresPriveService.findOffresByIdPostulation(id);
+    }
+
+    @GetMapping("/testadd/{idoffre}/{idtest}")
+    public Offres addTestToOffre(@PathVariable("idoffre") Long idoffre, @PathVariable("idtest") Long idtest) {
+        return offresPriveService.addTestToOffre(idoffre, idtest);
+    }
+
+    @GetMapping("/testrem/{idoffre}/{idtest}")
+    public void deleteTestfromOffre(@PathVariable("idoffre") Long idoffre, @PathVariable("idtest") Long idtest) {
+        offresPriveService.deleteTestFromOffre(idoffre, idtest);
     }
 }

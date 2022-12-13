@@ -7,9 +7,9 @@ import {debounceTime, distinctUntilChanged, map , Observable, OperatorFunction} 
 import {ImageService} from "../../../Services/image.service";
 import {Router} from "@angular/router";
 import {NgForm} from "@angular/forms";
-import {OffrePublicService} from "../../../Services/offre-public.service";
 import {OffresPublic} from "../../../Entity/OffresPublic";
 import {UserAuthentificationService} from "../../../Services/user-authentification.service";
+import {OffreService} from "../../../Services/offre.service";
 
 
 @Component({
@@ -66,7 +66,8 @@ export class AfficherOffresComponent implements OnInit {
   constructor(private recruteurService: RecruteurService,
               private imageService: ImageService,
               private router: Router,
-              private userAuthentificationService: UserAuthentificationService) { }
+              private userAuthentificationService: UserAuthentificationService,
+              private offreService: OffreService) { }
 
   ngOnInit(): void {
     this.getRecruteurs();
@@ -95,15 +96,28 @@ export class AfficherOffresComponent implements OnInit {
   public getRecruteurs(): void{
     this.recruteurService.getRecruteurs()
         .pipe(
-            map((x: any[], i) => x.map((offre: Offres) => this.imageService.createImage(offre)))
+            map((x: any[], i) => x.map((recruteur: Recruteur) => this.imageService.createImage(recruteur)))
     )
         .subscribe(
         (responce:Recruteur[]) => {
             for (let rec of responce){
                 for (let ofr of rec.offres){
-                    this.Offres.set(ofr,rec);
-                    this.offresTitres.push(ofr.titre);
-                    this.offresLieu.push(ofr.lieu)
+                    if (Number(ofr)){
+                        this.offreService.findOffreById(ofr).subscribe(
+                            (responce: Offres)=>{
+                                this.Offres.set(responce,rec);
+                                this.offresTitres.push(responce.titre);
+                                this.offresLieu.push(responce.lieu)
+                            },(error: HttpErrorResponse)=>{
+                                alert(error.message);
+                            }
+                        );
+                    }
+                    else {
+                        this.Offres.set(ofr,rec);
+                        this.offresTitres.push(ofr.titre);
+                        this.offresLieu.push(ofr.lieu)
+                    }
                 }
             }
         },

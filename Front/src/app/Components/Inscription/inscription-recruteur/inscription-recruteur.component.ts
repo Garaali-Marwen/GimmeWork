@@ -28,6 +28,7 @@ export class InscriptionRecruteurComponent implements OnInit {
     id: 0,
     offres: [],
     num_tel: 0,
+    testNiveaus: []
   }
   constructor(private  recruteurService: RecruteurService) { }
 

@@ -1,4 +1,5 @@
 import {Postulation} from "./Postulation";
+import {TestNiveau} from "./TestNiveau";
 
 export interface Offres{
     id : number,
@@ -13,5 +14,7 @@ export interface Offres{
     etude: string,
     salaire: number,
     disponibilite: string,
-    postulations: Postulation[]
+    postulations: Postulation[],
+    testNiveaus:TestNiveau[],
+
 }

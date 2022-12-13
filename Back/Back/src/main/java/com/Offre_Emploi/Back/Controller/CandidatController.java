@@ -157,5 +157,10 @@ public class CandidatController {
         return candidatService.findCandidatByIdPostulation(id);
     }
 
+    @GetMapping("/notification/{id}")
+    public Candidat updateNotificationMail(@PathVariable("id") Long id){
+        return candidatService.updateCandidatNotification(id);
+    }
+
 
 }

@@ -33,7 +33,6 @@ export class AfficherOffresLinkedinComponent implements OnInit {
               this.OffresPublic = responce;
             },
             (error: HttpErrorResponse) => {
-              alert(error.message);
             });
   }
 

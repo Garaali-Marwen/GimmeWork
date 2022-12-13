@@ -88,12 +88,14 @@ public class UserController {
     public ResponseEntity<User> sendNotification(@PathVariable ("id") Long id) {
         List<Candidat> users = offresPriveService.mail(id);
         for (Candidat user : users) {
-            SimpleMailMessage sm = new SimpleMailMessage();
-            sm.setFrom("gimmework3@gmail.com");
-            sm.setTo(user.getMail());
-            sm.setText(" Bonjour " + user.getNom() + " ," + "\n\n merci de consulter notre siteweb lien .............................. \n nous avons  nous avons recommandé des offres d'emploi correspondent vraiment à votre profil.");
-            sm.setSubject("Nouvelles Offres d'emploi");
-            javaMailSender.send(sm);
+            if (user.getMailNotifications()){
+                SimpleMailMessage sm = new SimpleMailMessage();
+                sm.setFrom("gimmework3@gmail.com");
+                sm.setTo(user.getMail());
+                sm.setText(" Bonjour " + user.getNom() + " ," + "\n\n merci de consulter notre siteweb lien .............................. \n nous avons  nous avons recommandé des offres d'emploi correspondent vraiment à votre profil.");
+                sm.setSubject("Nouvelles Offres d'emploi");
+                javaMailSender.send(sm);
+            }
         }
         return new ResponseEntity<>(HttpStatus.OK);
 

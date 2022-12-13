@@ -65,4 +65,8 @@ export class CandidatService {
     return this.http.get<Candidat>(`${this.apiServerUrl}/user/sendNotification/${id}`);
   }
 
+  public notificationUpdate(id: number): Observable<Candidat>{
+    return this.http.get<Candidat>(`${this.apiServerUrl}/candidat/notification/${id}`);
+  }
+
 }

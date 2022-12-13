@@ -7,7 +7,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from '@angular/material/input';
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {FormationService} from "./Services/formation.service";
 import { HttpClientModule } from '@angular/common/http';
 import { NavBarComponent } from './Components/nav-bar/nav-bar.component';
@@ -71,6 +71,13 @@ import { ModeleOneComponent } from './Components/CV/modele-one/modele-one.compon
 import { ModeleTwoComponent } from './Components/CV/modele-two/modele-two.component';
 import { OffresRecommanderComponent } from './Components/Offre/offres-recommander/offres-recommander.component';
 import { AideComponent } from './Components/aide/aide.component';
+import { AddTestComponent } from './Components/TestNiveau/add-test/add-test.component';
+import { AfficherTestComponent } from './Components/TestNiveau/afficher-test/afficher-test.component';
+import { AddTestOffreComponent } from './Components/Offre/add-test-offre/add-test-offre.component';
+import {CountdownComponent} from "ngx-countdown";
+import { PasserTestComponent } from './Components/TestNiveau/passer-test/passer-test.component';
+import {MatBadgeModule} from "@angular/material/badge";
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
   declarations: [
@@ -115,6 +122,10 @@ import { AideComponent } from './Components/aide/aide.component';
     ModeleTwoComponent,
     OffresRecommanderComponent,
     AideComponent,
+    AddTestComponent,
+    AfficherTestComponent,
+    AddTestOffreComponent,
+    PasserTestComponent,
   ],
     imports: [
         BrowserModule,
@@ -147,6 +158,10 @@ import { AideComponent } from './Components/aide/aide.component';
         NgxPaginationModule,
         PdfViewerModule,
         NgApexchartsModule,
+        ReactiveFormsModule,
+        CountdownComponent,
+        MatBadgeModule,
+        MatListModule,
     ],
   providers: [
       FormationService

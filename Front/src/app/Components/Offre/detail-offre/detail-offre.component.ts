@@ -16,6 +16,8 @@ import {LoginComponent} from "../../login/login.component";
 import {PostulationService} from "../../../Services/postulation.service";
 import {Postulation} from "../../../Entity/Postulation";
 import {AddPostulationComponent} from "../add-postulation/add-postulation.component";
+import {Score} from "../../TestNiveau/afficher-test/afficher-test.component";
+import {TestNiveauService} from "../../../Services/test-niveau.service";
 
 @Component({
   selector: 'app-detail-offre',
@@ -32,7 +34,8 @@ export class DetailOffreComponent implements OnInit {
               private router: Router,
               private candidatService: CandidatService,
               private dialog: MatDialog,
-              private postulationService: PostulationService) { }
+              private postulationService: PostulationService,
+              private testNiveauService: TestNiveauService) { }
 
   public offre: Offres={
     id: 0,
@@ -47,7 +50,8 @@ export class DetailOffreComponent implements OnInit {
     etude: "",
     salaire: 0,
     disponibilite: "",
-    postulations: []
+    postulations: [],
+      testNiveaus:[]
   };
   public recruteur: Recruteur= {
     nom: "",
@@ -63,7 +67,8 @@ export class DetailOffreComponent implements OnInit {
     role: "",
     id: 0,
     offres: [],
-    num_tel: 0
+    num_tel: 0,
+      testNiveaus:[]
   }
 
   private idO = 0;
@@ -86,9 +91,9 @@ export class DetailOffreComponent implements OnInit {
   }
 
   idPostulation = 0;
-  public candidatPostulation = new Map<Candidat,any>;
+  public candidatPostulation = new Map<any,any>;
 
-  public Candidat: Candidat = {
+  public Candidat: any = {
       adresse: "",
       competances: [],
       cv: {
@@ -112,7 +117,9 @@ export class DetailOffreComponent implements OnInit {
       nom: "",
       postulations: [],
       prenom: "",
+      resultat: 0
   };
+    score: Score[]=[];
   public candidatAccepter= 0;
   public candidatRefuser=0;
   public role: string = "";
@@ -148,7 +155,24 @@ export class DetailOffreComponent implements OnInit {
                       .pipe(map(p => this.imageService.createImage(p)))
                       .subscribe(
                           (responce:Candidat) => {
-                              this.candidatPostulation.set(responce,i);
+                              this.Candidat = responce;
+                              if (this.offre.testNiveaus.length>0){
+                                  this.testNiveauService.getScoreByIdCandidat(this.Candidat.id).subscribe(
+                                      (response: Score[]) => {
+                                          this.score = response;
+                                          for (let score of this.score){
+                                              if (this.offre.testNiveaus[0].scoreTests.indexOf(score)){
+                                                  this.Candidat.resultat = score.score;
+                                              }
+                                          }
+
+                                      },
+                                      (error: HttpErrorResponse) => {
+                                          alert(error.message);
+                                      }
+                                  );
+                              }
+                              this.candidatPostulation.set(this.Candidat,i);
                           },
                           (error: HttpErrorResponse) => {
                               alert(error.message);
@@ -188,7 +212,8 @@ export class DetailOffreComponent implements OnInit {
             this.dialog.open(AddPostulationComponent, {
                 data: {
                     candidatId: candidatId,
-                    offreId: offreId
+                    offreId: offreId,
+                    recid: this.idR
                 },
             })
         }

@@ -20,7 +20,10 @@
 
 
         <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf=" isLogedIn() && (role == 'Condidat' || role == 'Recruteur')">
-            <img alt=" " [src]="user.image.url" style="width: 30px; height: 30px; border-radius: 50%">
+            <img *ngIf="user.image.file.name!=''" alt=" " [src]="user.image.url" style="width: 33px; height: 33px; border-radius: 50%">
+            <mat-icon color="primary" *ngIf="user.image.file.name == ''">
+                <span class="material-symbols-outlined">account_circle</span>
+            </mat-icon>
         </button>
         <mat-menu #menu="matMenu">
             <button mat-menu-item style="width: 150px;display: flex;align-items: center;" (click)="afficherProfile()">
@@ -31,6 +34,46 @@
                 <mat-icon color="primary"><span class="material-symbols-outlined">logout</span></mat-icon>
                 <span style="color: #3f51b4; font-weight: bold">Deconnexion</span>
             </button>
+        </mat-menu>
+
+
+
+        <button mat-icon-button [matMenuTriggerFor]="notifications" *ngIf=" isLogedIn() && role == 'Condidat'">
+            <mat-icon color="primary" [matBadge]="Offres.size" [matBadgeHidden]="notification_verif(notifs)">
+                <span class="material-symbols-outlined" matTooltip="Notifications activées" style="cursor: pointer">notifications</span>
+            </mat-icon>
+        </button>
+        <mat-menu #notifications="matMenu" xPosition="before" class="my-class">
+            <mat-list *ngIf="notifs.length==0" style="padding: 10px">
+                <mat-card-title>0 Notifications</mat-card-title>
+            </mat-list>
+            <mat-list *ngIf="Offres.size!=0">
+                <div *ngFor="let offre of Offres | keyvalue" (click)="getDetails(offre.key.id, offre.value.id, notifs)"
+                     style="cursor: pointer">
+                    <div style="display: flex; align-items: center; padding-left: 10px;padding-right: 10px">
+                        <img [src]=offre.value.image.url style="width: 50px; height: 50px;border-radius: 50%; margin-right: 5px">
+                        <div>
+                            <b>{{offre.key.titre}}</b><br>
+                            <small style="color: rgba(129,129,129,0.8)">{{offre.key.date_ajout | date}}</small>
+                        </div>
+                    </div>
+                </div>
+                <mat-divider></mat-divider>
+            </mat-list>
+
+            <mat-list *ngIf="OffresVu.size!=0">
+                <div *ngFor="let offre of OffresVu | keyvalue" (click)="getDetails(offre.key.id, offre.value.id, notifs)"
+                     style="cursor: pointer; background-color: rgba(129,129,129,0.25)">
+                    <div style="display: flex; align-items: center; padding-left: 10px;padding-right: 10px">
+                        <img [src]=offre.value.image.url style="width: 50px; height: 50px;border-radius: 50%; margin-right: 5px">
+                        <div>
+                            <b>{{offre.key.titre}}</b><br>
+                            <small style="color: rgba(129,129,129,0.8)">{{offre.key.date_ajout | date}}</small>
+                        </div>
+                    </div>
+                </div>
+                <mat-divider></mat-divider>
+            </mat-list>
         </mat-menu>
 
 

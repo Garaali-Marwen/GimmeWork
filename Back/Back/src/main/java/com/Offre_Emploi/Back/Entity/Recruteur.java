@@ -19,5 +19,9 @@ public class Recruteur extends User{
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "ro_id", referencedColumnName = "id")
     private Set<Offres> offres = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private Set<TestNiveau> testNiveaus = new HashSet<>();
 }
 

@@ -10,4 +10,5 @@ import java.util.List;
 public interface CandidatRepository extends JpaRepository<Candidat,Long> {
 
     Candidat getCandidatsByPostulationsId(Long Id);
+
 }

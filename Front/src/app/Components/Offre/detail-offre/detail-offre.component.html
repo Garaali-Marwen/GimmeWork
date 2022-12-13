@@ -32,7 +32,7 @@
             <mat-card-title style="color: #3f51b4;">Recruteur:</mat-card-title>
             <br>
             <div style="display: flex">
-                <img [src]=recruteur.image.url
+                <img *ngIf="recruteur.image.file.name != ''" [src]=recruteur.image.url
                      style="width: 100px; height: 100px;border: #c2c2c2 solid 3px;border-radius: 50%">
                 <mat-card-content style="margin-left: 20px">
                     <p style="font-weight: bold">{{recruteur.prenom}} {{recruteur.nom}}</p>
@@ -112,7 +112,7 @@
         <br>
         <div style="display: flex;flex-wrap: wrap;">
             <mat-card *ngFor="let candidat of candidatPostulation| keyvalue" style="width: 420px; margin: 10px;">
-                <img [src]=candidat.key.image.url
+                <img *ngIf="candidat.key.image.file.name != ''" [src]=candidat.key.image.url
                      style="width: 100px; height: 100px;border: #c2c2c2 solid 3px;border-radius: 50%;">
                 <div style="position: absolute;top: 20px; right: 20px">
                     <button mat-icon-button *ngIf="candidat.value.decision_recruteur == 'en attente'"
@@ -152,6 +152,10 @@
                             </mat-icon>
                             {{candidat.key.fonction}}
                         </p>
+                        <U style="display: flex; align-items: center; color: #3f51b4"
+                           *ngIf="candidat.key.resultat > 0 && offre.testNiveaus.length>0">
+                            <b>Note de test: {{candidat.key.resultat}} / 100</b>
+                        </U>
                     </mat-card-content>
                 </div>
                 <br>
@@ -193,6 +197,7 @@
                            (click)="afficherLM(candidat.value.lettre_motivation.url.changingThisBreaksApplicationSecurity)">
                        <span class="material-symbols-outlined">open_in_new</span>
                    </button>
+
                </div>
 
             </mat-card>

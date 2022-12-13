@@ -1,8 +1,10 @@
 package com.Offre_Emploi.Back.Service;
 
 import com.Offre_Emploi.Back.Entity.*;
+import com.Offre_Emploi.Back.Repository.NotificationRepository;
 import com.Offre_Emploi.Back.Repository.OffrePriveRepository;
 import com.Offre_Emploi.Back.Repository.RecruteurRepository;
+import com.Offre_Emploi.Back.Repository.TestNiveauRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +27,11 @@ public class OffresPriveService {
     @Autowired
     private RecruteurRepository recruteurRepository;
 
+    @Autowired
+    private TestNiveauRepository testNiveauRepository;
+
+    @Autowired
+    private NotificationRepository notificationRepository;
     public List<Offres> getOffres(){
         return offrePriveRepository.findAll();
     }
@@ -33,9 +40,6 @@ public class OffresPriveService {
         return offrePriveRepository.save(offres);
     }
 
-    public void deleteOffre(Long offreId){
-        offrePriveRepository.deleteById(offreId);
-    }
 
     public Offres findById(Long id){
         return offrePriveRepository.findById(id).orElse(null);
@@ -134,6 +138,30 @@ public class OffresPriveService {
         return candidat_mail;
     }
 
+    @Transactional
+    public Offres addTestToOffre(Long idoffre, Long idtest){
+        TestNiveau testNiveau = testNiveauRepository.findById(idtest).orElse(null);
+        Offres offres = offrePriveRepository.findById(idoffre).orElse(null);
+
+        if (testNiveau != null && offres != null){
+            offres.getTestNiveaus().add(testNiveau);
+        }
+        return offres;
+    }
+
+    @Transactional
+    public void deleteTestFromOffre(Long idoffre, Long idtest){
+        Offres offres = offrePriveRepository.findById(idoffre).orElse(null);
+        TestNiveau testNiveau = testNiveauRepository.findById(idtest).orElse(null);
+        offres.getTestNiveaus().remove(testNiveau);
+    }
+
+
+    @Transactional
+    public void deleteOffre(Long offreId){
+        notificationRepository.deleteAll(notificationRepository.getNotificationsByOffres_Id(offreId));
+        offrePriveRepository.deleteById(offreId);
+    }
 
 
 

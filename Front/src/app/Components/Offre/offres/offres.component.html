@@ -136,12 +136,21 @@
             <mat-card-subtitle style="display: flex; justify-content: space-between; align-items: center">
                 Ajouté le: {{offre.date_ajout}}
                 <div style="display: flex; align-items: center" *ngIf="isLogedIn() && proprietaireCompte()">
+                    <b style="color: #3f51b4" *ngIf="offre.testNiveaus.length!=0">Inclu un test</b>
+                    <button color="primary" mat-icon-button *ngIf="offre.testNiveaus.length!=0" (click)="deleteTestFromOffre(offre.id, offre.testNiveaus[0].id)" matTooltip="Supprimer le test">
+                        <span class="material-symbols-outlined">quiz</span>
+                    </button>
+                    <div style="border-left: 2px solid rgba(194,194,194,0.67);  height: 20px;" *ngIf="offre.testNiveaus.length!=0"></div>
                     <button mat-icon-button (click)="validerSuppression(offre.id)" matTooltip="Supprimer">
                         <mat-icon color="primary"><span class="material-symbols-outlined">delete</span></mat-icon>
                     </button>
                     <div style="border-left: 2px solid rgba(194,194,194,0.67);  height: 20px;"></div>
                     <button mat-icon-button matTooltip="Modifier" (click)="modifier(offre.id)">
                         <mat-icon color="primary"><span class="material-symbols-outlined">edit</span></mat-icon>
+                    </button>
+                    <div style="border-left: 2px solid rgba(194,194,194,0.67);  height: 20px;" *ngIf="offre.testNiveaus.length==0 && recruteur.testNiveaus.length!=0"></div>
+                    <button color="primary" mat-icon-button *ngIf="offre.testNiveaus.length==0 && recruteur.testNiveaus.length!=0" (click)="addTestToOffre(offre.id)" matTooltip="Ajouter une test">
+                        <span class="material-symbols-outlined">add_circle</span>
                     </button>
                 </div>
             </mat-card-subtitle>

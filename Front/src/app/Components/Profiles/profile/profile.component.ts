@@ -12,6 +12,8 @@ import {Image} from "../../../Entity/image";
 import {Recruteur} from "../../../Entity/Recruteur";
 import {Candidat} from "../../../Entity/Candidat";
 import {map} from "rxjs";
+import {NotificationService} from "../../../Services/notification.service";
+import {Notification} from "../../../Entity/Notification";
 
 @Component({
   selector: 'app-profile',
@@ -46,7 +48,8 @@ export class ProfileComponent implements OnInit {
           url: ""
       },
       competances: [],
-      formations: []
+      formations: [],
+      mailNotifications: true
   }
   public role: string = "";
   public idUser = 0;
@@ -58,13 +61,16 @@ export class ProfileComponent implements OnInit {
     unbounded = false;
     disabled = false;
     roleUserConnecte = "";
+    isChecked: any;
+    public notifications: Notification[]= [];
 
   constructor(private userAuthentificationService:UserAuthentificationService,
               private candidatService: CandidatService,
               private recruteurService: RecruteurService,
               private imageService: ImageService,
               public dialog: MatDialog,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private notificationService: NotificationService) { }
 
   ngOnInit(): void {
       this.route.queryParams
@@ -105,8 +111,9 @@ export class ProfileComponent implements OnInit {
                     if (this.user.cv){
                         this.imageService.createCv(this.user);
                     }
-                    if (this.user.lettre_motivation)
+                    if (this.user.lettre_motivation) {
                         this.imageService.createLm(this.user);
+                    }
                 }
             },
             (error: HttpErrorResponse) => {
@@ -345,5 +352,18 @@ export class ProfileComponent implements OnInit {
 
     ouvrirPdf(url: any) {
         window.open(url)
+    }
+
+
+    public notificationUpdate(): void{
+        this.candidatService.notificationUpdate(this.idUser)
+            .subscribe(
+                (responce:any) => {
+                   window.location.reload();
+                },
+                (error: HttpErrorResponse) => {
+                    alert(error.message);
+                }
+            );
     }
 }
