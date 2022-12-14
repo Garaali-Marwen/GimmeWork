@@ -16,6 +16,7 @@ public class ScoreTest {
     private LocalDate dateTest;
     private float score;
     private boolean resultat;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "candidat_id", referencedColumnName = "id")
     private Candidat candidat;
 }

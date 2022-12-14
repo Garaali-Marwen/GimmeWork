@@ -7,8 +7,10 @@ import {UtilisateursComponent} from "./Components/Admin/utilisateurs/utilisateur
 import {StatistiquesComponent} from "./Components/Admin/Statis/statistiques/statistiques.component";
 import {CvComponent} from "./Components/CV/cv/cv.component";
 import {AideComponent} from "./Components/aide/aide.component";
-import {TestComponent} from "./test/test.component";
 import {AfficherTestComponent} from "./Components/TestNiveau/afficher-test/afficher-test.component";
+import {AjoutArticleComponent} from "./Components/Articles/ajout-article/ajout-article.component";
+import {DetailArticleComponent} from "./Components/Articles/detail-article/detail-article.component";
+import {ContactComponent} from "./Components/Contacts/contact/contact.component";
 
 const routes: Routes = [
   {path: 'profile', component:ProfileComponent},
@@ -18,7 +20,10 @@ const routes: Routes = [
   {path: 'statistiques', component:StatistiquesComponent},
   {path: 'cv', component:CvComponent},
   {path: 'help', component:AideComponent},
-  {path: 'test', component:AfficherTestComponent}
+  {path: 'test', component:AfficherTestComponent},
+  {path: 'articles', component:AjoutArticleComponent},
+  {path: 'detail-article', component:DetailArticleComponent},
+  {path: 'contact', component:ContactComponent}
 
 ];
 

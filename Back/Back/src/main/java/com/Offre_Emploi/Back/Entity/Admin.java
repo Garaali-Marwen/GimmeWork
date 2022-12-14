@@ -13,7 +13,4 @@ import java.util.Set;
 @Data
 public class Admin extends User{
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private Set<TestNiveau> testNiveaus = new HashSet<>();
 }

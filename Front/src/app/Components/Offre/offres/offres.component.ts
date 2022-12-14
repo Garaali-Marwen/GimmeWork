@@ -50,6 +50,7 @@ export class OffresComponent implements OnInit {
     public recruteur!: Recruteur;
     myDate = new Date();
     date: any;
+    p: number = 1;
       constructor(private userAuthentificationService:UserAuthentificationService,
                   private offreService: OffreService,
                   private recruteurService: RecruteurService,

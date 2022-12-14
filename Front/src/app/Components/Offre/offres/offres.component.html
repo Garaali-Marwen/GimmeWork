@@ -1,4 +1,4 @@
-<mat-card style="width: 750px; margin: 10px">
+<mat-card style="width: 750px; margin: 10px;">
     <mat-card-title style="display: flex; justify-content: space-between; align-items: center">
         Offres
         <button mat-icon-button *ngIf="isLogedIn() && proprietaireCompte()" (click)="ajoutOffre()" matTooltip="Ajouter une offre">
@@ -132,7 +132,8 @@
     </form>
 
     <div style="display: flex;flex-wrap: wrap;">
-        <mat-card style="margin: 5px; width: 100%;height: 150px;" *ngFor="let offre of recruteurOfres">
+
+        <mat-card style="margin: 5px; width: 100%;height: 150px;" *ngFor="let offre of recruteurOfres | paginate: { id: 'no',itemsPerPage: 3, currentPage: p }">
             <mat-card-subtitle style="display: flex; justify-content: space-between; align-items: center">
                 Ajouté le: {{offre.date_ajout}}
                 <div style="display: flex; align-items: center" *ngIf="isLogedIn() && proprietaireCompte()">
@@ -169,6 +170,8 @@
                 </button>
             </mat-card-content>
         </mat-card>
+        <pagination-controls style="margin: auto; padding-top: 20px" (pageChange)="p = $event" id="no" *ngIf="recruteurOfres.length>3"></pagination-controls>
+
     </div>
 
 </mat-card>

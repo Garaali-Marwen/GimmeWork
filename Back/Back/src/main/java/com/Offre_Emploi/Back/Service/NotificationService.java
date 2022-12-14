@@ -14,6 +14,8 @@ import java.util.List;
 public class NotificationService {
     private int e1;
     private int e2;
+    private int e3;
+
 
     @Autowired
     private NotificationRepository notificationRepository;
@@ -39,14 +41,16 @@ public class NotificationService {
         List<Candidat> candidat_notification = new ArrayList<>();
         List<Candidat> candidat = candidatService.getCondidats();
 
-        Neurone n = new Neurone(0.6, 0.3, 0.8);
+        Neurone n = new Neurone(0.6, 0.3, 0.8, 0.6);
         for (Candidat candidat1:candidat){
             for (Competance c :candidat1.getCompetances() ) {
+                if (offre.getTitre().toLowerCase().contains(candidat1.getFonction().toLowerCase()))
+                    e3 = 1;
                 if (offre.getDescription().toLowerCase().contains(c.getNom().toLowerCase()))
                     e1 = 1;
                 if (offre.getDescription().toLowerCase().contains(c.getNom().toLowerCase()) & (c.getNiveau() > 40))
                     e2 = 1;
-                if (n.evaluer(e1, e2)) {
+                if (n.evaluer(e1, e2, e3)) {
                     boolean isExisteOffre = candidat_notification.contains(candidat1);
                     if(!isExisteOffre){
                         candidat_notification.add(candidat1);
@@ -54,9 +58,9 @@ public class NotificationService {
                 }
                 e1 = 0;
                 e2 = 0;
+                e3 = 0;
             }
         }
-
         for (Candidat c : candidat_notification){
             if (c.getMailNotifications())
             {

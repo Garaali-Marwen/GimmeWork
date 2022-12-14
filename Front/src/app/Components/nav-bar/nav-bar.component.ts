@@ -110,33 +110,63 @@ export class NavBarComponent implements OnInit {
               if (this.user.role == 'Condidat'){
                 this.notificationService.findNotificationByIdCandidat(this.user.id)
                     .subscribe(
-                        (responce:Notification[]) => {
+                        (responce:any[]) => {
+                            console.log(responce)
                           for (let n of responce){
                             if (!n.vu){
                               this.notifs.push(n);
-                              console.log(this.notifs)
-                              this.recruteurService.findRecruteurByIdOffre(n.offres.id)
-                                  .pipe(map(p => this.imageService.createImage(p)))
-                                  .subscribe(
-                                      (responce:Recruteur) => {
-                                        this.Offres.set(n.offres, responce);
-                                      },
-                                      (error: HttpErrorResponse) => {
-                                        alert(error.message);
-                                      }
-                                  );
+                              if (Number(n.offres)){
+                                this.recruteurService.findRecruteurByIdOffre(n.offres)
+                                    .pipe(map(p => this.imageService.createImage(p)))
+                                    .subscribe(
+                                        (responce:Recruteur) => {
+                                          this.Offres.set(n.offres, responce);
+                                        },
+                                        (error: HttpErrorResponse) => {
+                                          alert(error.message);
+                                        }
+                                    );
+                              }else {
+                                this.recruteurService.findRecruteurByIdOffre(n.offres.id)
+                                    .pipe(map(p => this.imageService.createImage(p)))
+                                    .subscribe(
+                                        (responce:Recruteur) => {
+                                          this.Offres.set(n.offres, responce);
+                                        },
+                                        (error: HttpErrorResponse) => {
+                                          alert(error.message);
+                                        }
+                                    );
+
+                              }
+
                             }
                             else {
-                              this.recruteurService.findRecruteurByIdOffre(n.offres.id)
-                                  .pipe(map(p => this.imageService.createImage(p)))
-                                  .subscribe(
-                                      (responce:Recruteur) => {
-                                        this.OffresVu.set(n.offres, responce);
-                                      },
-                                      (error: HttpErrorResponse) => {
-                                        alert(error.message);
-                                      }
-                                  );
+                              if (Number(n.offres)){
+                                this.recruteurService.findRecruteurByIdOffre(n.offres)
+                                    .pipe(map(p => this.imageService.createImage(p)))
+                                    .subscribe(
+                                        (responce:Recruteur) => {
+                                          this.OffresVu.set(n.offres, responce);
+                                        },
+                                        (error: HttpErrorResponse) => {
+                                          alert(error.message);
+                                        }
+                                    );
+                              }else {
+                                this.recruteurService.findRecruteurByIdOffre(n.offres.id)
+                                    .pipe(map(p => this.imageService.createImage(p)))
+                                    .subscribe(
+                                        (responce:Recruteur) => {
+                                          this.OffresVu.set(n.offres, responce);
+                                        },
+                                        (error: HttpErrorResponse) => {
+                                          alert(error.message);
+                                        }
+                                    );
+
+                              }
+
                             }
                           }
                         },

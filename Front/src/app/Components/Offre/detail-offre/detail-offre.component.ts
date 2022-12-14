@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {OffreService} from "../../../Services/offre.service";
-import {map} from "rxjs";
+import {config, map} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Offres} from "../../../Entity/Offres";
 import {Recruteur} from "../../../Entity/Recruteur";
@@ -18,6 +18,8 @@ import {Postulation} from "../../../Entity/Postulation";
 import {AddPostulationComponent} from "../add-postulation/add-postulation.component";
 import {Score} from "../../TestNiveau/afficher-test/afficher-test.component";
 import {TestNiveauService} from "../../../Services/test-niveau.service";
+import {NgbCarouselConfig} from "@ng-bootstrap/ng-bootstrap";
+
 
 @Component({
   selector: 'app-detail-offre',
@@ -35,7 +37,11 @@ export class DetailOffreComponent implements OnInit {
               private candidatService: CandidatService,
               private dialog: MatDialog,
               private postulationService: PostulationService,
-              private testNiveauService: TestNiveauService) { }
+              private testNiveauService: TestNiveauService,
+              config: NgbCarouselConfig) {
+      config.showNavigationArrows = true;
+      config.showNavigationIndicators = false;
+  }
 
   public offre: Offres={
     id: 0,

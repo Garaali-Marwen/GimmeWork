@@ -11,7 +11,7 @@
                     <span>Modifier</span>
                 </button>
 
-                <button mat-menu-item style="display: flex;align-items: center;" (click)="notificationUpdate()">
+                <button mat-menu-item style="display: flex;align-items: center;" *ngIf="role=='Condidat'" (click)="notificationUpdate()">
                     <span class="material-symbols-outlined">notifications</span>
                     Notifications
                     <mat-slide-toggle color="primary" style="margin-left: 10px" [checked]="user.mailNotifications"></mat-slide-toggle>

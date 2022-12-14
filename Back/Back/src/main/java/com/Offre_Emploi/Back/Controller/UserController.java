@@ -2,6 +2,7 @@ package com.Offre_Emploi.Back.Controller;
 
 import com.Offre_Emploi.Back.Entity.Admin;
 import com.Offre_Emploi.Back.Entity.Candidat;
+import com.Offre_Emploi.Back.Entity.Contact;
 import com.Offre_Emploi.Back.Entity.User;
 import com.Offre_Emploi.Back.Repository.UserRepository;
 import com.Offre_Emploi.Back.Service.OffresPriveService;
@@ -52,6 +53,12 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
+    @GetMapping("/get/year/all")
+    public ResponseEntity<List<User>> getAllUsersByYear(){
+        List<User> users = userService.getUsersByYear();
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
 
     //change password
     @PostMapping("/changePassword")
@@ -98,7 +105,15 @@ public class UserController {
             }
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
 
+    @PostMapping("/sendEmailMessage")
+    public void send(@RequestBody Contact contact) {
+        SimpleMailMessage sm = new SimpleMailMessage();
+        sm.setFrom(contact.getEmail());
+        sm.setTo("gimmework3@gmail.com");
+        sm.setText(contact.getMessage());
+        javaMailSender.send(sm);
 
     }
 }

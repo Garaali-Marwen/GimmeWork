@@ -94,6 +94,15 @@
             </mat-icon>
             <span style="color: #3f51b4; font-weight: bold">Statistiques</span>
         </button>
+
+        <button mat-menu-item *ngIf="isLogedIn() && role == 'Admin'"
+                style="width: 150px; display: flex;align-items: center;"
+                routerLink="/articles">
+            <mat-icon color="primary"><span class="material-symbols-outlined">article</span></mat-icon>
+            <span style="color: #3f51b4; font-weight: bold">Articles</span>
+        </button>
+
+
         <button mat-menu-item *ngIf="isLogedIn() && role == 'Admin'"
                 style="width: 150px; display: flex;align-items: center;"
                 (click)="logout()">

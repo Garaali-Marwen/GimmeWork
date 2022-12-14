@@ -6,11 +6,13 @@ import com.Offre_Emploi.Back.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Year;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class UserService {
-
+    int year = Year.now().getValue();
     @Autowired
     private UserRepository userRepository;
 
@@ -35,5 +37,15 @@ public class UserService {
 
     public List<User> getUsers(){
         return userRepository.findAll();
+    }
+
+    public List<User> getUsersByYear(){
+        List<User> users = new ArrayList<>();
+        for (User user:userRepository.findAll()){
+            if (user.getDateinscription().getYear()==year){
+                users.add(user);
+            }
+        }
+        return users;
     }
 }

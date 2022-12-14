@@ -12,7 +12,7 @@ export class AppComponent implements OnInit{
 
   constructor(private userAuthentificationService: UserAuthentificationService,
               public router: Router){}
-
+  currentItem = 'Television';
   public role: string= "";
   ngOnInit(): void {
     this.role= this.userAuthentificationService.getRole();

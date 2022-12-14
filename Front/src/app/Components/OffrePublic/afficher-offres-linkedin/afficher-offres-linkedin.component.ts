@@ -21,6 +21,7 @@ export class AfficherOffresLinkedinComponent implements OnInit {
 
   p: number = 1;
 
+  public erreure: string = "";
 
   ngOnInit(): void {
     this.getOffresPublic();
@@ -33,6 +34,7 @@ export class AfficherOffresLinkedinComponent implements OnInit {
               this.OffresPublic = responce;
             },
             (error: HttpErrorResponse) => {
+              this.erreure = "Erreure lors de chargement"
             });
   }
 

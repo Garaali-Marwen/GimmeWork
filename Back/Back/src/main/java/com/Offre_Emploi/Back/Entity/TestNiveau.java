@@ -23,7 +23,8 @@ public class TestNiveau {
     @JoinColumn(name = "test_id", referencedColumnName = "id")
     private List<Question> questions;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "test_id", referencedColumnName = "id")
     private List<ScoreTest> scoreTests = new ArrayList<>();
     @ManyToMany(mappedBy = "testNiveaus",fetch = FetchType.EAGER)
     private List<Offres> offres = new ArrayList<>();

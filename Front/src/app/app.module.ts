@@ -78,6 +78,17 @@ import {CountdownComponent} from "ngx-countdown";
 import { PasserTestComponent } from './Components/TestNiveau/passer-test/passer-test.component';
 import {MatBadgeModule} from "@angular/material/badge";
 import {MatListModule} from "@angular/material/list";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { AcceuilComponent } from './Components/acceuil/acceuil.component';
+import { AjoutArticleComponent } from './Components/Articles/ajout-article/ajout-article.component';
+import { ContactComponent } from './Components/Contacts/contact/contact.component';
+import { DetailArticleComponent } from './Components/Articles/detail-article/detail-article.component';
+import {MatStepperModule} from "@angular/material/stepper";
+import { ModifierArticleComponent } from './Components/Articles/modifier-article/modifier-article.component';
+import { MsgContactComponent } from './Components/Contacts/msg-contact/msg-contact.component';
+import { SupprimerArticleComponent } from './Components/Articles/supprimer-article/supprimer-article.component';
+import { OffresRechercherComponent } from './Components/Offre/offres-rechercher/offres-rechercher.component';
+import { AreaChartsComponent } from './Components/Admin/Statis/area-charts/area-charts.component';
 
 @NgModule({
   declarations: [
@@ -126,6 +137,15 @@ import {MatListModule} from "@angular/material/list";
     AfficherTestComponent,
     AddTestOffreComponent,
     PasserTestComponent,
+    AcceuilComponent,
+    AjoutArticleComponent,
+    ContactComponent,
+    DetailArticleComponent,
+    ModifierArticleComponent,
+    MsgContactComponent,
+    SupprimerArticleComponent,
+    OffresRechercherComponent,
+    AreaChartsComponent,
   ],
     imports: [
         BrowserModule,
@@ -162,6 +182,8 @@ import {MatListModule} from "@angular/material/list";
         CountdownComponent,
         MatBadgeModule,
         MatListModule,
+        MatProgressSpinnerModule,
+        MatStepperModule,
     ],
   providers: [
       FormationService

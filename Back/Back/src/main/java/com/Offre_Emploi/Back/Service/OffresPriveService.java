@@ -20,6 +20,8 @@ public class OffresPriveService {
     int year = Year.now().getValue();
     private int e1;
     private int e2;
+    private int e3;
+
     @Autowired
     private CandidatService candidatService;
     @Autowired
@@ -93,22 +95,26 @@ public class OffresPriveService {
         List<Offres> l = getOffres();
         List<Offres> offre_recommandations = new ArrayList<>();
         Candidat candidat = candidatService.findCandidatById(id_candidat);
-        Neurone n = new Neurone(0.6, 0.3, 0.8);
+        Neurone n = new Neurone(0.6, 0.3, 0.8, 0.6);
         Set<Competance> list_competence_candidat = candidat.getCompetances();
 
         for (Competance c : list_competence_candidat) {
             for (Offres o : l) {
+
+                if (o.getTitre().toLowerCase().contains(candidat.getFonction().toLowerCase()))
+                    e3 = 1;
                 if (o.getDescription().toLowerCase().contains(c.getNom().toLowerCase()))
                     e1 = 1;
                 if (o.getDescription().toLowerCase().contains(c.getNom().toLowerCase()) & (c.getNiveau() > 40))
                     e2 = 1;
-                if (n.evaluer(e1, e2)) {
+                if (n.evaluer(e1, e2, e3)) {
                     boolean isExisteOffre = offre_recommandations.contains(o);
-                    if(!isExisteOffre) offre_recommandations.add(o);
+                    if (!isExisteOffre) offre_recommandations.add(o);
                 }
 
                 e1 = 0;
                 e2 = 0;
+                e3 = 0;
             }
         }
         return offre_recommandations;
@@ -118,20 +124,24 @@ public class OffresPriveService {
         Offres offre = findById(id);
         List<Candidat> candidat_mail = new ArrayList<>();
         List<Candidat> candidat = candidatService.getCondidats();
-        Neurone n = new Neurone(0.6, 0.3, 0.8);
+        Neurone n = new Neurone(0.6, 0.3, 0.8, 0.6);
+
         for (Candidat candidat1:candidat){
             for (Competance c :candidat1.getCompetances() ) {
+                if (offre.getTitre().toLowerCase().contains(candidat1.getFonction().toLowerCase()))
+                    e3 = 1;
                 if (offre.getDescription().toLowerCase().contains(c.getNom().toLowerCase()))
                     e1 = 1;
                 if (offre.getDescription().toLowerCase().contains(c.getNom().toLowerCase()) & (c.getNiveau() > 40))
                     e2 = 1;
-                if (n.evaluer(e1, e2)) {
+                if (n.evaluer(e1, e2, e3)) {
                     boolean isExisteOffre = candidat_mail.contains(candidat1);
                     if(!isExisteOffre) candidat_mail.add(candidat1);
                 }
 
                 e1 = 0;
                 e2 = 0;
+                e3 = 0;
             }
         }
 

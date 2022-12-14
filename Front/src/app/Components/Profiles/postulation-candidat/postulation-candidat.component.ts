@@ -23,7 +23,7 @@ export class PostulationCandidatComponent implements OnInit {
               private router: Router,
               private offreService: OffreService) {
       config.showNavigationArrows = true;
-      config.showNavigationIndicators = true;
+      config.showNavigationIndicators = false;
   }
 
   idUser = 0;

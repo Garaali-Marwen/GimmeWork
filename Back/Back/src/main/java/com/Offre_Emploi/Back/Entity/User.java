@@ -3,6 +3,8 @@ package com.Offre_Emploi.Back.Entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Data
@@ -18,6 +20,7 @@ public class User {
     @Column(nullable = false)
     private String mdp;
     private String role;
+    private LocalDate dateinscription = LocalDate.now();
 
     @Column(unique = true)
     private String mail;

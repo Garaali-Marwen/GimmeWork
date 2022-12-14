@@ -69,4 +69,8 @@ export class CandidatService {
     return this.http.get<Candidat>(`${this.apiServerUrl}/candidat/notification/${id}`);
   }
 
+  public getUsers(): Observable<any[]>{
+    return this.http.get<any[]>(`${this.apiServerUrl}/user/get/year/all`);
+  }
+
 }

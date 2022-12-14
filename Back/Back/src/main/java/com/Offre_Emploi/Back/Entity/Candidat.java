@@ -43,6 +43,6 @@ public class Candidat extends User{
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Notification> notification = new ArrayList<>();
 
-    private Boolean mailNotifications = false;
+    private Boolean mailNotifications = true;
 
 }

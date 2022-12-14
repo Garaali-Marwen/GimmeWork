@@ -17,7 +17,8 @@ public class Notification {
     private Long id;
     private Boolean vu;
     private LocalDate date;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "offre_id", referencedColumnName = "id")
     private Offres offres;
     @ManyToOne
     private Candidat candidat;

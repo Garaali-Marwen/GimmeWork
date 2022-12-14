@@ -17,7 +17,7 @@ public class AdminService {
     @Autowired
     private TestNiveauRepository testNiveauRepository;
 
-    @Transactional
+    /*@Transactional
     public Admin addTestToAdmin(Long idadmin, Long idtest){
         TestNiveau testNiveau = testNiveauRepository.findById(idtest).orElse(null);
         Admin admin = adminRepository.findById(idadmin).orElse(null);
@@ -26,5 +26,5 @@ public class AdminService {
             admin.getTestNiveaus().add(testNiveau);
         }
         return admin;
-    }
+    }*/
 }

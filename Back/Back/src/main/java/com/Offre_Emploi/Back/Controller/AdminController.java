@@ -15,8 +15,8 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-    @GetMapping("/{idadmin}/{idtest}")
+   /* @GetMapping("/{idadmin}/{idtest}")
     public Admin addTestToAdmin(@PathVariable("idadmin") Long idadmin, @PathVariable("idtest") Long idtest) {
         return adminService.addTestToAdmin(idadmin, idtest);
-    }
+    }*/
 }
